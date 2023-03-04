@@ -1,15 +1,15 @@
-package com.bosen.product.vo.request;
+package com.bosen.product.vo.response;
 
-import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 /**
- * 商品sku
+ * 商品sku明细
  */
 @Data
-public class ProductSkuUpsertVO extends BaseEntityData {
+public class ProductSkuDetailVO {
+    private Long id;
     /**
      * sku编码
      */

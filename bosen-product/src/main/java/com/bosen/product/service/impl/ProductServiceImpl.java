@@ -54,6 +54,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
             List<ProductAttributeDO> productAttributeDOS = formData.getAttrList().stream().map(i -> {
                 ProductAttributeDO attributeDO = new ProductAttributeDO();
                 BeanUtils.copyProperties(i, attributeDO);
+                attributeDO.setProductId(productDO.getId());
                 return attributeDO;
             }).collect(Collectors.toList());
             productAttributeService.saveBatch(productAttributeDOS);
@@ -61,17 +62,10 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
             productAttributeDOS = formData.getSpecList().stream().map(i -> {
                 ProductAttributeDO attributeDO = new ProductAttributeDO();
                 BeanUtils.copyProperties(i, attributeDO);
+                attributeDO.setProductId(productDO.getId());
                 return attributeDO;
             }).collect(Collectors.toList());
             productAttributeService.saveBatch(productAttributeDOS);
-            // 保存sku
-            List<ProductSkuDO> skuDOS = formData.getSkuList().stream().map(i -> {
-                ProductSkuDO skuDO = new ProductSkuDO();
-                BeanUtils.copyProperties(i, skuDO);
-                // todo 绑定商品规格，这里的第一个坑
-                return skuDO;
-            }).collect(Collectors.toList());
-            skuService.saveBatch(skuDOS);
         } else {
             throw new BusinessException("保存商品失败");
         }
