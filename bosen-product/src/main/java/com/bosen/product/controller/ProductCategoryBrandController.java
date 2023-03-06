@@ -6,6 +6,7 @@ import com.bosen.product.service.IProductCategoryBrandService;
 import com.bosen.product.vo.request.ProductCategoryBrandQueryVO;
 import com.bosen.product.vo.request.ProductCategoryBrandUpsertVO;
 import com.bosen.product.vo.response.ProductCategoryBrandDetailVO;
+import com.bosen.product.vo.response.ProductCategoryWithBrandVO;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,7 +44,7 @@ public class ProductCategoryBrandController {
      */
     @GetMapping("/listForMobile")
     @Cacheable(cacheNames = "product:category:brand", key = "'list'", unless = "!#result?.code == 200")
-    public ResponseData<List<ProductCategoryBrandDetailVO>> listForMobile(ProductCategoryBrandQueryVO queryVO) {
+    public ResponseData<List<ProductCategoryWithBrandVO>> listForMobile(ProductCategoryBrandQueryVO queryVO) {
         return categoryBrandService.listForMobile(queryVO);
     }
 

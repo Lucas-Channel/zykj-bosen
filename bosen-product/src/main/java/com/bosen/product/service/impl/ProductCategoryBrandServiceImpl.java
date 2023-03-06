@@ -12,11 +12,14 @@ import com.bosen.product.service.IProductCategoryBrandService;
 import com.bosen.product.vo.request.ProductCategoryBrandQueryVO;
 import com.bosen.product.vo.request.ProductCategoryBrandUpsertVO;
 import com.bosen.product.vo.response.ProductCategoryBrandDetailVO;
+import com.bosen.product.vo.response.ProductCategoryWithBrandVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -35,8 +38,18 @@ public class ProductCategoryBrandServiceImpl extends ServiceImpl<ProductCategory
     }
 
     @Override
-    public ResponseData<List<ProductCategoryBrandDetailVO>> listForMobile(ProductCategoryBrandQueryVO queryVO) {
-        return ResponseData.success(baseMapper.listForMobile(queryVO));
+    public ResponseData<List<ProductCategoryWithBrandVO>> listForMobile(ProductCategoryBrandQueryVO queryVO) {
+        List<ProductCategoryBrandDetailVO> detailVOS = baseMapper.listForMobile(queryVO);
+        Map<Long, List<ProductCategoryBrandDetailVO>> collect = detailVOS.stream().collect(Collectors.groupingBy(ProductCategoryBrandDetailVO::getCategoryId));
+        List<ProductCategoryWithBrandVO> list = new ArrayList<>();
+        collect.forEach((k, v) -> {
+            ProductCategoryWithBrandVO de = new ProductCategoryWithBrandVO();
+            de.setCategoryId(k);
+            de.setCategoryName(v.get(0).getCategoryName());
+            de.setBrandList(v);
+            list.add(de);
+        });
+        return ResponseData.success(list);
     }
 
     @Override

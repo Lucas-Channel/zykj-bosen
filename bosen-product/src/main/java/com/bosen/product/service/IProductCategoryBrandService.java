@@ -7,6 +7,7 @@ import com.bosen.product.domain.ProductCategoryBrand;
 import com.bosen.product.vo.request.ProductCategoryBrandQueryVO;
 import com.bosen.product.vo.request.ProductCategoryBrandUpsertVO;
 import com.bosen.product.vo.response.ProductCategoryBrandDetailVO;
+import com.bosen.product.vo.response.ProductCategoryWithBrandVO;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public interface IProductCategoryBrandService extends IService<ProductCategoryBr
 
     ResponseData<PageData<ProductCategoryBrandDetailVO>> pageList(ProductCategoryBrandQueryVO queryVO);
 
-    ResponseData<List<ProductCategoryBrandDetailVO>> listForMobile(ProductCategoryBrandQueryVO queryVO);
+    ResponseData<List<ProductCategoryWithBrandVO>> listForMobile(ProductCategoryBrandQueryVO queryVO);
 
     ResponseData<Void> upsertCategoryBrand(ProductCategoryBrandUpsertVO upsertVO);
 
