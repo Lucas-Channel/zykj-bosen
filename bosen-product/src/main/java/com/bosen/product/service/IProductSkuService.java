@@ -7,7 +7,6 @@ import com.bosen.product.domain.ProductSkuDO;
 import com.bosen.product.vo.request.ProductSkuQueryVO;
 import com.bosen.product.vo.request.ProductSkuUpsertVO;
 import com.bosen.product.vo.response.ProductSkuDetailVO;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 

@@ -3,8 +3,6 @@ package com.bosen.product.vo.request;
 import com.bosen.common.domain.PageVO;
 import lombok.Data;
 
-import java.math.BigDecimal;
-
 /**
  * 商品sku查询参数
  */

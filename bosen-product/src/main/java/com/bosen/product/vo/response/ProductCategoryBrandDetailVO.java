@@ -1,6 +1,5 @@
 package com.bosen.product.vo.response;
 
-import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
 import java.io.Serializable;

@@ -1,7 +1,5 @@
 package com.bosen.product.controller;
 
-import cn.hutool.db.PageResult;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.product.domain.ProductDO;

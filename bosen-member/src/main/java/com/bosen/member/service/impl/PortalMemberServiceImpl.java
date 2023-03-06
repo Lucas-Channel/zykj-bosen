@@ -11,7 +11,6 @@ import com.bosen.common.constant.common.UserStatusConstant;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.common.domain.AdminUserCacheVO;
 import com.bosen.common.domain.MemberCacheVO;
 import com.bosen.common.domain.UserDto;
 import com.bosen.common.exception.BusinessException;

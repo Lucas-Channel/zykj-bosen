@@ -8,7 +8,6 @@ import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.exception.BusinessException;
 import com.bosen.product.domain.ProductAttributeDO;
 import com.bosen.product.domain.ProductDO;
-import com.bosen.product.domain.ProductSkuDO;
 import com.bosen.product.mapper.ProductMapper;
 import com.bosen.product.service.IProductAttributeService;
 import com.bosen.product.service.IProductService;
@@ -17,7 +16,6 @@ import com.bosen.product.vo.request.ProductQueryVO;
 import com.bosen.product.vo.request.ProductUpsertVO;
 import com.bosen.product.vo.response.ProductDetailVO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

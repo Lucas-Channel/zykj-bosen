@@ -1,6 +1,5 @@
 package com.bosen.product.controller;
 
-import cn.hutool.db.Page;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.product.domain.ProductSkuDO;

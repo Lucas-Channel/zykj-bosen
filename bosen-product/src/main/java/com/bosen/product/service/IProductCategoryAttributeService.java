@@ -7,7 +7,6 @@ import com.bosen.product.domain.ProductCategoryAttribute;
 import com.bosen.product.vo.request.ProductCategoryAttributeQueryVO;
 import com.bosen.product.vo.request.ProductCategoryAttributeUpsert;
 import com.bosen.product.vo.response.ProductCategoryAttributeDetailVO;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 

@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-
 
 @Data
 @TableName("bs_product_brand")
