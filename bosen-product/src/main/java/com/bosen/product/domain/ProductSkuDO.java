@@ -1,16 +1,20 @@
 package com.bosen.product.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
+ * 特别说明：sku的价格是统一零售价格，如果存在指定会员价格或者批量价格，取其他表
  * 商品sku
  */
 @Data
-@TableName("bs_product_sku")
+@TableName(value = "bs_product_sku", autoResultMap = true)
 public class ProductSkuDO extends BaseEntityData {
     /**
      * sku编码
@@ -56,4 +60,16 @@ public class ProductSkuDO extends BaseEntityData {
      * 商品图片地址
      */
     private String picUrl;
+
+    /**
+     * 批发价格，可能存在返回性价格
+     */
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private List<ProductSkuWholesalePriceDO> wholesalePrice;
+
+    /**
+     * 指定会员价格，用于临时
+     */
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private List<ProductSkuMemberPriceDO> memberPrice;
 }

@@ -3,6 +3,8 @@ package com.bosen.product.controller;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.product.domain.ProductSkuDO;
+import com.bosen.product.domain.ProductSkuMemberPriceDO;
+import com.bosen.product.domain.ProductSkuWholesalePriceDO;
 import com.bosen.product.service.IProductSkuService;
 import com.bosen.product.vo.request.ProductSkuQueryVO;
 import com.bosen.product.vo.request.ProductSkuUpsertVO;
@@ -37,9 +39,36 @@ public class ProductSkuController {
         return skuService.addSkuStock(skuUpsertVOList);
     }
 
+    /**
+     * 分页获取sku信息
+     * @param queryVO 参数
+     * @return 结果
+     */
     @GetMapping("/pageList")
     public ResponseData<PageData<ProductSkuDetailVO>> pageList(ProductSkuQueryVO queryVO) {
         return skuService.pageList(queryVO);
+    }
+
+    /**
+     * 设置批发价格
+     * @param prices 价格范围
+     * @param skuId sku
+     * @return 结果
+     */
+    @PostMapping("/setWholesalePrice")
+    public ResponseData<Void> setWholesalePrice(@RequestBody List<ProductSkuWholesalePriceDO> prices, @RequestParam Long skuId) {
+        return skuService.setWholesalePrice(prices, skuId);
+    }
+
+    /**
+     * 设置会员价格
+     * @param prices 价格范围
+     * @param skuId sku
+     * @return 结果
+     */
+    @PostMapping("/setMemberPrice")
+    public ResponseData<Void> setMemberPrice(@RequestBody List<ProductSkuMemberPriceDO> prices, @RequestParam Long skuId) {
+        return skuService.setMemberPrice(prices, skuId);
     }
 
 }

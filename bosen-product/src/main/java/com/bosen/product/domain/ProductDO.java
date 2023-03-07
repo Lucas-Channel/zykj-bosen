@@ -1,6 +1,8 @@
 package com.bosen.product.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
@@ -12,7 +14,7 @@ import java.math.BigDecimal;
  * @date 2023/3/1
  */
 @Data
-@TableName("bs_product")
+@TableName(value = "bs_product", autoResultMap = true)
 public class ProductDO extends BaseEntityData {
     /**
      * 品类
@@ -47,6 +49,7 @@ public class ProductDO extends BaseEntityData {
     /**
      * 商品轮播图
      */
+    @TableField(typeHandler = JacksonTypeHandler.class)
     private String[] album;
 
     /**
