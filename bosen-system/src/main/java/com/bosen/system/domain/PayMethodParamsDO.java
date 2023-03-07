@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @date 2023/3/6
  */
 @Data
-@TableName("bs_pay_method")
+@TableName("bs_pay_method_params")
 public class PayMethodParamsDO extends BaseEntityData implements Serializable {
 
     private static final long serialVersionUID = 4916153864619189942L;
