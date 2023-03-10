@@ -47,4 +47,9 @@ public class MemberAssetAccountDO extends BaseEntityData implements Serializable
      * 更新支付密码标志
      */
     private Integer updatePasswordFlag;
+
+    /**
+     * 是否开启免密支付：1开启，0未开启
+     */
+    private Integer noSecretPay;
 }
