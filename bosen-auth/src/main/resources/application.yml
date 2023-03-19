@@ -8,9 +8,9 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   datasource:
-    url: jdbc:mysql://localhost:3306/smart_cms?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
-    username: root
-    password: 12345678
+    url: jdbc:mysql://sg.mysql.gaofeicm.cf/bosen?sslMode=VERIFY_IDENTITY
+    username: nzmbw2azd5pde1ltkwed
+    password: pscale_pw_C74y4yxA7OFGZuolfv8eITwkTKhYkwJIvjOZGLAOgjv
   redis:
     host: localhost # Redis服务器地址
     database: 1 # Redis数据库索引（默认为0）

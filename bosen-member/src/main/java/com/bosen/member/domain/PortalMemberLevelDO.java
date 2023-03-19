@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * 消费会员等级
+ * 平台消费会员等级
  */
 @Data
 @TableName("bs_portal_member_level")

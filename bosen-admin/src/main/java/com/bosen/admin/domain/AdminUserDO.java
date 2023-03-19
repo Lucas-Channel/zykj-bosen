@@ -10,7 +10,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 后台管理-用户
+ * 后台管理-用户-后台管理员
+ * 考虑一下是否需要性别和生日字段，平台后台正常而言不需要，商家后台好像也不需要
  * @author Lucas
  * @version 2.0.0
  * @date 2023/2/23
