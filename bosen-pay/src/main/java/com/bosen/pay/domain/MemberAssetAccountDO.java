@@ -29,9 +29,19 @@ public class MemberAssetAccountDO extends BaseEntityData implements Serializable
     private BigDecimal accountBalance;
 
     /**
+     * 余额加密密文
+     */
+    private String accountBalanceEncrypt;
+
+    /**
      * 锁定金额
      */
     private BigDecimal lockBalance;
+
+    /**
+     * 锁定金额加密密文
+     */
+    private String lockBalanceEncrypt;
 
     /**
      * 账户状态：1-正常, 2-已冻结

@@ -7,37 +7,41 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * 商品规格/属性实体,一个商品对应多个属性，多个规格，一个规格对应多个规格值
+ * 商品规格/属性 值
  */
 @Data
-@TableName("bs_product_attribute")
-public class ProductAttributeDO extends BaseEntityData implements Serializable {
+@TableName("bs_product_attribute_value")
+public class ProductAttributeValueDO extends BaseEntityData implements Serializable {
 
-    private static final long serialVersionUID = 4613708100451207664L;
+    private static final long serialVersionUID = 923761090154282826L;
+
     /**
      * 商品ID
      */
     private Long productId;
-
     /**
      * 属性ID
      */
-    private Long attributeId;
+    private Long productAttributeId;
 
     /**
-     * 属性名称
+     * 属性值
      */
-    private String name;
-
+    private String value;
     /**
      * 属性类型(1:规格;2:属性;)
      */
     private Integer type;
 
     /**
-     * 是否默认属性/规格
+     * 规格图片地址
      */
-    private Integer defaultAttribute;
+    private String picUrl;
+
+    /**
+     * 是否默认属性值
+     */
+    private Integer defaultAttributeValue;
 
     /**
      * 排序

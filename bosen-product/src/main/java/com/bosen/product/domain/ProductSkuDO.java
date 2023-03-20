@@ -22,7 +22,7 @@ public class ProductSkuDO extends BaseEntityData {
     private String skuCode;
 
     /**
-     * SKU 名称
+     * SKU 名称：拼接规格值
      */
     private String name;
 
