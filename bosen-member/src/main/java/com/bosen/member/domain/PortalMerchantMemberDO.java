@@ -41,7 +41,7 @@ public class PortalMerchantMemberDO extends BaseEntityData implements Serializab
     private Integer attentionFlag;
 
     /**
-     * 商家会员登记
+     * 商家会员等级
      */
     private Long merchantMemberLevelId;
 }

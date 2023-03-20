@@ -110,5 +110,13 @@ public class PortalMemberDO extends BaseEntityData implements Serializable {
      */
     private String idCard;
 
+    /**
+     * 微信openId
+     */
     private String openId;
+
+    /**
+     * 是否修改密码
+     */
+    private Integer hasUpdatePassword;
 }
