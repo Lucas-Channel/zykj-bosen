@@ -2,13 +2,14 @@ package com.bosen.system.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bosen.common.domain.BaseEntityData;
+import com.bosen.system.constants.FundModelEnums;
 import com.bosen.system.constants.PayMethodParamCodeEnum;
 import lombok.Data;
 
 import java.io.Serializable;
 
 /**
- * 支付方式
+ * 支付方式-参数配置
  * @author Lucas
  * @version 2.0.0
  * @date 2023/3/6
@@ -36,5 +37,11 @@ public class PayMethodParamsDO extends BaseEntityData implements Serializable {
      * 备注
      */
     private String paramRemark;
+
+    /**
+     * 资金归集方式
+     * @see FundModelEnums
+     */
+    private Integer fundModel;
 
 }

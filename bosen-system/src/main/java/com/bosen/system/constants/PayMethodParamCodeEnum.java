@@ -28,11 +28,11 @@ public enum PayMethodParamCodeEnum {
     /**
      * 微信 - appid
      */
-    WECHAT_APP_ID(1, "AppId"),
+    WECHAT_APP_ID(5, "AppId"),
     /**
      * 微信 - app密钥
      */
-    WECHAT_API_KEY(1, "AppKey"),
+    WECHAT_API_KEY(6, "AppKey"),
     ;
     private final Integer sort;
     private final String paramCode;

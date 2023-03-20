@@ -1,7 +1,7 @@
 package com.bosen.system.controller;
 
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.system.service.IPayMethodService;
+import com.bosen.system.service.IPayTypeService;
 import com.bosen.system.vo.request.PayMethodUpsertVO;
 import com.bosen.system.vo.response.PayMethodVO;
 import org.springframework.beans.BeanUtils;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/payMethod")
 public class PayMethodController {
     @Resource
-    private IPayMethodService payMethodService;
+    private IPayTypeService payMethodService;
 
     /**
      * 列表查询
