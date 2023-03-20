@@ -7,9 +7,12 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * 平台后台用户-角色信息表
+ */
 @Data
 @TableName("bs_user_role_relation")
-public class SystemUserRoleRelation implements Serializable {
+public class AdminUserRoleRelation implements Serializable {
     private static final long serialVersionUID = -5251127089052356920L;
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

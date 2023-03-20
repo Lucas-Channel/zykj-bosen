@@ -2,7 +2,7 @@ package com.bosen.admin.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bosen.admin.domain.SystemRole;
-import com.bosen.admin.domain.SystemUserRoleRelation;
+import com.bosen.admin.domain.AdminUserRoleRelation;
 import com.bosen.admin.mapper.SystemUserRoleRelationMapper;
 import com.bosen.admin.service.ISystemUserRoleRelationService;
 import com.bosen.common.constant.response.ResponseCode;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class SystemUserRoleRelationServiceImpl extends ServiceImpl<SystemUserRoleRelationMapper, SystemUserRoleRelation> implements ISystemUserRoleRelationService {
+public class SystemUserRoleRelationServiceImpl extends ServiceImpl<SystemUserRoleRelationMapper, AdminUserRoleRelation> implements ISystemUserRoleRelationService {
     @Override
     public List<SystemRole> getUserRoleList(Long adminUserId) {
         return this.baseMapper.getUserRoleList(adminUserId);
@@ -32,12 +32,12 @@ public class SystemUserRoleRelationServiceImpl extends ServiceImpl<SystemUserRol
     @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> updateUserRole(Long adminId, List<Long> roleIds) {
         // 删除历史角色
-        boolean remove = this.lambdaUpdate().eq(SystemUserRoleRelation::getAdminUserId, adminId).remove();
+        boolean remove = this.lambdaUpdate().eq(AdminUserRoleRelation::getAdminUserId, adminId).remove();
         if (!remove) {
             throw new BusinessException(ResponseCode.DELETE_OLD_ROLES_ERROR);
         }
-        List<SystemUserRoleRelation> userRoleRelations = roleIds.stream().map(i -> {
-            SystemUserRoleRelation userRoleRelation = new SystemUserRoleRelation();
+        List<AdminUserRoleRelation> userRoleRelations = roleIds.stream().map(i -> {
+            AdminUserRoleRelation userRoleRelation = new AdminUserRoleRelation();
             userRoleRelation.setRoleId(i);
             userRoleRelation.setAdminUserId(adminId);
             return userRoleRelation;
