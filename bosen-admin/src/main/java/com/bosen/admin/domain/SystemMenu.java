@@ -69,4 +69,9 @@ public class SystemMenu implements Serializable {
      */
     private String routeUrl;
 
+    /**
+     * 所属平台：1、平台后台，2、商家后台
+     */
+    private Integer belongPlatform;
+
 }

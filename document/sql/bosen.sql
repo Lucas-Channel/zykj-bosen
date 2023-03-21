@@ -193,36 +193,37 @@ CREATE TABLE `bs_sys_menu` (
                                `hidden` int(1) DEFAULT NULL COMMENT '前端隐藏',
                                `type` int(1) DEFAULT NULL COMMENT '菜单类型：0：目录， 1：菜单',
                                `route_url` varchar(200) DEFAULT NULL COMMENT '路由地址',
+                               `belong_platform` int DEFAULT NULL COMMENT '所属平台：1、平台后台，2、商家后台',
                                PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
 -- ----------------------------
 -- Records of bs_sys_menu
 -- ----------------------------
-INSERT INTO `bs_sys_menu` VALUES ('1', '0', '2020-02-02 14:50:36', '商品', '0', '0', 'pms', 'product', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('2', '1', '2020-02-02 14:51:50', '商品列表', '1', '0', 'product', 'product-list', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('3', '1', '2020-02-02 14:52:44', '添加商品', '1', '0', 'addProduct', 'product-add', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('4', '1', '2020-02-02 14:53:51', '商品分类', '1', '0', 'productCate', 'product-cate', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('5', '1', '2020-02-02 14:54:51', '商品类型', '1', '0', 'productAttr', 'product-attr', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('6', '1', '2020-02-02 14:56:29', '品牌管理', '1', '0', 'brand', 'product-brand', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('7', '0', '2020-02-02 16:54:07', '订单', '0', '0', 'oms', 'order', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('8', '7', '2020-02-02 16:55:18', '订单列表', '1', '0', 'order', 'product-list', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('9', '7', '2020-02-02 16:56:46', '订单设置', '1', '0', 'orderSetting', 'order-setting', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('10', '7', '2020-02-02 16:57:39', '退货申请处理', '1', '0', 'returnApply', 'order-return', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('11', '7', '2020-02-02 16:59:40', '退货原因设置', '1', '0', 'returnReason', 'order-return-reason', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('12', '0', '2020-02-04 16:18:00', '营销', '0', '0', 'sms', 'sms', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('13', '12', '2020-02-04 16:19:22', '秒杀活动列表', '1', '0', 'flash', 'sms-flash', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('14', '12', '2020-02-04 16:20:16', '优惠券列表', '1', '0', 'coupon', 'sms-coupon', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('16', '12', '2020-02-07 16:22:38', '品牌推荐', '1', '0', 'homeBrand', 'product-brand', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('17', '12', '2020-02-07 16:23:14', '新品推荐', '1', '0', 'homeNew', 'sms-new', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('18', '12', '2020-02-07 16:26:38', '人气推荐', '1', '0', 'homeHot', 'sms-hot', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('19', '12', '2020-02-07 16:28:16', '专题推荐', '1', '0', 'homeSubject', 'sms-subject', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('20', '12', '2020-02-07 16:28:42', '广告列表', '1', '0', 'homeAdvertise', 'sms-ad', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('21', '0', '2020-02-07 16:29:13', '权限', '0', '0', 'ums', 'ums', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('22', '21', '2020-02-07 16:29:51', '用户列表', '1', '0', 'admin', 'ums-admin', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('23', '21', '2020-02-07 16:30:13', '角色列表', '1', '0', 'role', 'ums-role', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('24', '21', '2020-02-07 16:30:53', '菜单列表', '1', '0', 'menu', 'ums-menu', '0', null, null);
-INSERT INTO `bs_sys_menu` VALUES ('25', '21', '2020-02-07 16:31:13', '资源列表', '1', '0', 'resource', 'ums-resource', '0', null, null);
+INSERT INTO `bs_sys_menu` VALUES ('1', '0', '2020-02-02 14:50:36', '商品', '0', '0', 'pms', 'product', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('2', '1', '2020-02-02 14:51:50', '商品列表', '1', '0', 'product', 'product-list', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('3', '1', '2020-02-02 14:52:44', '添加商品', '1', '0', 'addProduct', 'product-add', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('4', '1', '2020-02-02 14:53:51', '商品分类', '1', '0', 'productCate', 'product-cate', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('5', '1', '2020-02-02 14:54:51', '商品类型', '1', '0', 'productAttr', 'product-attr', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('6', '1', '2020-02-02 14:56:29', '品牌管理', '1', '0', 'brand', 'product-brand', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('7', '0', '2020-02-02 16:54:07', '订单', '0', '0', 'oms', 'order', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('8', '7', '2020-02-02 16:55:18', '订单列表', '1', '0', 'order', 'product-list', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('9', '7', '2020-02-02 16:56:46', '订单设置', '1', '0', 'orderSetting', 'order-setting', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('10', '7', '2020-02-02 16:57:39', '退货申请处理', '1', '0', 'returnApply', 'order-return', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('11', '7', '2020-02-02 16:59:40', '退货原因设置', '1', '0', 'returnReason', 'order-return-reason', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('12', '0', '2020-02-04 16:18:00', '营销', '0', '0', 'sms', 'sms', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('13', '12', '2020-02-04 16:19:22', '秒杀活动列表', '1', '0', 'flash', 'sms-flash', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('14', '12', '2020-02-04 16:20:16', '优惠券列表', '1', '0', 'coupon', 'sms-coupon', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('16', '12', '2020-02-07 16:22:38', '品牌推荐', '1', '0', 'homeBrand', 'product-brand', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('17', '12', '2020-02-07 16:23:14', '新品推荐', '1', '0', 'homeNew', 'sms-new', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('18', '12', '2020-02-07 16:26:38', '人气推荐', '1', '0', 'homeHot', 'sms-hot', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('19', '12', '2020-02-07 16:28:16', '专题推荐', '1', '0', 'homeSubject', 'sms-subject', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('20', '12', '2020-02-07 16:28:42', '广告列表', '1', '0', 'homeAdvertise', 'sms-ad', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('21', '0', '2020-02-07 16:29:13', '权限', '0', '0', 'ums', 'ums', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('22', '21', '2020-02-07 16:29:51', '用户列表', '1', '0', 'admin', 'ums-admin', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('23', '21', '2020-02-07 16:30:13', '角色列表', '1', '0', 'role', 'ums-role', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('24', '21', '2020-02-07 16:30:53', '菜单列表', '1', '0', 'menu', 'ums-menu', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('25', '21', '2020-02-07 16:31:13', '资源列表', '1', '0', 'resource', 'ums-resource', '0', null, null, 1);
 
 
 
@@ -319,7 +320,7 @@ CREATE TABLE `bs_user_role_relation` (
 ) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='后台用户和角色关系表';
 
 -- ----------------------------
--- Records of ums_admin_role_relation
+-- Records of bs_user_role_relation
 -- ----------------------------
 INSERT INTO `bs_user_role_relation` VALUES (1, 1, 1);
 INSERT INTO `bs_user_role_relation` VALUES (2, 1, 2);
@@ -328,12 +329,112 @@ INSERT INTO `bs_user_role_relation` VALUES (3, 1, 3);
 
 
 -- ----------------------------
--- Table structure for ums_admin_permission_relation
+-- Table structure for bs_user_permission_relation
 -- ----------------------------
-DROP TABLE IF EXISTS `ums_admin_permission_relation`;
-CREATE TABLE `ums_admin_permission_relation` (
+DROP TABLE IF EXISTS `bs_user_permission_relation`;
+CREATE TABLE `bs_user_permission_relation` (
      `id` bigint(20) NOT NULL AUTO_INCREMENT,
      `admin_id` bigint(20) DEFAULT NULL,
      `permission_id` bigint(20) DEFAULT NULL,
      PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台用户和权限关系表(除角色中定义的权限以外的加减权限)';
+
+
+-- ----------------------------
+-- Table structure for bs_merchant
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_merchant`;
+CREATE TABLE `bs_merchant` (
+                                               `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                                               `merchant_name` varchar(100) DEFAULT NULL,
+                                               `register_mobile` varchar(100) DEFAULT NULL,
+                                               `password` varchar(100) DEFAULT NULL,
+                                               `admin_merchant_level_id` bigint(20) DEFAULT NULL,
+                                               `merchant_email` varchar(20) DEFAULT NULL,
+                                               `relation_mobile` varchar(20) DEFAULT NULL,
+                                               `relation_name` varchar(100) DEFAULT NULL,
+                                               `relation_email` varchar(20) DEFAULT NULL,
+                                               `service_mobile` varchar(20) DEFAULT NULL,
+                                               `order_notice_mobile` varchar(20) DEFAULT NULL,
+                                               `icon` varchar(100) DEFAULT NULL,
+                                               `status` int DEFAULT NULL,
+                                               `login_flag` int DEFAULT NULL,
+                                               `has_update_password` int DEFAULT NULL,
+                                               `login_time` datetime(0) DEFAULT NULL,
+                                               `creator_user` varchar(50) DEFAULT NULL,
+                                               `create_time` datetime(0) DEFAULT NULL,
+                                               `updater_user` varchar(50) DEFAULT NULL,
+                                               `update_time` datetime(0) DEFAULT NULL,
+                                               `del_flag` int DEFAULT 0,
+                                               PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商户信息表';
+
+-- ----------------------------
+-- Table structure for bs_merchant_member_level
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_merchant_member_level`;
+CREATE TABLE `bs_merchant_member_level` (
+                                               `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                                               `merchant_id` bigint(20) DEFAULT NULL,
+                                               `name` varchar(20) DEFAULT NULL,
+                                               `creator_user` varchar(50) DEFAULT NULL,
+                                               `create_time` datetime(0) DEFAULT NULL,
+                                               `updater_user` varchar(50) DEFAULT NULL,
+                                               `update_time` datetime(0) DEFAULT NULL,
+                                               `del_flag` int DEFAULT 0,
+                                               PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商家-消费会员等级';
+
+
+-- ----------------------------
+-- Table structure for bs_merchant_role_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_merchant_role_relation`;
+CREATE TABLE `bs_merchant_role_relation` (
+                                         `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                                         `merchant_id` bigint(20) DEFAULT NULL,
+                                         `role_id` bigint(20) DEFAULT NULL,
+                                         `creator_user` varchar(50) DEFAULT NULL,
+                                         `create_time` datetime(0) DEFAULT NULL,
+                                         `updater_user` varchar(50) DEFAULT NULL,
+                                         `update_time` datetime(0) DEFAULT NULL,
+                                         `del_flag` int DEFAULT 0,
+                                         PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='入驻商家-角色信息';
+
+
+-- ----------------------------
+-- Table structure for bs_merchant_business_license
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_merchant_business_license`;
+CREATE TABLE `bs_merchant_business_license` (
+                                             `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                                             `merchant_id` bigint(20) DEFAULT NULL,
+                                             `bank_account` varchar(50) DEFAULT NULL,
+                                             `bank_deposit` varchar(50) DEFAULT NULL,
+                                             `company_name` varchar(50) DEFAULT NULL,
+                                             `unified_social_credit_code` varchar(50) DEFAULT NULL,
+                                             `main_business` varchar(500) DEFAULT NULL,
+                                             `business_license_url` varchar(100) DEFAULT NULL,
+                                             `creator_user` varchar(50) DEFAULT NULL,
+                                             `create_time` datetime(0) DEFAULT NULL,
+                                             `updater_user` varchar(50) DEFAULT NULL,
+                                             `update_time` datetime(0) DEFAULT NULL,
+                                             `del_flag` int DEFAULT 0,
+                                             PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='平台入驻商家-营业信息';
+
+-- ----------------------------
+-- Table structure for bs_admin_merchant_level
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_admin_merchant_level`;
+CREATE TABLE `bs_admin_merchant_level` (
+                                             `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                                             `name` varchar(50) DEFAULT NULL,
+                                             `creator_user` varchar(50) DEFAULT NULL,
+                                             `create_time` datetime(0) DEFAULT NULL,
+                                             `updater_user` varchar(50) DEFAULT NULL,
+                                             `update_time` datetime(0) DEFAULT NULL,
+                                             `del_flag` int DEFAULT 0,
+                                             PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='后台-商家等级';
