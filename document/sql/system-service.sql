@@ -11,17 +11,13 @@ CREATE TABLE `bs_unit`  (
                                      `update_time` datetime(0) DEFAULT NULL,
                                      `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
                                      `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                     `del_flag` int DEFAULT NULL,
+                                     `del_flag` int DEFAULT 0,
                                      PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '单表表';
 
 -- ----------------------------
 -- Records of bs_unit
 -- ----------------------------
-INSERT INTO `bs_unit` VALUES (1, 'KG', '公斤', 1, '2021-07-11 19:56:58', '2021-07-11 20:02:54', null, null, 0);
-INSERT INTO `bs_unit` VALUES (10, 'BOM', '盒', 1, '2022-03-05 16:12:16', '2022-03-05 16:12:16', null, null, 0);
-INSERT INTO `bs_unit` VALUES (11, 'PART', '件', 1, '2022-03-05 16:12:16', '2022-03-05 16:12:16', null, null, 0);
-
 -- ----------------------------
 -- Table structure for bs_currency
 -- ----------------------------
@@ -52,15 +48,18 @@ CREATE TABLE `bs_pay_method`  (
                                 `pay_method_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '名称',
                                 `icon_url` varchar(64) DEFAULT NULL COMMENT '图标地址',
                                 `enable_flag` int NULL DEFAULT NULL COMMENT '启用状态：1，启用，0禁用',
+                                `fund_model` int NULL DEFAULT NULL COMMENT '资金归集方式',
                                 `create_time` datetime(0) DEFAULT NULL,
+                                `update_time` datetime(0) DEFAULT NULL,
+                                `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                `del_flag` int DEFAULT 0,
                                 PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '支付方式';
 
 -- ----------------------------
 -- Records of bs_pay_method
 -- ----------------------------
-INSERT INTO `bs_pay_method` VALUES (1, 'WeChat', '微信支付', '', 1, '2021-07-11 19:56:58');
-INSERT INTO `bs_pay_method` VALUES (2, 'AliPay', '支付宝支付', '', 1, '2021-07-11 19:56:58');
 
 
 
@@ -74,11 +73,12 @@ CREATE TABLE `bs_pay_method_params`  (
                                   `param_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '编码',
                                   `param_val` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '值',
                                   `param_remark` varchar(64) DEFAULT NULL COMMENT '说明',
+                                  `fund_model` int NULL DEFAULT NULL COMMENT '资金归集方式',
                                   `create_time` datetime(0) DEFAULT NULL,
                                   `update_time` datetime(0) DEFAULT NULL,
                                   `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
                                   `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                  `del_flag` int DEFAULT NULL,
+                                  `del_flag` int DEFAULT 0,
                                   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '支付参数';
 
@@ -102,10 +102,30 @@ CREATE TABLE `bs_sys_params`  (
                                          `update_time` datetime(0) DEFAULT NULL,
                                          `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
                                          `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                         `del_flag` int DEFAULT NULL,
+                                         `del_flag` int DEFAULT 0,
                                          PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '平台参数';
 
 -- ----------------------------
 -- Records of bs_sys_params
 -- ----------------------------
+
+
+-- ----------------------------
+-- Table structure for bs_area
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_area`;
+CREATE TABLE `bs_area`  (
+                                  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                  `code` varchar(64) NOT NULL COMMENT '编码',
+                                  `name` varchar(64) NOT NULL COMMENT '名称',
+                                  `level` int NOT NULL COMMENT '层级',
+                                  `sort` int DEFAULT NULL COMMENT '排序',
+                                  `parent_id` bigint NULL DEFAULT NULL COMMENT '父类id',
+                                  `create_time` datetime(0) DEFAULT NULL,
+                                  `update_time` datetime(0) DEFAULT NULL,
+                                  `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                  `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                  `del_flag` int DEFAULT 0,
+                                  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '省市级区域信息表';

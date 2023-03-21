@@ -15,7 +15,7 @@ CREATE TABLE `admin_user_b` (
         `create_time` datetime(0) DEFAULT NULL,
         `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
         `update_time` datetime(0) DEFAULT NULL,
-        `del_flag` int DEFAULT NULL,
+        `del_flag` int DEFAULT 0,
         PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='后台用户表';
 
@@ -53,7 +53,7 @@ CREATE TABLE `portal_member_b` (
        `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
        `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
        `update_time` datetime(0) DEFAULT NULL,
-       `del_flag` int DEFAULT NULL,
+       `del_flag` int DEFAULT 0,
        `id_card` varchar(64) DEFAULT NULL COMMENT '身份证信息',
        `open_id` varchar(64) DEFAULT NULL COMMENT 'openId',
        PRIMARY KEY (`id`),
@@ -93,7 +93,7 @@ CREATE TABLE `portal_member_level` (
        `create_time` datetime(0) DEFAULT NULL,
        `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
        `update_time` datetime(0) DEFAULT NULL,
-       `del_flag` int DEFAULT NULL,
+       `del_flag` int DEFAULT 0,
        PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='会员等级表';
 
@@ -140,7 +140,7 @@ CREATE TABLE `portal_member_receive_address` (
      `create_time` datetime(0) DEFAULT NULL,
      `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
      `update_time` datetime(0) DEFAULT NULL,
-     `del_flag` int DEFAULT NULL,
+     `del_flag` int DEFAULT 0,
      PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='会员收货地址表';
 
