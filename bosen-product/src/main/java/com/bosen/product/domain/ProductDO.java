@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -16,7 +17,13 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName(value = "bs_product", autoResultMap = true)
-public class ProductDO extends BaseEntityData {
+public class ProductDO extends BaseEntityData implements Serializable {
+
+    private static final long serialVersionUID = 8966284598903261678L;
+    /**
+     * spu 名称
+     */
+    private String name;
     /**
      * 品类
      */
@@ -28,12 +35,12 @@ public class ProductDO extends BaseEntityData {
     private Long brandId;
 
     /**
-     * 原价
+     * 原价，默认规格价格
      */
     private BigDecimal originPrice;
 
     /**
-     * 销售/零售价
+     * 销售/零售价，默认规格价格
      */
     private BigDecimal salesPrice;
 

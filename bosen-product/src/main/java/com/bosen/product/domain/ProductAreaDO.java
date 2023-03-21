@@ -32,7 +32,7 @@ public class ProductAreaDO extends BaseEntityData implements Serializable {
     /**
      * 是否不限制城市
      */
-    private Boolean isAllCity = true;
+    private Boolean allowAllCity = true;
 
     /**
      * 市级编码
@@ -47,7 +47,7 @@ public class ProductAreaDO extends BaseEntityData implements Serializable {
     /**
      * 是否不限制区域
      */
-    private Boolean isAllRegion = true;
+    private Boolean allowAllRegion = true;
 
     /**
      * 区域编码
@@ -62,7 +62,7 @@ public class ProductAreaDO extends BaseEntityData implements Serializable {
     /**
      * 是否不限制小区
      */
-    private Boolean isAllCommunity = true;
+    private Boolean allowAllCommunity = true;
 
     /**
      * 小区编码
