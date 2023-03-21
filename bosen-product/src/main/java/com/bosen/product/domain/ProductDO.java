@@ -7,6 +7,7 @@ import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @author Lucas
@@ -68,7 +69,34 @@ public class ProductDO extends BaseEntityData {
     private String detail;
 
     /**
-     * 商品状态(0:下架 1:上架)
+     * 商品状态(0-下架 1-上架，2-待审核，3-审核不通过, 4-审核通过)
      */
     private Integer status;
+
+    /**
+     * 上架时间
+     */
+    private LocalDateTime pushDateTime;
+
+    /**
+     * 下架时间
+     */
+    private LocalDateTime pullDateTime;
+
+    /**
+     * 审核日期
+     */
+    private LocalDateTime applyDateTime;
+
+    /**
+     * 标签id
+     */
+    private Long labelId;
+
+    /**
+     * 标签名称
+     */
+    private Long labelName;
+
+
 }

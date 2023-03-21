@@ -62,6 +62,11 @@ public class ProductSkuDO extends BaseEntityData {
     private String picUrl;
 
     /**
+     * 入库批次
+     */
+    private String lotNumber;
+
+    /**
      * 批发价格，可能存在返回性价格
      */
     @TableField(typeHandler = JacksonTypeHandler.class)
@@ -72,4 +77,9 @@ public class ProductSkuDO extends BaseEntityData {
      */
     @TableField(typeHandler = JacksonTypeHandler.class)
     private List<ProductSkuMemberPriceDO> memberPrice;
+
+    /**
+     * 销售数量
+     */
+    private Integer salesCount;
 }
