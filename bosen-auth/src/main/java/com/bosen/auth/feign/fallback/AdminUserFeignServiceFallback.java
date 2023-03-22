@@ -26,4 +26,9 @@ public class AdminUserFeignServiceFallback implements AdminUserFeignService {
     public ResponseData<ClientDetail> getByClientId(String clientId) {
         throw new BusinessException(ResponseCode.ADMIN_SERVICE_ERROR);
     }
+
+    @Override
+    public UserDto loginMerchantByMobile(String mobile) {
+        throw new BusinessException(ResponseCode.ADMIN_SERVICE_ERROR);
+    }
 }

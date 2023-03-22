@@ -23,10 +23,7 @@ import reactor.core.publisher.Mono;
 import javax.annotation.Resource;
 import java.net.URI;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -65,7 +62,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
             JWSObject jwsObject = JWSObject.parse(realToken);
             String userStr = jwsObject.getPayload().toString();
             UserDto userDto = JSONUtil.toBean(userStr, UserDto.class);
-            if (AuthConstant.ADMIN_CLIENT_ID.equals(userDto.getClientId()) && !pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {
+            if ((Objects.equals(AuthConstant.ADMIN_CLIENT_ID, userDto.getClientId()) || Objects.equals(AuthConstant.MERCHANT_CLIENT_ID, userDto.getClientId())) && !pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {
                 return Mono.just(new AuthorizationDecision(false));
             }
             if (AuthConstant.PORTAL_CLIENT_ID.equals(userDto.getClientId()) && pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {

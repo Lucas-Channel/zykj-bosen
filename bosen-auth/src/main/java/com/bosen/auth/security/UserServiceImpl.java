@@ -36,9 +36,11 @@ public class UserServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String clientId = request.getParameter("client_id");
         UserDto userDto;
-        if(AuthConstant.ADMIN_CLIENT_ID.equals(clientId)){
+        if (AuthConstant.ADMIN_CLIENT_ID.equals(clientId)) {
             userDto = adminUserFeignService.loadUserByUsername(username);
-        }else{
+        } else if (AuthConstant.MERCHANT_CLIENT_ID.equals(clientId)) {
+            userDto = adminUserFeignService.loginMerchantByMobile(username);
+        } else {
             userDto = memberFeignService.loadUserByUsername(username);
         }
         if (userDto==null) {

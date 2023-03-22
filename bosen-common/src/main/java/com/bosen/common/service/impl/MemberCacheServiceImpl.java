@@ -25,21 +25,21 @@ public class MemberCacheServiceImpl implements IMemberCacheService {
     @Override
     public void delMember(Long memberId) {
         log.info("删除登录用户缓存信息，用户id为：{}", memberId);
-        String key = RedisKeyConstant.CACHE_ADMIN_USER_KEY + memberId;
+        String key = RedisKeyConstant.CACHE_MEMBER_KEY + memberId;
         redisService.del(key);
     }
 
     @Override
     public MemberCacheVO getMember(Long memberId) {
         log.info("删除登录用户缓存信息，会员id为：{}", memberId);
-        String key = RedisKeyConstant.CACHE_ADMIN_USER_KEY + memberId;
+        String key = RedisKeyConstant.CACHE_MEMBER_KEY + memberId;
         return (MemberCacheVO) redisService.get(key);
     }
 
     @Override
     public void setMember(MemberCacheVO memberCacheVO) {
         log.info("添加登录会员缓存信息，用户信息为：{}", JSONUtil.toJsonStr(memberCacheVO));
-        String key = RedisKeyConstant.CACHE_ADMIN_USER_KEY + memberCacheVO.getId();
+        String key = RedisKeyConstant.CACHE_MEMBER_KEY + memberCacheVO.getId();
         redisService.set(key, memberCacheVO, RedisKeyConstant.CACHE_ADMIN_USER_EXPIRE);
     }
 }

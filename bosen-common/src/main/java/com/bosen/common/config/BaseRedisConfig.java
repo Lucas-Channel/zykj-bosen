@@ -2,9 +2,11 @@ package com.bosen.common.config;
 
 import com.bosen.common.service.IAdminUserCacheService;
 import com.bosen.common.service.IMemberCacheService;
+import com.bosen.common.service.IMerchantCacheService;
 import com.bosen.common.service.RedisService;
 import com.bosen.common.service.impl.AdminUserCacheServiceImpl;
 import com.bosen.common.service.impl.MemberCacheServiceImpl;
+import com.bosen.common.service.impl.MerchantCacheServiceImpl;
 import com.bosen.common.service.impl.RedisServiceImpl;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -80,5 +82,10 @@ public class BaseRedisConfig {
     @Bean
     public IMemberCacheService memberCacheService(){
         return new MemberCacheServiceImpl();
+    }
+
+    @Bean
+    public IMerchantCacheService merchantCacheService(){
+        return new MerchantCacheServiceImpl();
     }
 }

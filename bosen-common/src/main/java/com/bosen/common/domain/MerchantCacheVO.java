@@ -1,8 +1,6 @@
-package com.bosen.admin.domain;
+package com.bosen.common.domain;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.bosen.common.constant.common.UserStatusConstant;
-import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,15 +8,17 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 平台入驻商家信息
+ * 商户后台用户缓存对象
  * @author Lucas
  * @version 2.0.0
- * @date 2023/3/19
+ * @date 2023/2/27
  */
 @Data
-@TableName("bs_merchant")
-public class MerchantDO extends BaseEntityData implements Serializable {
-    private static final long serialVersionUID = -6493729386040690106L;
+public class MerchantCacheVO implements Serializable {
+    private static final long serialVersionUID = -7840757913143182546L;
+
+    private Long id;
+
 
     /**
      * 商户名称

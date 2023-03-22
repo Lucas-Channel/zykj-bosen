@@ -20,6 +20,8 @@ public interface AuthConstant {
      */
     String ADMIN_CLIENT_ID = "admin-app";
 
+    String MERCHANT_CLIENT_ID = "merchant-app";
+
     /**
      * 前台商城client_id
      */

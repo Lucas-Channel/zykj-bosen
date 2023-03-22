@@ -19,4 +19,7 @@ public interface AdminUserFeignService {
 
     @GetMapping("/client/getByClientId")
     ResponseData<ClientDetail> getByClientId(@RequestParam String clientId);
+
+    @GetMapping("/merchant/loginByMobile")
+    UserDto loginMerchantByMobile(@RequestParam String mobile);
 }

@@ -1,33 +1,31 @@
-package com.bosen.admin.domain;
+package com.bosen.admin.vo.resquest;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.bosen.common.constant.common.UserStatusConstant;
-import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
-import java.io.Serializable;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 平台入驻商家信息
- * @author Lucas
- * @version 2.0.0
- * @date 2023/3/19
+ * 商户注册参数
  */
 @Data
-@TableName("bs_merchant")
-public class MerchantDO extends BaseEntityData implements Serializable {
-    private static final long serialVersionUID = -6493729386040690106L;
+public class RegisterMerchantVO {
 
     /**
      * 商户名称
      */
+    @NotBlank
     private String merchantName;
 
     /**
      * 商家注册手机号
      */
+    @NotBlank
     private String registerMobile;
 
     /**
@@ -38,6 +36,7 @@ public class MerchantDO extends BaseEntityData implements Serializable {
     /**
      * 平台商家等级
      */
+    @NotNull
     private Long adminMerchantLevelId;
 
     /**
@@ -68,6 +67,7 @@ public class MerchantDO extends BaseEntityData implements Serializable {
     /**
      * 下单通知短信接收电话
      */
+    @NotBlank
     private String orderNoticeMobile;
 
     private String icon;
@@ -102,4 +102,10 @@ public class MerchantDO extends BaseEntityData implements Serializable {
      * 平台抽佣比例，非平台旗下自营商家时，必填，平台审核时填写
      */
     private BigDecimal platformPumpingScale;
+
+    /**
+     * 营业信息
+     */
+    @NotNull
+    private MerchantBusinessLicenseVO merchantBusinessLicenseVO;
 }
