@@ -5,6 +5,7 @@ import com.bosen.common.constant.common.SexConstant;
 import com.bosen.common.constant.common.UserStatusConstant;
 import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
  * @date 2023/2/23
  */
 @Data
+@Accessors(chain = true)
 @TableName(value = "bs_admin_user_b")
 public class AdminUserDO extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = 496498778273679222L;
