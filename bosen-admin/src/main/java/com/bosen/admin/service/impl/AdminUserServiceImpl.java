@@ -1,5 +1,6 @@
 package com.bosen.admin.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bosen.admin.domain.AdminUserDO;
@@ -10,9 +11,11 @@ import com.bosen.admin.service.ISystemUserRoleRelationService;
 import com.bosen.admin.vo.resquest.RegisterAdminUserVO;
 import com.bosen.admin.vo.resquest.UpdateAdminPasswordParamVO;
 import com.bosen.common.constant.common.UserStatusConstant;
+import com.bosen.common.constant.common.YesOrNoConstant;
 import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.domain.AdminUserCacheVO;
+import com.bosen.common.domain.AssignRoleVO;
 import com.bosen.common.domain.UserDto;
 import com.bosen.common.exception.BusinessException;
 import com.bosen.common.service.IAdminUserCacheService;
@@ -51,8 +54,22 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
             BeanUtils.copyProperties(adminUserDO, userDto);
             List<SystemRole> userRoleList = userRoleRelationService.getUserRoleList(userDto.getId());
             if (!CollectionUtils.isEmpty(userRoleList)) {
-                List<String> stringList = userRoleList.stream().map(SystemRole::getName).collect(Collectors.toList());
-                userDto.setRoles(stringList);
+                if (Objects.equals(userRoleList.size(), 1)) {
+                    userDto.setDefaultRoleId(userRoleList.get(0).getId());
+                } else {
+                    List<SystemRole> collect = userRoleList.stream().filter(i -> Objects.equals(YesOrNoConstant.YES, i.getDefaultRole())).collect(Collectors.toList());
+                    if (CollUtil.isNotEmpty(collect)) {
+                        userDto.setDefaultRoleId(collect.get(0).getId());
+                    } else {
+                        userDto.setDefaultRoleId(userRoleList.get(0).getId());
+                    }
+                }
+                userDto.setRoles(userRoleList.stream().map(i -> {
+                    AssignRoleVO as = new AssignRoleVO();
+                    as.setRoleId(i.getId());
+                    as.setRoleCode(i.getCode());
+                    return as;
+                }).collect(Collectors.toList()));
             }
             return userDto;
         }
@@ -89,13 +106,13 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
     }
 
     @Override
-    public AdminUserCacheVO getCurrentAdminUser() {
-        AdminUserCacheVO admin = cacheService.getAdmin(AuthUser.getUserId());
+    public AdminUserCacheVO getCurrentAdminUser(Long adminId) {
+        AdminUserCacheVO admin = cacheService.getAdmin(adminId);
         if (Objects.nonNull(admin)) {
             return admin;
         }
         admin = new AdminUserCacheVO();
-        AdminUserDO adminUserDO = this.getById(AuthUser.getUserId());
+        AdminUserDO adminUserDO = this.getById(adminId);
         BeanUtils.copyProperties(adminUserDO,admin);
         cacheService.setAdmin(admin);
         return admin;

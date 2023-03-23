@@ -28,8 +28,8 @@ feign:
   client:
     config:
       default:
-        connectTimeout: 5000
-        readTimeout: 5000
+        connectTimeout: 50000
+        readTimeout: 50000
         loggerLevel: basic
 # 以下配置避免nacos疯狂打印日志
 logging:

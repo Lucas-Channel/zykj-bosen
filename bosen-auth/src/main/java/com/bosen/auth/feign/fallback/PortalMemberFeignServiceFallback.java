@@ -19,4 +19,9 @@ public class PortalMemberFeignServiceFallback implements PortalMemberFeignServic
     public UserDto loadUserByUsername(String username) {
         throw new BusinessException(ResponseCode.ADMIN_SERVICE_ERROR);
     }
+
+    @Override
+    public void cacheMemberInfo(Long memberId) {
+        throw new BusinessException(ResponseCode.ADMIN_SERVICE_ERROR);
+    }
 }

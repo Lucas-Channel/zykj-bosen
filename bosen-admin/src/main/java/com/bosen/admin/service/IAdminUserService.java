@@ -36,5 +36,5 @@ public interface IAdminUserService extends IService<AdminUserDO> {
      * 获取当前登录后台会员信息
      * @return 对象
      */
-    AdminUserCacheVO getCurrentAdminUser();
+    AdminUserCacheVO getCurrentAdminUser(Long adminId);
 }

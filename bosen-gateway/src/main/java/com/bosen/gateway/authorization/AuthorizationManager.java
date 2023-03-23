@@ -2,8 +2,10 @@ package com.bosen.gateway.authorization;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.bosen.common.constant.auth.AuthConstant;
+import com.bosen.common.constant.auth.RedisKeyConstant;
 import com.bosen.common.domain.UserDto;
 import com.bosen.gateway.config.IgnoreUrlsConfig;
 import com.nimbusds.jose.JWSObject;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import reactor.core.publisher.Mono;
+import sun.security.util.SecurityConstants;
 
 import javax.annotation.Resource;
 import java.net.URI;
@@ -61,6 +64,11 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
             String realToken = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
             JWSObject jwsObject = JWSObject.parse(realToken);
             String userStr = jwsObject.getPayload().toString();
+            String jti = new JSONObject(userStr).getStr(AuthConstant.JWT_JTI); // JWT唯一标识
+            Boolean isBlack = redisTemplate.hasKey(AuthConstant.TOKEN_BLACKLIST_PREFIX + jti);
+            if (isBlack) {
+                return Mono.just(new AuthorizationDecision(false));
+            }
             UserDto userDto = JSONUtil.toBean(userStr, UserDto.class);
             if ((Objects.equals(AuthConstant.ADMIN_CLIENT_ID, userDto.getClientId()) || Objects.equals(AuthConstant.MERCHANT_CLIENT_ID, userDto.getClientId())) && !pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {
                 return Mono.just(new AuthorizationDecision(false));

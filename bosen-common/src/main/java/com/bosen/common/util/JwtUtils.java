@@ -1,16 +1,16 @@
 package com.bosen.common.util;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import com.bosen.common.constant.auth.AuthConstant;
-import lombok.SneakyThrows;
+import com.bosen.common.exception.BusinessException;
+import com.nimbusds.jose.JWSObject;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
+import java.util.Objects;
 
 /**
  * JWT工具类
@@ -19,13 +19,19 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class JwtUtils {
 
-    @SneakyThrows
     public static JSONObject getJwtPayload() {
-        JSONObject jsonObject = null;
-        String payload = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest().getHeader(AuthConstant.JWT_PAYLOAD_KEY);
-        if (StrUtil.isNotBlank(payload)) {
-            jsonObject = JSONUtil.parseObj(URLDecoder.decode(payload, StandardCharsets.UTF_8.name()));
+        String token = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest().getHeader(AuthConstant.JWT_PAYLOAD_KEY);
+        if (!StringUtils.hasLength(token)) {
+            throw new BusinessException("token不能为空");
         }
-        return jsonObject;
+        String realToken = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
+        JWSObject jwsObject = null;
+        try {
+            jwsObject = JWSObject.parse(realToken);
+        } catch (ParseException e) {
+            throw new BusinessException("token转换异常");
+        }
+        String userStr = jwsObject.getPayload().toString();
+        return new JSONObject(userStr);
     }
 }

@@ -21,4 +21,9 @@ public class AdminUserRoleRelation implements Serializable {
 
     private Long roleId;
 
+    /**
+     * 是否是默认角色
+     */
+    private Integer defaultRole;
+
 }

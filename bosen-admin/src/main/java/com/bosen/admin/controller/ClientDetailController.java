@@ -5,6 +5,7 @@ import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.domain.api.ClientDetail;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.util.Asserts;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -24,7 +25,7 @@ public class ClientDetailController {
     private IClientService clientService;
 
     @PostMapping("/upsertClient")
-    public ResponseData<Void> upsertClient(@RequestBody ClientDetail clientDetail) {
+    public ResponseData<Void> upsertClient(@RequestBody ClientDetail clientDetail, @RequestHeader HttpHeaders httpHeaders) {
         return clientService.upsertClient(clientDetail);
     }
 

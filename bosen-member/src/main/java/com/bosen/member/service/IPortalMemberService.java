@@ -58,5 +58,5 @@ public interface IPortalMemberService extends IService<PortalMemberDO> {
      */
     ResponseData<Void> updateStatus(Long id, Integer status);
 
-    MemberCacheVO getCurrentAdminUser();
+    MemberCacheVO getCurrentMember(Long memberId);
 }

@@ -19,7 +19,7 @@ public class AuthUser {
         Long userId = null;
         JSONObject jsonObject = JwtUtils.getJwtPayload();
         if (!Objects.isNull(jsonObject)) {
-            userId = jsonObject.getLong("userId");
+            userId = jsonObject.getLong("id");
         }
         return userId;
     }
@@ -41,6 +41,6 @@ public class AuthUser {
 
     public static boolean isAdmin() {
         List<String> roles = getRoles();
-        return CollectionUtil.isNotEmpty(roles) && roles.contains("ADMIN");
+        return CollectionUtil.isNotEmpty(roles) && roles.contains("admin");
     }
 }

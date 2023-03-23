@@ -31,4 +31,14 @@ public class AdminUserFeignServiceFallback implements AdminUserFeignService {
     public UserDto loginMerchantByMobile(String mobile) {
         throw new BusinessException(ResponseCode.ADMIN_SERVICE_ERROR);
     }
+
+    @Override
+    public void cacheAdminInfo(Long adminId) {
+        throw new BusinessException(ResponseCode.ADMIN_SERVICE_ERROR);
+    }
+
+    @Override
+    public void cacheMerchantInfo(Long merchantId) {
+        throw new BusinessException(ResponseCode.ADMIN_SERVICE_ERROR);
+    }
 }

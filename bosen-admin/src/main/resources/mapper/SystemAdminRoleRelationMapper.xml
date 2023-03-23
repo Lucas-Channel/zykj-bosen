@@ -3,7 +3,7 @@
 <mapper namespace="com.bosen.admin.mapper.SystemUserRoleRelationMapper">
 
     <select id="getUserRoleList" resultType="com.bosen.admin.domain.SystemRole">
-        select r.*
+        select r.*, ar.default_role
         from bs_user_role_relation ar left join bs_sys_role r on ar.role_id = r.id
         where ar.admin_user_id = #{adminUserId}
     </select>

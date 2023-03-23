@@ -14,10 +14,31 @@ import java.util.List;
 @NoArgsConstructor
 public class UserDto {
     private Long id;
+    /**
+     * 账号
+     */
     private String username;
+    /**
+     * 密码
+     */
     private String password;
+    /**
+     * 账户状态
+     */
     private Integer status;
+    /**
+     * 客户端id
+     */
     private String clientId;
-    private List<String> roles;
+    /**
+     * 登录默认选中角色id
+     */
+    private Long defaultRoleId;
+    /**
+     * 角色列表
+     */
+    private List<AssignRoleVO> roles;
+
+    private Long exp;
 
 }

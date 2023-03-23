@@ -4,7 +4,7 @@
 
     <select id="initRolesInterfaceUrlMap" resultType="com.bosen.admin.vo.response.RolesInterfaceUrlVO">
         SELECT
-            bsr.name role_name,
+            bsr.code role_name,
             bmp.interface_url
         from
             bs_role_permission_relation brpr

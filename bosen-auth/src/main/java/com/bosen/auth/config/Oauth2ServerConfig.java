@@ -3,6 +3,7 @@ package com.bosen.auth.config;
 import com.bosen.auth.component.JwtTokenEnhancer;
 import com.bosen.auth.security.ClientDetailsServiceImpl;
 import com.bosen.auth.security.UserServiceImpl;
+import com.bosen.common.constant.auth.RedisKeyConstant;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,7 +51,7 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     public TokenStore tokenStore() {
         RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
         //设置redis中token存储中的前缀
-        redisTokenStore.setPrefix("bs-auth-token:");
+        redisTokenStore.setPrefix(RedisKeyConstant.TOKEN_KEY);
         return redisTokenStore;
     }
 

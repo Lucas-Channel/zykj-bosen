@@ -36,5 +36,5 @@ public interface IMerchantService extends IService<MerchantDO> {
      * 获取当前登录后台会员信息
      * @return 对象
      */
-    MerchantCacheVO getCurrentMerchant();
+    MerchantCacheVO getCurrentMerchant(Long merchantId);
 }

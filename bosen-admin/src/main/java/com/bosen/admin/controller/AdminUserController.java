@@ -110,8 +110,17 @@ public class AdminUserController {
      * @param username 用户名
      * @return 结果
      */
-    @RequestMapping(value = "/loadByUsername", method = RequestMethod.GET)
+    @GetMapping(value = "/loadByUsername")
     public UserDto loadUserByUsername(@RequestParam String username) {
         return adminService.loadUserByUsername(username);
+    }
+
+    /**
+     * 缓存用户信息
+     * @param adminId 平台后台用户id
+     */
+    @PostMapping("/cacheAdminInfo")
+    public void cacheAdminInfo(@RequestBody Long adminId) {
+        adminService.getCurrentAdminUser(adminId);
     }
 }

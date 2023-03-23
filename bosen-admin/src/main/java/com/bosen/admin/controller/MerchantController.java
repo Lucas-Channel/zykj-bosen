@@ -115,4 +115,13 @@ public class MerchantController {
     public UserDto loadByMobile(@RequestParam String mobile) {
         return merchantService.loadUserByUsername(mobile);
     }
+
+    /**
+     * 缓存商户信息
+     * @param merchantId 商户后台用户id
+     */
+    @PostMapping("/cacheMerchantInfo")
+    public void cacheAdminInfo(@RequestBody Long merchantId) {
+        merchantService.getCurrentMerchant(merchantId);
+    }
 }

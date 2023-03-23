@@ -1,9 +1,11 @@
 package com.bosen.admin.domain;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import org.springframework.data.annotation.Transient;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -20,6 +22,8 @@ public class SystemRole implements Serializable {
      */
     private String name;
 
+    private String code;
+
     /**
      * 描述
      */
@@ -34,5 +38,11 @@ public class SystemRole implements Serializable {
      * 启用状态：0->禁用；1->启用
      */
     private Integer status;
+
+    /**
+     * 登录默认选中角色id
+     */
+    @TableField(exist = false)
+    private Long defaultRole;
 
 }

@@ -6,6 +6,8 @@ import com.bosen.common.domain.UserDto;
 import com.bosen.common.domain.api.ClientDetail;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -22,4 +24,10 @@ public interface AdminUserFeignService {
 
     @GetMapping("/merchant/loginByMobile")
     UserDto loginMerchantByMobile(@RequestParam String mobile);
+
+    @PostMapping("/admin/cacheAdminInfo")
+    void cacheAdminInfo(@RequestBody Long adminId);
+
+    @PostMapping("/merchant/cacheMerchantInfo")
+    void cacheMerchantInfo(@RequestBody Long merchantId);
 }

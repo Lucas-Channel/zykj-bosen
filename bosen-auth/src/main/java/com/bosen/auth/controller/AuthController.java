@@ -1,18 +1,31 @@
 package com.bosen.auth.controller;
 
 import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.bosen.auth.domain.Oauth2TokenDto;
+import com.bosen.auth.event.CacheLoginUserInfoEvent;
+import com.bosen.auth.feign.AdminUserFeignService;
+import com.bosen.auth.feign.PortalMemberFeignService;
 import com.bosen.common.constant.auth.AuthConstant;
+import com.bosen.common.constant.auth.RedisKeyConstant;
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.common.domain.UserDto;
+import com.bosen.common.exception.BusinessException;
 import com.bosen.common.util.JwtUtils;
+import com.nimbusds.jose.JWSObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -29,6 +42,9 @@ public class AuthController {
 
     @Resource
     private RedisTemplate redisTemplate;
+
+    @Resource
+    private ApplicationContext applicationContext;
 
     @RequestMapping(value = "/token", method = RequestMethod.POST)
     public ResponseData<Oauth2TokenDto> postAccessToken(HttpServletRequest request,
@@ -51,12 +67,21 @@ public class AuthController {
                 .refreshToken(oAuth2AccessToken.getRefreshToken().getValue())
                 .expiresIn(oAuth2AccessToken.getExpiresIn())
                 .tokenHead(AuthConstant.JWT_TOKEN_PREFIX).build();
-
+        JWSObject jwsObject = null;
+        try {
+            jwsObject = JWSObject.parse(oauth2TokenDto.getToken());
+        } catch (ParseException e) {
+            throw new BusinessException("转换token失败");
+        }
+        String userStr = jwsObject.getPayload().toString();
+        UserDto userDto = JSONUtil.toBean(userStr, UserDto.class);
+        applicationContext.publishEvent(new CacheLoginUserInfoEvent(this, userDto.getId(), client_id));
         return ResponseData.success(oauth2TokenDto);
     }
 
     @DeleteMapping("/logout")
     public ResponseData<Void> logout() {
+
         JSONObject payload = JwtUtils.getJwtPayload();
         String jti = payload.getStr(AuthConstant.JWT_JTI); // JWT唯一标识
         Long expireTime = payload.getLong(AuthConstant.JWT_EXP); // JWT过期时间戳(单位：秒)

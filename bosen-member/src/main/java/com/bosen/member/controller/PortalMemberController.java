@@ -83,4 +83,12 @@ public class PortalMemberController {
         return portalMemberService.updateStatus(id, status);
     }
 
+    /**
+     * 缓存会员信息
+     * @param memberId c端用户id
+     */
+    @PostMapping("/cacheMemberInfo")
+    public void cacheMemberInfo(@RequestBody Long memberId) {
+        portalMemberService.getCurrentMember(memberId);
+    }
 }

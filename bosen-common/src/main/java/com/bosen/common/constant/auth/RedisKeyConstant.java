@@ -25,4 +25,6 @@ public interface RedisKeyConstant {
      * 缓存商户后台用户信息key
      */
     String CACHE_ADMIN_MERCHANT_KEY = "bosen:admin:merchant:";
+
+    String TOKEN_KEY = "bs-auth-token:";
 }

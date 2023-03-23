@@ -11,6 +11,7 @@ import com.bosen.common.constant.common.UserStatusConstant;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.common.domain.AssignRoleVO;
 import com.bosen.common.domain.MemberCacheVO;
 import com.bosen.common.domain.UserDto;
 import com.bosen.common.exception.BusinessException;
@@ -56,7 +57,7 @@ public class PortalMemberServiceImpl extends ServiceImpl<PortalMemberMapper, Por
         if (Objects.nonNull(memberDO)) {
             UserDto userDto = new UserDto();
             BeanUtil.copyProperties(memberDO,userDto);
-            userDto.setRoles(CollUtil.toList("前台会员"));
+            userDto.setRoles(CollUtil.toList(new AssignRoleVO(0L, "c端会员")));
             return userDto;
         }
         return null;
@@ -128,13 +129,13 @@ public class PortalMemberServiceImpl extends ServiceImpl<PortalMemberMapper, Por
     }
 
     @Override
-    public MemberCacheVO getCurrentAdminUser() {
-        MemberCacheVO admin = memberCacheService.getMember(AuthUser.getUserId());
+    public MemberCacheVO getCurrentMember(Long memberId) {
+        MemberCacheVO admin = memberCacheService.getMember(memberId);
         if (Objects.nonNull(admin)) {
             return admin;
         }
         admin = new MemberCacheVO();
-        PortalMemberDO adminUserDO = this.getById(AuthUser.getUserId());
+        PortalMemberDO adminUserDO = this.getById(memberId);
         BeanUtils.copyProperties(adminUserDO,admin);
         memberCacheService.setMember(admin);
         return admin;
