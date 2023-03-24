@@ -105,5 +105,14 @@ public class ProductDO extends BaseEntityData implements Serializable {
      */
     private Long labelName;
 
+    /**
+     * 商品所属商家
+     */
+    private Long merchantId;
+
+    /**
+     * 商品所属商家角色id
+     */
+    private Long merchantRoleId;
 
 }
