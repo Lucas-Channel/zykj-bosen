@@ -1,6 +1,5 @@
 package com.bosen.admin.mapper;
 
-import com.baomidou.mybatisplus.annotation.InterceptorIgnore;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.bosen.admin.domain.SystemRolePermissionRelation;
 import com.bosen.admin.vo.response.RolePermissionDetailVO;
@@ -15,7 +14,6 @@ import java.util.List;
  * @date 2023/2/25
  */
 public interface SystemRolePermissionRelationMapper extends BaseMapper<SystemRolePermissionRelation> {
-//    @InterceptorIgnore(tenantLine = "true")
     List<RolesInterfaceUrlVO> initRolesInterfaceUrlMap();
 
     List<RolePermissionDetailVO> getRolePermissionList(@Param("roleId") Long roleId, @Param("menuId") Long menuId);
