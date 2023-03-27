@@ -4,6 +4,7 @@ import com.bosen.auth.event.CacheLoginUserInfoEvent;
 import com.bosen.auth.feign.AdminUserFeignService;
 import com.bosen.auth.feign.PortalMemberFeignService;
 import com.bosen.common.constant.auth.AuthConstant;
+import com.bosen.common.util.TenantContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -35,5 +36,6 @@ public class CacheLoginUserInfoEventListener {
         } else {
             memberFeignService.cacheMemberInfo(cacheLoginUserInfoEvent.getId());
         }
+//        TenantContext.setTenant("123");
     }
 }
