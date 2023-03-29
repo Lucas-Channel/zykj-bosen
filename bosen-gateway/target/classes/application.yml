@@ -44,6 +44,48 @@ spring:
             - Path=/bosen-search/**
           filters:
             - StripPrefix=1
+        - id: bosen-pay
+          uri: lb://bosen-pay
+          predicates:
+            - Path=/bosen-pay/**
+          filters:
+            - StripPrefix=1
+        - id: bosen-order
+          uri: lb://bosen-order
+          predicates:
+            - Path=/bosen-order/**
+          filters:
+            - StripPrefix=1
+        - id: bosen-product
+          uri: lb://bosen-product
+          predicates:
+            - Path=/bosen-product/**
+          filters:
+            - StripPrefix=1
+        - id: bosen-marketing
+          uri: lb://bosen-marketing
+          predicates:
+            - Path=/bosen-marketing/**
+          filters:
+            - StripPrefix=1
+        - id: bosen-system
+          uri: lb://bosen-system
+          predicates:
+            - Path=/bosen-system/**
+          filters:
+            - StripPrefix=1
+        - id: bosen-seckill
+          uri: lb://bosen-seckill
+          predicates:
+            - Path=/bosen-seckill/**
+          filters:
+            - StripPrefix=1
+        - id: bosen-after-sales
+          uri: lb://bosen-after-sales
+          predicates:
+            - Path=/bosen-after-sales/**
+          filters:
+            - StripPrefix=1
   security:
     oauth2:
       resourceserver:
@@ -76,6 +118,9 @@ secure:
       - "/bosen-admin/admin/updatePassword"
       - "/bosen-admin/admin/register"
       - "/bosen-admin/minio/upload"
+      - "/bosen-admin/merchant/loadByMobile"
+      - "/bosen-admin/merchant/updatePassword"
+      - "/bosen-admin/merchant/register"
 management: #开启SpringBoot Admin的监控
   endpoints:
     web:
