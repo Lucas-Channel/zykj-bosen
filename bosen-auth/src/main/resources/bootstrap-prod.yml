@@ -2,10 +2,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: http://nacos-registry:8848
+        server-addr: ${NACOS_ADDR:127.0.0.1}:${NACOS_POR:8848}
       config:
-        server-addr: http://nacos-registry:8848
-        file-extension: yaml
+        server-addr: ${NACOS_ADDR:127.0.0.1}:${NACOS_POR:8848}
+        file-extension: yml
 logging:
   level:
     root: info
