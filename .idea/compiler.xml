@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="bosen-auth" />
+        <module name="bosen-admin" />
+        <module name="bosen-marketing" />
+        <module name="bosen-component-redisson" />
+        <module name="bosen-common" />
+        <module name="bosen-after-sales" />
+        <module name="bosen-order" />
+        <module name="bosen-system" />
+        <module name="bosen-pay" />
+        <module name="bosen-search" />
+        <module name="bosen-member" />
+        <module name="bosen-seckill" />
+        <module name="bosen-gateway" />
+        <module name="bosen-product" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="bosen-admin" options="-parameters" />
+      <module name="bosen-after-sales" options="-parameters" />
+      <module name="bosen-auth" options="-parameters" />
+      <module name="bosen-common" options="-parameters" />
+      <module name="bosen-component-redisson" options="-parameters" />
+      <module name="bosen-gateway" options="-parameters" />
+      <module name="bosen-marketing" options="-parameters" />
+      <module name="bosen-member" options="-parameters" />
+      <module name="bosen-order" options="-parameters" />
+      <module name="bosen-pay" options="-parameters" />
+      <module name="bosen-product" options="-parameters" />
+      <module name="bosen-search" options="-parameters" />
+      <module name="bosen-seckill" options="-parameters" />
+      <module name="bosen-system" options="-parameters" />
+    </option>
+  </component>
+</project>

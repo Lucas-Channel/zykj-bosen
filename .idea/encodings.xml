@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/bosen-admin/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-after-sales/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-auth/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-component/bosen-component-redisson/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-component/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-component/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-marketing/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-member/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-order/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-pay/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-product/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-search/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-seckill/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/bosen-system/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+  </component>
+</project>

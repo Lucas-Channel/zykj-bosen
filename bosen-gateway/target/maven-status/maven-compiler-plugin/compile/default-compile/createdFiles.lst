@@ -1,0 +1,11 @@
+com\bosen\gateway\config\IgnoreUrlsConfig.class
+com\bosen\gateway\config\ResourceServerConfig.class
+com\bosen\gateway\GatewayApplication.class
+com\bosen\gateway\config\GlobalCorsConfig.class
+com\bosen\gateway\filter\IgnoreUrlsRemoveJwtFilter.class
+com\bosen\gateway\authorization\AuthorizationManager.class
+com\bosen\gateway\exception\GlobalExceptionHandler.class
+com\bosen\gateway\component\RestfulAccessDeniedHandler.class
+com\bosen\gateway\config\RedisConfig.class
+com\bosen\gateway\component\RestAuthenticationEntryPoint.class
+com\bosen\gateway\filter\AuthGlobalFilter.class

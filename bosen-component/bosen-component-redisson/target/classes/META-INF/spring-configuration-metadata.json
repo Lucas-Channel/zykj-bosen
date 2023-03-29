@@ -1,0 +1,11 @@
+{
+  "groups": [
+    {
+      "name": "redisson",
+      "type": "com.bosen.component.config.RedissonConfig",
+      "sourceType": "com.bosen.component.config.RedissonConfig"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

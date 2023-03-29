@@ -1,0 +1,3 @@
+com\bosen\component\config\RedissonConfig.class
+META-INF\spring-configuration-metadata.json
+com\bosen\component\until\DistributedLockerUtil.class
