@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bosen.admin.mapper.SystemRoleMenuRelationMapper">
+
+    <select id="getRoleMenuList" resultType="com.bosen.admin.vo.response.RoleMenuDetailVO">
+        SELECT
+            bsm.id menu_id,
+            bsm.parent_id ,
+            bsm.title ,
+            bsm.sort,
+            bsm.icon,
+            if(brmr.id is null, false , true) has_menu_power
+        from
+            bs_sys_menu bsm
+        left join bs_role_menu_relation brmr on
+            brmr.menu_id = bsm.id and brmr.role_id = #{roleId}
+    </select>
+
+</mapper>
