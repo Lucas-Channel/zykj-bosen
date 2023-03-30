@@ -4,7 +4,6 @@ import com.bosen.auth.constant.MessageConstant;
 import com.bosen.auth.domain.SecurityUser;
 import com.bosen.auth.feign.AdminUserFeignService;
 import com.bosen.auth.feign.PortalMemberFeignService;
-import com.bosen.common.constant.auth.AuthConstant;
 import com.bosen.common.domain.UserDto;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.CredentialsExpiredException;
@@ -35,8 +34,7 @@ public class UserServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String clientId = request.getParameter("client_id");
-        UserDto userDto;
-        if (AuthConstant.ADMIN_CLIENT_ID.equals(clientId)) {
+        /*if (AuthConstant.ADMIN_CLIENT_ID.equals(clientId)) {
             userDto = adminUserFeignService.loadUserByUsername(username);
         } else if (AuthConstant.MERCHANT_CLIENT_ID.equals(clientId)) {
             userDto = adminUserFeignService.loginMerchantByMobile(username);
@@ -45,7 +43,8 @@ public class UserServiceImpl implements UserDetailsService {
         }
         if (userDto==null) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
-        }
+        }*/
+        UserDto userDto = adminUserFeignService.loadUserByUsername(username);
         userDto.setClientId(clientId);
         SecurityUser securityUser = new SecurityUser(userDto);
         if (!securityUser.isEnabled()) {

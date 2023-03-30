@@ -24,7 +24,7 @@ public class UserRoleController {
      * @return
      */
     @PostMapping(value = "/allocation")
-    public ResponseData<Void> updateRole(@RequestParam("adminId") Long adminId, @RequestParam("roleIds") List<Long> roleIds) {
+    public ResponseData<Void> updateRole(@RequestParam("adminId") String adminId, @RequestParam("roleIds") List<String> roleIds) {
         return userRoleRelationService.updateUserRole(adminId, roleIds);
     }
 
@@ -35,7 +35,7 @@ public class UserRoleController {
      */
     @GetMapping(value = "/role/{adminId}")
     @ResponseBody
-    public ResponseData<List<SystemRole>> getRoleList(@PathVariable Long adminId) {
+    public ResponseData<List<SystemRole>> getRoleList(@PathVariable String adminId) {
         List<SystemRole> roleList = userRoleRelationService.getUserRoleList(adminId);
         return ResponseData.success(roleList);
     }

@@ -17,5 +17,5 @@ public interface PortalMemberFeignService {
     UserDto loadUserByUsername(@RequestParam String username);
 
     @PostMapping("/member/cacheMemberInfo")
-    void cacheMemberInfo(@RequestBody Long memberId);
+    void cacheMemberInfo(@RequestBody String memberId);
 }

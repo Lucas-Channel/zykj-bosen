@@ -63,7 +63,7 @@ public class ProductCategoryBrandServiceImpl extends ServiceImpl<ProductCategory
                 brand.setCreateTime(LocalDateTime.now());
             } else {
                 // 修改只能单条修改，新增可以批量
-                brand.setId(upsertVO.getId());
+                //brand.setId(upsertVO.getId());
             }
             return brand;
         }).collect(Collectors.toList());

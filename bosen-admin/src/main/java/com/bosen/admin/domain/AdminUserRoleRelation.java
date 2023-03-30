@@ -15,11 +15,11 @@ import java.io.Serializable;
 public class AdminUserRoleRelation implements Serializable {
     private static final long serialVersionUID = -5251127089052356920L;
     @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private String id;
 
-    private Long adminUserId;
+    private String adminUserId;
 
-    private Long roleId;
+    private String roleId;
 
     /**
      * 是否是默认角色

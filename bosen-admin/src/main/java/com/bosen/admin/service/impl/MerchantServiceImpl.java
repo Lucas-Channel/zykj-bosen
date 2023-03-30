@@ -19,11 +19,9 @@ import com.bosen.common.domain.MerchantCacheVO;
 import com.bosen.common.domain.UserDto;
 import com.bosen.common.exception.BusinessException;
 import com.bosen.common.service.IMerchantCacheService;
-import com.bosen.common.util.AuthUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -53,7 +51,7 @@ public class MerchantServiceImpl extends ServiceImpl<MerchantMapper, MerchantDO>
             UserDto userDto = new UserDto();
             userDto.setUsername(merchantDO.getMerchantName());
             userDto.setStatus(merchantDO.getStatus());
-            userDto.setId(merchantDO.getId());
+            //userDto.setId(merchantDO.getId());
             userDto.setPassword(merchantDO.getPassword());
             List<SystemRole> roleList = merchantRoleRelationService.getMerchantRoleList(userDto.getId());
             if (CollUtil.isNotEmpty(roleList)) {
@@ -105,7 +103,7 @@ public class MerchantServiceImpl extends ServiceImpl<MerchantMapper, MerchantDO>
             throw new BusinessException(ResponseCode.OLD_PASSWORD_ERROR);
         }
         merchantDO.setPassword(BCrypt.hashpw(updatePasswordParam.getNewPassword()));
-        cacheService.delMerchant(merchantDO.getId());
+        //cacheService.delMerchant(merchantDO.getId());
         return ResponseData.judge(this.updateById(merchantDO));
     }
 

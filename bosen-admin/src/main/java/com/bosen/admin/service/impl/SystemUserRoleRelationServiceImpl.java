@@ -24,13 +24,13 @@ import java.util.stream.Collectors;
 @Service
 public class SystemUserRoleRelationServiceImpl extends ServiceImpl<SystemUserRoleRelationMapper, AdminUserRoleRelation> implements ISystemUserRoleRelationService {
     @Override
-    public List<SystemRole> getUserRoleList(Long adminUserId) {
+    public List<SystemRole> getUserRoleList(String adminUserId) {
         return this.baseMapper.getUserRoleList(adminUserId);
     }
 
     @Override
     @Transactional(rollbackFor = BusinessException.class)
-    public ResponseData<Void> updateUserRole(Long adminId, List<Long> roleIds) {
+    public ResponseData<Void> updateUserRole(String adminId, List<String> roleIds) {
         // 删除历史角色
         boolean remove = this.lambdaUpdate().eq(AdminUserRoleRelation::getAdminUserId, adminId).remove();
         if (!remove) {

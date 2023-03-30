@@ -2,15 +2,15 @@ package com.bosen.admin.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.bosen.admin.domain.AdminUserDO;
-import com.bosen.admin.service.IAdminUserService;
+import com.bosen.admin.domain.BsUserAccount;
+import com.bosen.admin.service.IBsUserAccountService;
 import com.bosen.admin.vo.resquest.RegisterAdminUserVO;
 import com.bosen.admin.vo.resquest.UpdateAdminPasswordParamVO;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.domain.PageVO;
 import com.bosen.common.domain.UserDto;
-import com.bosen.common.service.IAdminUserCacheService;
+import com.bosen.common.service.IBsUserAccountCacheService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -18,15 +18,17 @@ import javax.validation.Valid;
 
 /**
  * 后台用户管理
+ * @author gaofeicm，hhl
  */
 @RestController
 @RequestMapping("/admin")
 public class AdminUserController {
-    @Resource
-    private IAdminUserService adminService;
 
     @Resource
-    private IAdminUserCacheService cacheService;
+    private IBsUserAccountService adminService;
+
+    @Resource
+    private IBsUserAccountCacheService cacheService;
     /**
      * 注册用户
      * @param registerAdminUserVO 注册信息
@@ -43,8 +45,8 @@ public class AdminUserController {
      * @return 结果
      */
     @GetMapping(value = "/info")
-    public ResponseData<AdminUserDO> getAdminInfo(@RequestParam Long userId) {
-        AdminUserDO one = adminService.lambdaQuery().eq(AdminUserDO::getId, userId).one();
+    public ResponseData<BsUserAccount> getAdminInfo(@RequestParam String userId) {
+        BsUserAccount one = adminService.lambdaQuery().eq(BsUserAccount::getId, userId).one();
         return ResponseData.success(one);
     }
 
@@ -54,8 +56,8 @@ public class AdminUserController {
      * @return 结果
      */
     @GetMapping(value = "/listPage")
-    public ResponseData<PageData<AdminUserDO>> listPage(PageVO pageVO) {
-        Page<AdminUserDO> list = adminService.page(new Page<>(pageVO.getCurrent(), pageVO.getSize()), new LambdaQueryWrapper<AdminUserDO>().orderByDesc(AdminUserDO::getCreateTime));
+    public ResponseData<PageData<BsUserAccount>> listPage(PageVO pageVO) {
+        Page<BsUserAccount> list = adminService.page(new Page<>(pageVO.getCurrent(), pageVO.getSize()), new LambdaQueryWrapper<BsUserAccount>().orderByDesc(BsUserAccount::getCreateTime));
         return ResponseData.success(new PageData(list.getTotal(), list.getRecords()));
     }
 
@@ -65,7 +67,7 @@ public class AdminUserController {
      * @return 结果
      */
     @PostMapping(value = "/update")
-    public ResponseData<Void> update(@RequestBody AdminUserDO admin) {
+    public ResponseData<Void> update(@RequestBody BsUserAccount admin) {
         cacheService.delAdmin(admin.getId());
         return ResponseData.judge(adminService.updateById(admin));
     }
@@ -97,8 +99,8 @@ public class AdminUserController {
      * @return
      */
     @PostMapping(value = "/updateStatus/{id}")
-    public ResponseData<Void> updateStatus(@PathVariable Long id,@RequestParam(value = "status") Integer status) {
-        AdminUserDO umsAdmin = new AdminUserDO();
+    public ResponseData<Void> updateStatus(@PathVariable String id,@RequestParam(value = "status") Integer status) {
+        BsUserAccount umsAdmin = new BsUserAccount();
         umsAdmin.setStatus(status);
         umsAdmin.setId(id);
         cacheService.delAdmin(id);
@@ -120,7 +122,7 @@ public class AdminUserController {
      * @param adminId 平台后台用户id
      */
     @PostMapping("/cacheAdminInfo")
-    public void cacheAdminInfo(@RequestBody Long adminId) {
+    public void cacheAdminInfo(@RequestBody String adminId) {
         adminService.getCurrentAdminUser(adminId);
     }
 }

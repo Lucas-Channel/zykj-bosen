@@ -13,7 +13,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 public class UserDto {
-    private Long id;
+
+    private String id;
     /**
      * 账号
      */

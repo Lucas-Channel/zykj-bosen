@@ -19,7 +19,7 @@ public interface ISystemUserRoleRelationService extends IService<AdminUserRoleRe
      * @param adminUserId
      * @return
      */
-    List<SystemRole> getUserRoleList(Long adminUserId);
+    List<SystemRole> getUserRoleList(String adminUserId);
 
-    ResponseData<Void> updateUserRole(Long adminId, List<Long> roleIds);
+    ResponseData<Void> updateUserRole(String adminId, List<String> roleIds);
 }
