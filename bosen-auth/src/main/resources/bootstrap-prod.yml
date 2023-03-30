@@ -3,9 +3,15 @@ spring:
     nacos:
       discovery:
         server-addr: ${NACOS_ADDR:127.0.0.1}:${NACOS_POR:8848}
+        namespace: bosen
       config:
         server-addr: ${NACOS_ADDR:127.0.0.1}:${NACOS_POR:8848}
         file-extension: yaml
+        namespace: bosen
+        shared-configs:
+          - data-id: common.yaml
+            refresh: true
+        prefix: ${spring.application.name}
 logging:
   level:
     root: info
