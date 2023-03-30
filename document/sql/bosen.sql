@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `admin_user_b`;
-CREATE TABLE `admin_user_b` (
+DROP TABLE IF EXISTS `bs_admin_user_b`;
+CREATE TABLE `bs_admin_user_b` (
         `id` bigint(20) NOT NULL AUTO_INCREMENT,
         `username` varchar(64) DEFAULT NULL,
         `password` varchar(64) DEFAULT NULL,
@@ -22,15 +22,15 @@ CREATE TABLE `admin_user_b` (
 -- ----------------------------
 -- Records of admin_user_b
 -- ----------------------------
-INSERT INTO `admin_user_b` VALUES (1, 'admin', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/timg.jpg', 'test@qq.com', '测试账号', null, null, null, '2018-09-29 13:55:30', '2018-09-29 13:55:39', '-1', '2023-02-20 13:55:30', '-1', '2023-02-20 13:55:30', 0);
+INSERT INTO `bs_admin_user_b` VALUES (1, 'admin', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/timg.jpg', 'test@qq.com', '测试账号', null, null, null, '2018-09-29 13:55:30', '2018-09-29 13:55:39', '-1', '2023-02-20 13:55:30', '-1', '2023-02-20 13:55:30', 0);
 
 
 
 -- ----------------------------
 -- Table structure for portal_member_b
 -- ----------------------------
-DROP TABLE IF EXISTS `portal_member_b`;
-CREATE TABLE `portal_member_b` (
+DROP TABLE IF EXISTS `bs_portal_member_b`;
+CREATE TABLE `bs_portal_member_b` (
        `id` bigint(20) NOT NULL AUTO_INCREMENT,
        `member_level_id` bigint(20) DEFAULT NULL,
        `username` varchar(64) DEFAULT NULL COMMENT '用户名',
@@ -64,18 +64,18 @@ CREATE TABLE `portal_member_b` (
 -- ----------------------------
 -- Records of portal_member_b
 -- ----------------------------
-INSERT INTO `portal_member_b` VALUES (1, '4', 'test', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'windir', '18061581849', '1', '2018-08-02 10:35:44', null, '1', '2009-06-01', '上海', '学生', 'test', null, '5000', null, null, null, null, null, null, 0, null, null);
-INSERT INTO `portal_member_b` VALUES (3, '4', 'windy', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'windy', '18061581848', '1', '2018-08-03 16:46:38', null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null);
-INSERT INTO `portal_member_b` VALUES (4, '4', 'zhengsan', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'zhengsan', '18061581847', '1', '2018-11-12 14:12:04', null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null);
-INSERT INTO `portal_member_b` VALUES (5, '4', 'lisi', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'lisi', '18061581841', '1', '2018-11-12 14:12:38', null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null);
-INSERT INTO `portal_member_b` VALUES (6, '4', 'wangwu', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'wangwu', '18061581842', '1', '2018-11-12 14:13:09', null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null);
-INSERT INTO `portal_member_b` VALUES (7, '4', 'lion', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'lion', '18061581845', '1', '2018-11-12 14:21:39', null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null);
+INSERT INTO `bs_portal_member_b` VALUES (1, '4', 'test', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'windir', '18061581849', '1', '2018-08-02 10:35:44', null, '1', '2009-06-01', '上海', '学生', 'test', null, '5000', null, null, null, null, null, null, 0, null, null);
+INSERT INTO `bs_portal_member_b` VALUES (3, '4', 'windy', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'windy', '18061581848', '1', '2018-08-03 16:46:38', null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null);
+INSERT INTO `bs_portal_member_b` VALUES (4, '4', 'zhengsan', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'zhengsan', '18061581847', '1', '2018-11-12 14:12:04', null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null);
+INSERT INTO `bs_portal_member_b` VALUES (5, '4', 'lisi', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'lisi', '18061581841', '1', '2018-11-12 14:12:38', null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null);
+INSERT INTO `bs_portal_member_b` VALUES (6, '4', 'wangwu', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'wangwu', '18061581842', '1', '2018-11-12 14:13:09', null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null);
+INSERT INTO `bs_portal_member_b` VALUES (7, '4', 'lion', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.eJ6OEYqjH7INR/F.mXDbjZJi9HF0YCVG', 'lion', '18061581845', '1', '2018-11-12 14:21:39', null, null, null, null, null, null, null, null, null, null, null, null, null, null, 0, null, null);
 
 -- ----------------------------
 -- Table structure for portal_member_level
 -- ----------------------------
-DROP TABLE IF EXISTS `portal_member_level`;
-CREATE TABLE `portal_member_level` (
+DROP TABLE IF EXISTS `bs_portal_member_level`;
+CREATE TABLE `bs_portal_member_level` (
        `id` bigint(20) NOT NULL AUTO_INCREMENT,
        `name` varchar(100) DEFAULT NULL,
        `growth_point` int(11) DEFAULT NULL,
@@ -100,16 +100,16 @@ CREATE TABLE `portal_member_level` (
 -- ----------------------------
 -- Records of portal_member_level
 -- ----------------------------
-INSERT INTO `portal_member_level` VALUES ('1', '黄金会员', '1000', '0', '199.00', '5', '1', '1', '1', '1', '1', '1', null, null, null, null, null, 0);
-INSERT INTO `portal_member_level` VALUES ('2', '白金会员', '5000', '0', '99.00', '10', '1', '1', '1', '1', '1', '1', null, null, null, null, null, 0);
-INSERT INTO `portal_member_level` VALUES ('3', '钻石会员', '15000', '0', '69.00', '15', '1', '1', '1', '1', '1', '1', null, null, null, null, null, 0);
-INSERT INTO `portal_member_level` VALUES ('4', '普通会员', '1', '1', '199.00', '20', '1', '1', '1', '1', '0', '0', null, null, null, null, null, 0);
+INSERT INTO `bs_portal_member_level` VALUES ('1', '黄金会员', '1000', '0', '199.00', '5', '1', '1', '1', '1', '1', '1', null, null, null, null, null, 0);
+INSERT INTO `bs_portal_member_level` VALUES ('2', '白金会员', '5000', '0', '99.00', '10', '1', '1', '1', '1', '1', '1', null, null, null, null, null, 0);
+INSERT INTO `bs_portal_member_level` VALUES ('3', '钻石会员', '15000', '0', '69.00', '15', '1', '1', '1', '1', '1', '1', null, null, null, null, null, 0);
+INSERT INTO `bs_portal_member_level` VALUES ('4', '普通会员', '1', '1', '199.00', '20', '1', '1', '1', '1', '0', '0', null, null, null, null, null, 0);
 
 -- ----------------------------
 -- Table structure for portal_member_login_log
 -- ----------------------------
-DROP TABLE IF EXISTS `portal_member_login_log`;
-CREATE TABLE `portal_member_login_log` (
+DROP TABLE IF EXISTS `bs_portal_member_login_log`;
+CREATE TABLE `bs_portal_member_login_log` (
         `id` bigint(20) NOT NULL AUTO_INCREMENT,
         `member_id` bigint(20) DEFAULT NULL,
         `create_time` datetime DEFAULT NULL,
@@ -124,8 +124,8 @@ CREATE TABLE `portal_member_login_log` (
 -- ----------------------------
 -- Table structure for portal_member_receive_address
 -- ----------------------------
-DROP TABLE IF EXISTS `portal_member_receive_address`;
-CREATE TABLE `portal_member_receive_address` (
+DROP TABLE IF EXISTS `bs_portal_member_receive_address`;
+CREATE TABLE `bs_portal_member_receive_address` (
      `id` bigint(20) NOT NULL AUTO_INCREMENT,
      `member_id` bigint(20) DEFAULT NULL,
      `name` varchar(100) DEFAULT NULL COMMENT '收货人名称',
@@ -147,16 +147,16 @@ CREATE TABLE `portal_member_receive_address` (
 -- ----------------------------
 -- Records of ums_member_receive_address
 -- ----------------------------
-INSERT INTO `portal_member_receive_address` VALUES ('1', '1', '大梨', '18033441849', '0', '518000', '广东省', '深圳市', '南山区', '科兴科学园', null, null, null, null, 0);
-INSERT INTO `portal_member_receive_address` VALUES ('3', '1', '大梨', '18033441849', '0', '518000', '广东省', '深圳市', '福田区', '清水河街道', null, null, null, null, 0);
-INSERT INTO `portal_member_receive_address` VALUES ('4', '1', '大梨', '18033441849', '1', '518000', '广东省', '深圳市', '福田区', '东晓街道', null, null, null, null, 0);
+INSERT INTO `bs_portal_member_receive_address` VALUES ('1', '1', '大梨', '18033441849', '0', '518000', '广东省', '深圳市', '南山区', '科兴科学园', null, null, null, null, 0);
+INSERT INTO `bs_portal_member_receive_address` VALUES ('3', '1', '大梨', '18033441849', '0', '518000', '广东省', '深圳市', '福田区', '清水河街道', null, null, null, null, 0);
+INSERT INTO `bs_portal_member_receive_address` VALUES ('4', '1', '大梨', '18033441849', '1', '518000', '广东省', '深圳市', '福田区', '东晓街道', null, null, null, null, 0);
 
 
 -- ----------------------------
 -- Table structure for portal_member_statistics_info
 -- ----------------------------
-DROP TABLE IF EXISTS `portal_member_statistics_info`;
-CREATE TABLE `portal_member_statistics_info` (
+DROP TABLE IF EXISTS `bs_portal_member_statistics_info`;
+CREATE TABLE `bs_portal_member_statistics_info` (
      `id` bigint(20) NOT NULL AUTO_INCREMENT,
      `member_id` bigint(20) DEFAULT NULL,
      `consume_amount` decimal(10,2) DEFAULT NULL COMMENT '累计消费金额',
