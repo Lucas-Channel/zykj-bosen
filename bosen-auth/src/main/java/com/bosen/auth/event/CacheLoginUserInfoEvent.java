@@ -9,22 +9,22 @@ import org.springframework.context.ApplicationEvent;
  * @date 2023/3/23
  */
 public class CacheLoginUserInfoEvent extends ApplicationEvent {
-    private Long id;
+    private String id;
 
     private String clientId;
 
-    public CacheLoginUserInfoEvent(Object source, Long id, String clientId) {
+    public CacheLoginUserInfoEvent(Object source, String id, String clientId) {
         super(source);
         this.id = id;
         this.clientId = clientId;
     }
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -26,8 +26,8 @@ public interface AdminUserFeignService {
     UserDto loginMerchantByMobile(@RequestParam String mobile);
 
     @PostMapping("/admin/cacheAdminInfo")
-    void cacheAdminInfo(@RequestBody Long adminId);
+    void cacheAdminInfo(@RequestBody String adminId);
 
     @PostMapping("/merchant/cacheMerchantInfo")
-    void cacheMerchantInfo(@RequestBody Long merchantId);
+    void cacheMerchantInfo(@RequestBody String merchantId);
 }

@@ -78,7 +78,7 @@ public class PortalMemberServiceImpl extends ServiceImpl<PortalMemberMapper, Por
         // 设置默认等级
         ResponseData<PortalMemberLevelDO> memberLevel = memberLevelService.getDefaultMemberLevel();
         if (Objects.nonNull(memberLevel.getData())) {
-            one.setMemberLevelId(memberLevel.getData().getId());
+            //one.setMemberLevelId(memberLevel.getData().getId());
         }
         return ResponseData.judge(this.save(one));
     }
@@ -124,7 +124,7 @@ public class PortalMemberServiceImpl extends ServiceImpl<PortalMemberMapper, Por
     @Override
     public ResponseData<Void> updateStatus(Long id, Integer status) {
         PortalMemberDO memberDO = new PortalMemberDO();
-        memberDO.setStatus(status).setId(id);
+        //memberDO.setStatus(status).setId(id);
         return ResponseData.judge(this.updateById(memberDO));
     }
 

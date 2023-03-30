@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 public class MerchantRoleRelationServiceImpl extends ServiceImpl<MerchantRoleRelationMapper, MerchantRoleRelationDO> implements IMerchantRoleRelationService {
     @Override
-    public List<SystemRole> getMerchantRoleList(Long merchantId) {
+    public List<SystemRole> getMerchantRoleList(String merchantId) {
         return this.baseMapper.getMerchantRoleList(merchantId);
     }
 }

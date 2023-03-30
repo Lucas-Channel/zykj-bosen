@@ -17,5 +17,5 @@ public interface SystemUserRoleRelationMapper extends BaseMapper<AdminUserRoleRe
      * @param adminUserId
      * @return
      */
-    List<SystemRole> getUserRoleList(Long adminUserId);
+    List<SystemRole> getUserRoleList(String adminUserId);
 }

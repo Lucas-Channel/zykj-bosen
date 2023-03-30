@@ -17,5 +17,5 @@ public interface IMerchantRoleRelationService extends IService<MerchantRoleRelat
      * @param merchantId
      * @return 集合
      */
-    List<SystemRole> getMerchantRoleList(Long merchantId);
+    List<SystemRole> getMerchantRoleList(String merchantId);
 }

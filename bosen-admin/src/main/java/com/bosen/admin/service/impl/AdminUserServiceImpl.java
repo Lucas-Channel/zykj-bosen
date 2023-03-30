@@ -19,7 +19,6 @@ import com.bosen.common.domain.AssignRoleVO;
 import com.bosen.common.domain.UserDto;
 import com.bosen.common.exception.BusinessException;
 import com.bosen.common.service.IAdminUserCacheService;
-import com.bosen.common.util.AuthUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -101,7 +100,7 @@ public class AdminUserServiceImpl extends ServiceImpl<AdminUserMapper, AdminUser
             throw new BusinessException(ResponseCode.OLD_PASSWORD_ERROR);
         }
         userDO.setPassword(BCrypt.hashpw(updatePasswordParam.getNewPassword()));
-        cacheService.delAdmin(userDO.getId());
+        //cacheService.delAdmin(userDO.getId());
         return ResponseData.judge(this.updateById(userDO));
     }
 

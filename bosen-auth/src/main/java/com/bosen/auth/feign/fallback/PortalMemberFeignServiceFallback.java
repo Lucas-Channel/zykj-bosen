@@ -21,7 +21,7 @@ public class PortalMemberFeignServiceFallback implements PortalMemberFeignServic
     }
 
     @Override
-    public void cacheMemberInfo(Long memberId) {
+    public void cacheMemberInfo(String memberId) {
         throw new BusinessException(ResponseCode.ADMIN_SERVICE_ERROR);
     }
 }

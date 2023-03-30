@@ -52,7 +52,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
             List<ProductAttributeDO> productAttributeDOS = formData.getAttrList().stream().map(i -> {
                 ProductAttributeDO attributeDO = new ProductAttributeDO();
                 BeanUtils.copyProperties(i, attributeDO);
-                attributeDO.setProductId(productDO.getId());
+                //attributeDO.setProductId(productDO.getId());
                 return attributeDO;
             }).collect(Collectors.toList());
             productAttributeService.saveBatch(productAttributeDOS);
@@ -60,7 +60,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
             productAttributeDOS = formData.getSpecList().stream().map(i -> {
                 ProductAttributeDO attributeDO = new ProductAttributeDO();
                 BeanUtils.copyProperties(i, attributeDO);
-                attributeDO.setProductId(productDO.getId());
+                //attributeDO.setProductId(productDO.getId());
                 return attributeDO;
             }).collect(Collectors.toList());
             productAttributeService.saveBatch(productAttributeDOS);

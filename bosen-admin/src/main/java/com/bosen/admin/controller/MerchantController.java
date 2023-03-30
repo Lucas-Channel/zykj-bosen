@@ -67,7 +67,7 @@ public class MerchantController {
      */
     @PostMapping(value = "/update")
     public ResponseData<Void> update(@RequestBody MerchantDO merchantDO) {
-        cacheService.delMerchant(merchantDO.getId());
+        //cacheService.delMerchant(merchantDO.getId());
         return ResponseData.judge(merchantService.updateById(merchantDO));
     }
 
@@ -101,14 +101,14 @@ public class MerchantController {
     public ResponseData<Void> updateStatus(@PathVariable Long id,@RequestParam(value = "status") Integer status) {
         MerchantDO merchantDO = new MerchantDO();
         merchantDO.setStatus(status);
-        merchantDO.setId(id);
+        //merchantDO.setId(id);
         cacheService.delMerchant(id);
         return ResponseData.judge(merchantService.updateById(merchantDO));
     }
 
     /**
      * 通过用户名查询登录账号信息主要用于b端用户登录
-     * @param username 用户名
+     * @param mobile 手机号
      * @return 结果
      */
     @RequestMapping(value = "/loginByMobile", method = RequestMethod.GET)

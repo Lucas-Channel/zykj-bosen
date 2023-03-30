@@ -33,12 +33,12 @@ public class AdminUserFeignServiceFallback implements AdminUserFeignService {
     }
 
     @Override
-    public void cacheAdminInfo(Long adminId) {
+    public void cacheAdminInfo(String adminId) {
         throw new BusinessException(ResponseCode.ADMIN_SERVICE_ERROR);
     }
 
     @Override
-    public void cacheMerchantInfo(Long merchantId) {
+    public void cacheMerchantInfo(String merchantId) {
         throw new BusinessException(ResponseCode.ADMIN_SERVICE_ERROR);
     }
 }

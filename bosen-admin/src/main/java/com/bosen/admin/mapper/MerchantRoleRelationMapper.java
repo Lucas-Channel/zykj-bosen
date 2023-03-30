@@ -17,5 +17,5 @@ public interface MerchantRoleRelationMapper extends BaseMapper<MerchantRoleRelat
      * @param merchantId
      * @return
      */
-    List<SystemRole> getMerchantRoleList(Long merchantId);
+    List<SystemRole> getMerchantRoleList(String merchantId);
 }
