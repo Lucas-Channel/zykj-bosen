@@ -41,7 +41,7 @@ mybatis-plus:
   global-config:
     db-config:
       #主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
-      id-type: AUTO
+      id-type: ASSIGN_ID
   configuration:
     # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
     map-underscore-to-camel-case: true
@@ -57,29 +57,6 @@ management: #开启SpringBoot Admin的监控
   endpoint:
     health:
       show-details: always
-redis:
-  database: mall
-  key:
-    admin: 'ums:admin'
-  expire:
-    common: 86400 # 24小时
-aliyun:
-  oss:
-    endpoint: oss-cn-shenzhen.aliyuncs.com # oss对外服务的访问域名
-    accessKeyId: test # 访问身份验证中用到用户标识
-    accessKeySecret: test # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
-    bucketName: macro-oss # oss的存储空间
-    policy:
-      expire: 300 # 签名有效期(S)
-    maxSize: 10 # 上传文件大小(M)
-    callback: http://39.98.190.128:8080/aliyun/oss/callback # 文件上传成功后的回调地址
-    dir:
-      prefix: mall/images/ # 上传文件夹路径前缀
-minio:
-  endpoint: http://locahost:9000 #MinIO服务所在地址
-  bucketName: mall #存储桶名称
-  accessKey: minioadmin #访问的key
-  secretKey: minioadmin #访问的秘钥
 feign:
   okhttp:
     enabled: true

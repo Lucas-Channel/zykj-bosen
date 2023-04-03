@@ -1,11 +1,10 @@
 package com.bosen.common.domain;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,8 +24,7 @@ public class BaseEntityData {
      * 主键id,使用雪花算法自动生成id
      * 使用雪花算法生成的id精度超出17位，前端浏览器会把17位之后的数字用0自动替换，故转string返回给前端
      */
-    @TableId(value = "id")
-    @JsonSerialize(using = ToStringSerializer.class)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
     /**
