@@ -22,9 +22,14 @@ public class ProductSkuDO extends BaseEntityData {
     private String skuCode;
 
     /**
-     * SKU 名称：拼接规格值
+     * SKU 名称，如果autoSpliceSpecForName=1，拼接规格值，否则使用自动输入方式
      */
     private String name;
+
+    /**
+     * 商品规格值拼接：华为p50 红色 16G 256G 6.7英寸
+     */
+    private String specNameVal;
 
     /**
      * 商品 ID
@@ -35,6 +40,11 @@ public class ProductSkuDO extends BaseEntityData {
      * 规格ID，多个使用英文逗号(,)分割
      */
     private String specIds;
+
+    /**
+     * 规格属性值：颜色：红；大小：200；内存：16G
+     */
+    private String specNames;
 
     /**
      * 商品价格
@@ -82,4 +92,9 @@ public class ProductSkuDO extends BaseEntityData {
      * 销售数量
      */
     private Integer salesCount;
+
+    /**
+     * 是否自动拼接规格值作为skuName
+     */
+    private Integer autoSpliceSpecForName;
 }

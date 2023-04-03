@@ -5,14 +5,19 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * 商品属性类型枚举
+ * @author Lucas
+ * @version 2.0.0
+ * @date 2023/4/3
  */
-public enum AttributeTypeEnum {
+public enum ProductTypeEnums {
 
-    SPEC(1, "规格"),
-    ATTR(2, "属性");
+    GIFT(1, "赠品"),
+    PRODUCT_PACKAGE(2, "商品包"),
+    PRODUCT(3, "普通商品"),
+    SERVICE_PRODUCT(4, "服务商品"),
+    ;
 
-    AttributeTypeEnum(Integer code, String message) {
+    ProductTypeEnums(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -20,7 +25,7 @@ public enum AttributeTypeEnum {
     private Integer code;
     private String message;
 
-    private static Map<Integer,String> messageMap = Arrays.stream(AttributeTypeEnum.values()).collect(Collectors.toMap(AttributeTypeEnum::getCode,AttributeTypeEnum::getMessage));
+    private static Map<Integer,String> messageMap = Arrays.stream(ProductTypeEnums.values()).collect(Collectors.toMap(ProductTypeEnums::getCode,ProductTypeEnums::getMessage));
 
     public static String getMessageByCode(Integer code) {
         return messageMap.get(code);
@@ -33,5 +38,4 @@ public enum AttributeTypeEnum {
     public String getMessage() {
         return message;
     }
-
 }

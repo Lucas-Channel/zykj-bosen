@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.bosen.common.domain.BaseEntityData;
+import com.bosen.product.constant.ProductTypeEnums;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -43,6 +44,11 @@ public class ProductDO extends BaseEntityData implements Serializable {
      * 销售/零售价，默认规格价格
      */
     private BigDecimal salesPrice;
+
+    /**
+     * 卖点
+     */
+    private String sellingPoint;
 
     /**
      * 销量
@@ -96,23 +102,24 @@ public class ProductDO extends BaseEntityData implements Serializable {
     private LocalDateTime applyDateTime;
 
     /**
-     * 标签id
-     */
-    private Long labelId;
-
-    /**
-     * 标签名称
-     */
-    private Long labelName;
-
-    /**
      * 商品所属商家
      */
-    private Long merchantId;
+    private String merchantId;
+
+    /**
+     * 商家名称
+     */
+    private String merchantName;
 
     /**
      * 商品所属商家角色id
      */
     private Long merchantRoleId;
+
+    /**
+     * 商品类型
+     * @see ProductTypeEnums
+     */
+    private Integer productType;
 
 }
