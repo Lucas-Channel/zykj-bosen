@@ -5,7 +5,7 @@ import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
 /**
- * 分类品牌：一个分类多个品牌
+ * 平台分类品牌：一个分类多个品牌
  */
 @Data
 @TableName("bs_product_category_brand")

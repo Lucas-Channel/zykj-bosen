@@ -176,6 +176,7 @@ CREATE TABLE `bs_product`  (
                                `merchant_id` bigint not null COMMENT '商家id',
                                `merchant_role_id` bigint not NULL COMMENT '商家角色id',
                                `product_type` int not NULL COMMENT '商品类型',
+                               `merchant_category_id` varchar(70) not NULL COMMENT '商品类型',
                                PRIMARY KEY (`id`) USING BTREE,
                                INDEX `fk_brand`(`brand_id`) USING BTREE,
                                INDEX `fk_category`(`category_id`) USING BTREE

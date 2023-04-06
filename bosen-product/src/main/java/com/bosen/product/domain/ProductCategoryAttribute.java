@@ -6,7 +6,7 @@ import lombok.Data;
 
 
 /**
- * 商品默认分类属性/规格
+ * 平台商品默认分类属性/规格
  */
 @Data
 @TableName("bs_product_category_attribute")

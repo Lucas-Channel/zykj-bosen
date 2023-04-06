@@ -26,9 +26,14 @@ public class ProductDO extends BaseEntityData implements Serializable {
      */
     private String name;
     /**
-     * 品类
+     * 平台品类
      */
     private Long categoryId;
+
+    /**
+     * 商家品类id
+     */
+    private Long merchantCategoryId;
 
     /**
      * 品牌
