@@ -7,6 +7,7 @@ import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -97,4 +98,39 @@ public class ProductSkuDO extends BaseEntityData {
      * 是否自动拼接规格值作为skuName
      */
     private Integer autoSpliceSpecForName;
+
+    /**
+     * 库存预警数量
+     */
+    private Integer stockInventoryWarning;
+
+    /**
+     * 条形码/二维码
+     */
+    private String barCode;
+
+    /**
+     * 是否计算库存
+     */
+    private Integer calculateInventory;
+
+    /**
+     * 有效期开始时间
+     */
+    private LocalDateTime validityStartTime;
+
+    /**
+     * 有效期结束时间
+     */
+    private LocalDateTime validityEndTime;
+
+    /**
+     * 单位积分
+     */
+    private BigDecimal unitScore;
+
+    /**
+     * 最小起订
+     */
+    private BigDecimal minOrder;
 }

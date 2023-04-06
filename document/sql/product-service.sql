@@ -117,44 +117,34 @@ CREATE TABLE `bs_product_sku`  (
                                    `sku_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品编码',
                                    `product_id` bigint NOT NULL COMMENT '商品 ID',
                                    `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品名称',
+                                   `spec_name_val` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品规格值拼接',
                                    `spec_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品规格值，以英文逗号(,)分割',
+                                   `spec_name` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '规格属性值，以;分割',
                                    `price` decimal(11,2) NULL DEFAULT NULL COMMENT '商品价格',
                                    `stock_num` int NULL DEFAULT 0 COMMENT '库存数量',
                                    `locked_stock_num` int NULL DEFAULT 0 COMMENT '锁定库存数量',
                                    `pic_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品图片地址',
                                    `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                    `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                   `vip_price` decimal(11,2) NULL DEFAULT NULL COMMENT 'vip商品价格(单位：分)',
+                                   `vip_price` decimal(11,2) NULL DEFAULT NULL COMMENT 'vip商品价格',
                                    `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
                                    `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
                                    `del_flag` int DEFAULT 0,
                                    `wholesale_price` json NULL COMMENT '批发价格',
                                    `member_price` json NULL COMMENT '指定会员销售价格',
                                    `lot_number` varchar(50) NULL COMMENT '入库批次',
+                                   `bar_code` varchar(100) NULL COMMENT '条形码/二维码',
                                    `sales_count` int NULL COMMENT '销量',
+                                   `auto_splice_spec_for_name` int NULL COMMENT '是否自动拼接规格值作为skuName',
+                                   `stock_inventory_warning` int NULL COMMENT '库存预警数量',
+                                   `calculate_inventory` int NULL COMMENT '是否计算库存',
+                                   `validity_start_time` datetime NULL DEFAULT NULL COMMENT '有效期开始时间',
+                                   `validity_end_time` datetime NULL DEFAULT NULL COMMENT '有效期结束时间',
+                                   `unit_score` decimal(11,2) DEFAULT NULL COMMENT '单位积分',
+                                   `min_order` decimal(11,2) DEFAULT NULL COMMENT '最小起订',
                                    PRIMARY KEY (`id`) USING BTREE,
                                    INDEX `fk_product_id`(`product_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品库存表';
-
--- ----------------------------
--- Records of bs_product_sku
--- ----------------------------
-INSERT INTO `bs_product_sku` VALUES (1, 'sn001', 1, '黑 6+128g', '1_3', 399900, 999, 5, 'https://www.youlai.tech/files/default/c25b39470474494485633c49101a0f5d.png', '2021-08-08 00:43:26', '2022-07-03 14:16:16', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (2, 'sn002', 1, '黑 8+256g', '1_4', 499900, 9998, 0, 'https://www.youlai.tech/files/default/c25b39470474494485633c49101a0f5d.png', '2021-08-08 00:43:26', '2022-07-03 14:16:16', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (3, 'sn003', 1, '蓝 6+128g', '216_3', 399900, 9998, 0, 'https://www.youlai.tech/files/default/835d73a337964b9b97e5c7c90acc8cb2.png', '2022-03-05 09:25:53', '2022-07-03 14:16:16', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (4, 'sn004', 1, '蓝 8+256g', '216_4', 499900, 9988, 0, 'https://www.youlai.tech/files/default/835d73a337964b9b97e5c7c90acc8cb2.png', '2022-03-05 09:25:53', '2022-07-03 14:16:16', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (5, '10000001', 2, '魔幻青 RTX3060/i7-12700H/165Hz 2.5K屏', '256_258', 1025000, 9816, 26, 'http://a.youlai.tech:9000/default/8815c9a46fcc4b1ea952623406750da5.jpg', '2022-03-11 14:39:21', '2022-07-08 00:29:56', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (6, '10000002', 2, '魔幻青 RTX3050tTi/12代i5/144Hz高色域屏', '256_259', 925000, 10000, 0, 'http://a.youlai.tech:9000/default/8815c9a46fcc4b1ea952623406750da5.jpg', '2022-03-11 14:39:21', '2022-07-08 00:29:56', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (7, '10000003', 2, '日蚀灰 RTX3060/i7-12700H/165Hz 2.5K屏', '257_258', 1025000, 10000, 0, 'http://a.youlai.tech:9000/default/3210cd1ffb6c4346b743a10855d3cb37.jpg', '2022-03-11 14:39:21', '2022-07-08 00:29:56', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (8, '10000004', 2, '日蚀灰 RTX3050tTi/12代i5/144Hz高色域屏', '257_259', 925000, 10000, 0, 'http://a.youlai.tech:9000/default/3210cd1ffb6c4346b743a10855d3cb37.jpg', '2022-03-11 14:39:21', '2022-07-08 00:29:56', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (747, '111', 287, '16g 512g 【2022款】锐龙六核R5-6600U/核芯显卡/100%sRGB高色域', '841_843_845', 589900, 9991, 2, NULL, '2022-07-07 00:22:13', '2022-07-08 00:29:41', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (748, '112', 287, '16g 512g 【2022款】锐龙八核R7-6800U/核芯显卡/100%sRGB高色域', '841_843_846', 629900, 9999, 0, NULL, '2022-07-07 00:22:13', '2022-07-08 00:29:41', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (749, '113', 287, '16g 1t 【2022款】锐龙六核R5-6600U/核芯显卡/100%sRGB高色域', '841_844_845', 639900, 9999, 0, NULL, '2022-07-07 00:22:13', '2022-07-08 00:29:41', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (750, '114', 287, '16g 1t 【2022款】锐龙八核R7-6800U/核芯显卡/100%sRGB高色域', '841_844_846', 639900, 9999, 0, NULL, '2022-07-07 00:22:13', '2022-07-08 00:29:41', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (751, '115', 287, '32g 512g 【2022款】锐龙六核R5-6600U/核芯显卡/100%sRGB高色域', '842_843_845', 589900, 9999, 0, NULL, '2022-07-07 00:22:13', '2022-07-08 00:29:41', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (752, '116', 287, '32g 512g 【2022款】锐龙八核R7-6800U/核芯显卡/100%sRGB高色域', '842_843_846', 629900, 9999, 0, NULL, '2022-07-07 00:22:13', '2022-07-08 00:29:41', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (753, '117', 287, '32g 1t 【2022款】锐龙六核R5-6600U/核芯显卡/100%sRGB高色域', '842_844_845', 639900, 9999, 0, NULL, '2022-07-07 00:22:13', '2022-07-08 00:29:41', null, null, null, 0, null, null, null, null);
-INSERT INTO `bs_product_sku` VALUES (754, '118', 287, '32g 1t 【2022款】锐龙八核R7-6800U/核芯显卡/100%sRGB高色域', '842_844_846', 639900, 9999, 0, NULL, '2022-07-07 00:22:13', '2022-07-08 00:29:41', null, null, null, 0, null, null, null, null);
 
 -- ----------------------------
 -- Table structure for bs_product
@@ -280,3 +270,21 @@ CREATE TABLE `bs_product_area`  (
                                          `del_flag` int DEFAULT 0,
                                          PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品销售区域表';
+
+
+-- ----------------------------
+-- Table structure for bs_product_package_detail
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_product_package_detail`;
+CREATE TABLE `bs_product_package_detail`  (
+                               `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                               `product_id` varchar(64) NOT NULL COMMENT '商品spuID',
+                               `sku_id` varchar(64) NOT NULL COMMENT '商品skuID',
+                               `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                               `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                               `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                               `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                               `del_flag` int DEFAULT 0,
+                               PRIMARY KEY (`id`) USING BTREE,
+                               INDEX `fk_product_package_detail`(`product_id`) USING BTREE,
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品包明细表';
