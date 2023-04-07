@@ -28,17 +28,17 @@ public class ProductDO extends BaseEntityData implements Serializable {
     /**
      * 平台品类
      */
-    private Long categoryId;
+    private String categoryId;
 
     /**
      * 商家品类id
      */
-    private Long merchantCategoryId;
+    private String merchantCategoryId;
 
     /**
      * 品牌
      */
-    private Long brandId;
+    private String brandId;
 
     /**
      * 原价，默认规格价格

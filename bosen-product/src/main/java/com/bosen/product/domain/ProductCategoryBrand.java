@@ -13,11 +13,11 @@ public class ProductCategoryBrand extends BaseEntityData {
     /**
      * 分类ID
      */
-    private Long categoryId;
+    private String categoryId;
 
     /**
      * 品牌ID
      */
-    private Long brandId;
+    private String brandId;
 
 }
