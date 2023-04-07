@@ -18,15 +18,6 @@ CREATE TABLE `bs_product_brand`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品品牌表';
 
 -- ----------------------------
--- Records of bs_product_brand
--- ----------------------------
-INSERT INTO `bs_product_brand` VALUES (1, '有来', 'http://a.youlai.tech:9000/default/5409e3deb5a14b8fa8cb4275dee0e25d.png', 1, '2021-07-11 19:56:58', '2021-07-11 20:02:54', null, null, 0);
-INSERT INTO `bs_product_brand` VALUES (10, '小米', 'http://a.youlai.tech:9000/default/6a5a606fc60742919149a7861bf26cd5.jpg', 2, '2022-03-05 16:12:16', '2022-03-05 16:12:16', null, null, 0);
-INSERT INTO `bs_product_brand` VALUES (11, '华硕', 'http://a.youlai.tech:9000/default/f18083f95e104a0bae3c587dee3bb2ed.png', 3, '2022-03-05 16:12:16', '2022-03-05 16:12:16', null, null, 0);
-INSERT INTO `bs_product_brand` VALUES (20, '华为', 'https://oss.youlai.tech/default/ff61bd639b23491d8f2aa85d09fcf788.jpg', 1, '2022-05-06 23:08:33', '2022-05-06 23:08:33', null, null, 0);
-INSERT INTO `bs_product_brand` VALUES (33, '惠普', 'https://oss.youlai.tech/default/4cf579add9544c6eaafb41ce1131559e.gif', 1, '2022-07-07 00:12:16', '2022-07-07 00:12:16', null, null, 0);
-
--- ----------------------------
 -- Table structure for bs_product_category
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product_category`;
@@ -47,18 +38,6 @@ CREATE TABLE `bs_product_category`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品分类表';
 
 -- ----------------------------
--- Records of bs_product_category
--- ----------------------------
-INSERT INTO `bs_product_category` VALUES (3, '手机配件', 0, 1, NULL, 2, 1, NULL, '2022-07-07 22:56:53', null, null, 0);
-INSERT INTO `bs_product_category` VALUES (4, '智能手机', 3, 2, NULL, 1, 1, NULL, NULL, null, null, 0);
-INSERT INTO `bs_product_category` VALUES (5, '5g手机', 4, 3, 'https://oss.youlai.tech/default/6ffb37110ac2434a9882b9e8968b2887.jpg', 1, 1, NULL, '2022-07-08 00:28:38', null, null, 0);
-INSERT INTO `bs_product_category` VALUES (6, '电脑办公', 0, 1, 'https://www.youlai.tech/files/default/776c21c1a71848069093033f461c5f4a.jpg', 1, 1, '2022-02-25 11:22:44', '2022-07-07 22:56:38', null, null, 0);
-INSERT INTO `bs_product_category` VALUES (97, '笔记本电脑', 6, 2, NULL, 100, 1, '2022-07-08 00:10:27', '2022-07-08 00:10:27', null, null, 0);
-INSERT INTO `bs_product_category` VALUES (99, '轻薄本', 97, 3, 'https://oss.youlai.tech/default/2f849b96ebb54ab3a94b1b90137f1b4d.png', 100, 1, '2022-07-08 00:14:03', '2022-07-08 00:26:52', null, null, 0);
-INSERT INTO `bs_product_category` VALUES (100, '全能本', 97, 3, 'https://oss.youlai.tech/default/37cc080ec61b4ce7b0583b002568ebaa.png', 100, 1, '2022-07-08 00:14:10', '2022-07-08 00:27:01', null, null, 0);
-INSERT INTO `bs_product_category` VALUES (101, '游戏本', 97, 3, 'https://oss.youlai.tech/default/5c1a2d5427534b48bc382caa55197f11.png', 100, 1, '2022-07-08 00:14:18', '2022-07-08 00:27:11', null, null, 0);
-
--- ----------------------------
 -- Table structure for bs_product_category_attribute
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product_category_attribute`;
@@ -77,13 +56,6 @@ CREATE TABLE `bs_product_category_attribute`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品属性表';
 
 -- ----------------------------
--- Records of bs_product_category_attribute
--- ----------------------------
-INSERT INTO `bs_product_category_attribute` VALUES (34, 5, '颜色', 1, '2021-07-11 17:57:06', '2022-07-01 00:08:19', null, null, 0);
-INSERT INTO `bs_product_category_attribute` VALUES (35, 5, '规格', 1, '2021-07-11 18:00:06', '2022-07-01 00:08:19', null, null, 0);
-INSERT INTO `bs_product_category_attribute` VALUES (36, 5, '上市时间', 2, '2021-07-11 18:00:08', '2022-06-01 17:41:05', null, null, 0);
-
--- ----------------------------
 -- Table structure for bs_product_category_brand
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product_category_brand`;
@@ -98,14 +70,6 @@ CREATE TABLE `bs_product_category_brand`  (
                                               `del_flag` int DEFAULT 0,
                                               PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
-
--- ----------------------------
--- Records of bs_product_category_brand
--- ----------------------------
-
-INSERT INTO `bs_product_category_brand` VALUES (1, 3, 20, '2021-07-11 17:57:06', '2022-07-01 00:08:19', null, null, 0);
-INSERT INTO `bs_product_category_brand` VALUES (2, 6, 11, '2021-07-11 18:00:06', '2022-07-01 00:08:19', null, null, 0);
-INSERT INTO `bs_product_category_brand` VALUES (3, 6, 33, '2021-07-11 18:00:08', '2022-06-01 17:41:05', null, null, 0);
 
 
 -- ----------------------------
