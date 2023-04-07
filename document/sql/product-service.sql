@@ -142,6 +142,7 @@ CREATE TABLE `bs_product_sku`  (
                                    `validity_end_time` datetime NULL DEFAULT NULL COMMENT '有效期结束时间',
                                    `unit_score` decimal(11,2) DEFAULT NULL COMMENT '单位积分',
                                    `min_order` decimal(11,2) DEFAULT NULL COMMENT '最小起订',
+                                   `weight` decimal(11,2) DEFAULT NULL COMMENT '重量',
                                    PRIMARY KEY (`id`) USING BTREE,
                                    INDEX `fk_product_id`(`product_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品库存表';
@@ -175,8 +176,13 @@ CREATE TABLE `bs_product`  (
                                `apply_date_time` datetime NULL DEFAULT NULL COMMENT '审核时间',
                                `merchant_id` bigint not null COMMENT '商家id',
                                `merchant_role_id` bigint not NULL COMMENT '商家角色id',
+                               `merchant_name` varchar(70) not NULL COMMENT '商家名称',
                                `product_type` int not NULL COMMENT '商品类型',
-                               `merchant_category_id` varchar(70) not NULL COMMENT '商品类型',
+                               `delivery_type` int not NULL COMMENT '配送方式',
+                               `merchant_category_id` varchar(70) not NULL COMMENT '商家品类',
+                               `freight_calculate_model` int not NULL COMMENT '运费承担方',
+                               `freight_template_id` varchar(70) not NULL COMMENT '运费模板id',
+                               `delivery_company_id` varchar(70) not NULL COMMENT '物流公司id',
                                PRIMARY KEY (`id`) USING BTREE,
                                INDEX `fk_brand`(`brand_id`) USING BTREE,
                                INDEX `fk_category`(`category_id`) USING BTREE
@@ -289,3 +295,32 @@ CREATE TABLE `bs_product_package_detail`  (
                                PRIMARY KEY (`id`) USING BTREE,
                                INDEX `fk_product_package_detail`(`product_id`) USING BTREE,
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品包明细表';
+
+
+
+-- ----------------------------
+-- Table structure for bs_freight_template
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_freight_template`;
+CREATE TABLE `bs_freight_template`  (
+                               `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                               `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '名称',
+                               `pricing_mode` int NOT NULL COMMENT '计价方式 1-按重量',
+                               `transport_mode` int NULL DEFAULT NULL COMMENT '运送方式',
+                               `first_weight` decimal(11,2) NOT NULL COMMENT '首重',
+                               `first_weight_price` decimal(11,2) NOT NULL COMMENT '首重价格',
+                               `increment_weight` decimal(11,2) NOT NULL COMMENT '每增加重量',
+                               `increment_price` decimal(11,2) NOT NULL COMMENT '每增加价格',
+                               `remark` varchar(500) NULL COMMENT '运费说明',
+                               `status` int NULL DEFAULT 0 COMMENT '状态 0-无效 1-有效',
+                               `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                               `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                               `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                               `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                               `del_flag` int DEFAULT 0,
+                               `merchant_id` varchar(64) not null COMMENT '商家id',
+                               `merchant_role_id` varchar(64) not NULL COMMENT '商家角色id',
+                               `merchant_name` varchar(70) not NULL COMMENT '商家名称',
+                               PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '运费模板';
+

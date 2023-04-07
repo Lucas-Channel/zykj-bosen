@@ -133,4 +133,9 @@ public class ProductSkuDO extends BaseEntityData {
      * 最小起订
      */
     private BigDecimal minOrder;
+
+    /**
+     * 重量
+     */
+    private BigDecimal weight;
 }

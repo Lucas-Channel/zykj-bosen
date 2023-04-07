@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.bosen.common.domain.BaseEntityData;
+import com.bosen.product.constant.DeliveryTypeEnum;
+import com.bosen.product.constant.FreightCalculateModelEnum;
 import com.bosen.product.constant.ProductTypeEnums;
 import lombok.Data;
 
@@ -119,12 +121,34 @@ public class ProductDO extends BaseEntityData implements Serializable {
     /**
      * 商品所属商家角色id
      */
-    private Long merchantRoleId;
+    private String merchantRoleId;
 
     /**
      * 商品类型
      * @see ProductTypeEnums
      */
     private Integer productType;
+
+    /**
+     * 运费计算模式: 1,卖家承担运费，2，买家承担运费
+     * @see FreightCalculateModelEnum
+     */
+    private Integer freightCalculateModel;
+
+    /**
+     * 运费模板
+     */
+    private String freightTemplateId;
+
+    /**
+     * 物流公司id
+     */
+    private String deliveryCompanyId;
+
+    /**
+     * 配送方式
+     * @see DeliveryTypeEnum
+     */
+    private Integer deliveryType;
 
 }
