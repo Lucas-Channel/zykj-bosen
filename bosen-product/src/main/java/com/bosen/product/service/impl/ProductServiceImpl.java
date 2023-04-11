@@ -51,11 +51,13 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
     @Override
     @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> upsertProduct(ProductUpsertVO formData) {
+        // step1 保存spu基本信息
         ProductDO productDO = new ProductDO();
         BeanUtils.copyProperties(formData, productDO);
         boolean saveOrUpdate = this.saveOrUpdate(productDO);
+        // step2 保存spu属性和规格
         if (saveOrUpdate) {
-            // 删除历史
+            // step2.1 删除历史属性和规格
             productAttributeService.lambdaUpdate().eq(ProductAttributeDO::getProductId, productDO.getId()).remove();
             // 保存商品属性
             List<ProductAttributeDO> productAttributeDOS = formData.getAttrList().stream().map(i -> {

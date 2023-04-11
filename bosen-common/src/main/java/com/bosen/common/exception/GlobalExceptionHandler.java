@@ -1,7 +1,6 @@
-package com.bosen.pay.exception;
+package com.bosen.common.exception;
 
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.common.exception.BusinessException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,7 +13,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = BusinessException.class)
     public ResponseData<Void> handleBusinessException(BusinessException e) {
         if (e.getCode() != null) {
-            return ResponseData.fail(e.getCode().getCode(), e.getCode().getMessage());
+            return ResponseData.fail(e.getCode().getCode(), e.getMessage());
         }
         return ResponseData.fail(e.getMessage());
     }
