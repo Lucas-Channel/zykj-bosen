@@ -2,6 +2,7 @@ package com.bosen.common.service.impl;
 
 import com.bosen.common.service.RedisService;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * redis操作实现类
  */
+@Service
 public class RedisServiceImpl implements RedisService {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
