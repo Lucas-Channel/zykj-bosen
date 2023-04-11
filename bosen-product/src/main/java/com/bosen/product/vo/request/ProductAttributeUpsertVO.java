@@ -7,9 +7,16 @@ public class ProductAttributeUpsertVO {
 
     private String id;
 
-    private Long  attributeId;
+    private String productId;
+
+    private String attributeId;
 
     private String name;
+
+    /**
+     * 属性类型(1:规格;2:属性;)
+     */
+    private Integer type;
 
     private String value;
 

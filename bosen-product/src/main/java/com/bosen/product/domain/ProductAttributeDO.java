@@ -17,12 +17,12 @@ public class ProductAttributeDO extends BaseEntityData implements Serializable {
     /**
      * 商品ID
      */
-    private Long productId;
+    private String productId;
 
     /**
-     * 属性ID
+     * 属性ID,当使用平台规格/属性时，该值必填
      */
-    private Long attributeId;
+    private String attributeId;
 
     /**
      * 属性名称
@@ -33,11 +33,6 @@ public class ProductAttributeDO extends BaseEntityData implements Serializable {
      * 属性类型(1:规格;2:属性;)
      */
     private Integer type;
-
-    /**
-     * 是否默认属性/规格
-     */
-    private Integer defaultAttribute;
 
     /**
      * 排序

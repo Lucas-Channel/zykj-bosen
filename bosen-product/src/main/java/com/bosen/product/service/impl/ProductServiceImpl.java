@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.exception.BusinessException;
+import com.bosen.common.vo.request.ApproveInfoVO;
 import com.bosen.product.domain.ProductAttributeDO;
 import com.bosen.product.domain.ProductDO;
 import com.bosen.product.mapper.ProductMapper;
@@ -40,6 +41,14 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
     }
 
     @Override
+    public ResponseData<PageData<ProductDetailVO>> listPagesForMerchant(ProductQueryVO queryVO) {
+        // 获取当前登录账户信息
+        queryVO.setMerchantId(null);
+        queryVO.setMerchantRoleId(null);
+        return this.listPages(queryVO);
+    }
+
+    @Override
     @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> upsertProduct(ProductUpsertVO formData) {
         ProductDO productDO = new ProductDO();
@@ -68,5 +77,11 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
             throw new BusinessException("保存商品失败");
         }
         return ResponseData.success();
+    }
+
+    @Override
+    public ResponseData<Void> approveProduct(ApproveInfoVO approveInfoVO) {
+
+        return null;
     }
 }

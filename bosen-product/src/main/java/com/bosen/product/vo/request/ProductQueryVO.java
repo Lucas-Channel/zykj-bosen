@@ -14,6 +14,29 @@ public class ProductQueryVO extends PageVO {
      */
     private String keywords;
 
-    private Long categoryId;
+    /**
+     * 平台品类
+     */
+    private String categoryId;
+
+    /**
+     * 商家品类
+     */
+    private String merchantCategoryId;
+
+    /**
+     * 商家id
+     */
+    private String merchantId;
+
+    /**
+     * 商家角色
+     */
+    private String merchantRoleId;
+
+    /**
+     * 商家名称
+     */
+    private String merchantName;
 
 }

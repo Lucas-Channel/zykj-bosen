@@ -180,7 +180,6 @@ CREATE TABLE `bs_product_attribute`  (
                                          `attribute_id` bigint NULL DEFAULT NULL COMMENT '属性ID',
                                          `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '属性名称',
                                          `type` tinyint NOT NULL COMMENT '类型(1:规格;2:属性;)',
-                                         `default_attribute` tinyint CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '是否默认规格',
                                          `sort` int DEFAULT NULL COMMENT '排序',
                                          `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                          `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',

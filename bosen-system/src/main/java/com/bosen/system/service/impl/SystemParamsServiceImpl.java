@@ -3,6 +3,7 @@ package com.bosen.system.service.impl;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bosen.system.domain.SystemParamsDO;
 import com.bosen.system.mapper.SystemParamsMapper;
+import com.bosen.system.service.ISystemParamsService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,5 +12,5 @@ import org.springframework.stereotype.Service;
  * @date 2023/3/7
  */
 @Service
-public class SystemParamsServiceImpl extends ServiceImpl<SystemParamsMapper, SystemParamsDO> {
+public class SystemParamsServiceImpl extends ServiceImpl<SystemParamsMapper, SystemParamsDO> implements ISystemParamsService {
 }

@@ -16,8 +16,20 @@
             <if test='queryParams.categoryId !=null'>
                 and bb.category_id = #{queryParams.categoryId}
             </if>
+            <if test='queryParams.merchantCategoryId !=null'>
+                and bb.merchant_category_id = #{queryParams.merchantCategoryId}
+            </if>
+            <if test='queryParams.merchantId !=null'>
+                and bb.merchant_id = #{queryParams.merchantId}
+            </if>
+            <if test='queryParams.merchantRoleId !=null'>
+                and bb.merchant_role_id = #{queryParams.merchantRoleId}
+            </if>
+            <if test='queryParams.merchantName !=null'>
+                and bb.merchant_name like concat('%',#{queryParams.merchantName},'%')
+            </if>
         </where>
-        ORDER BY bb.id DESC
+        ORDER BY bb.create_time DESC
     </select>
 
     <select id="listForMobile" resultType="com.bosen.product.vo.response.ProductCategoryBrandDetailVO">

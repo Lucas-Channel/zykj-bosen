@@ -1,6 +1,10 @@
 package com.bosen.system.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.common.domain.PageVO;
 import com.bosen.system.domain.UnitDO;
 import com.bosen.system.service.IUnitService;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +31,17 @@ public class UnitController {
     @GetMapping("/list")
     public ResponseData<List<UnitDO>> list() {
         return ResponseData.success(unitService.list());
+    }
+
+    /**
+     * 商品分页列表
+     * @return 结果
+     */
+    @GetMapping("/pages")
+    public ResponseData<PageData<UnitDO>> listPages(PageVO queryVO) {
+        Page<UnitDO> list = unitService.page(new Page<>(queryVO.getCurrent(), queryVO.getSize()),
+                new LambdaQueryWrapper<UnitDO>().orderByDesc(UnitDO::getCreateTime));
+        return ResponseData.success(new PageData<>(list.getTotal(), list.getRecords()));
     }
 
     /**

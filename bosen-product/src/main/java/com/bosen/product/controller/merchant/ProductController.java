@@ -1,4 +1,4 @@
-package com.bosen.product.controller;
+package com.bosen.product.controller.merchant;
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
- * 商品spu管理
+ * 商品spu管理-商家后台
  */
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/product/merchant")
 public class ProductController {
     @Resource
     private IProductService productService;
@@ -28,8 +29,8 @@ public class ProductController {
      * @return 结果
      */
     @GetMapping("/pages")
-   public ResponseData<PageData<ProductDetailVO>> listPages(ProductQueryVO queryVO) {
-        return productService.listPages(queryVO);
+   public ResponseData<PageData<ProductDetailVO>> listPagesForMerchant(ProductQueryVO queryVO) {
+        return productService.listPagesForMerchant(queryVO);
     }
 
     /**
@@ -53,6 +54,16 @@ public class ProductController {
     @PostMapping("/upsertProduct")
     public ResponseData<Void> upsertProduct(@RequestBody @Valid ProductUpsertVO formData) {
         return productService.upsertProduct(formData);
+    }
+
+    /**
+     * 商品-提交审核
+     * @param id 商品id
+     * @return
+     */
+    @PostMapping("/submitApproveProduct")
+    public ResponseData<Void> submitApproveProduct(@RequestBody @Valid @NotBlank(message = "商品id不能为空") String id) {
+        return null;
     }
 
 
