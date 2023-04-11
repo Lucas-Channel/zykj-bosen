@@ -32,6 +32,8 @@ public class WebSecurityConfig {
                 .antMatchers("/rsa/publicKey").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
                 .antMatchers("/oauth/**").permitAll()
+                .antMatchers("/search/**").permitAll()
+                .antMatchers("/unit/**").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable();
         return http.build();
