@@ -1,7 +1,7 @@
 package com.bosen.product.controller;
 
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.product.domain.ProductCategory;
+import com.bosen.product.domain.ProductCategoryDO;
 import com.bosen.product.service.IProductCategoryService;
 import com.bosen.product.vo.response.ProductCategoryDetailVO;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +33,7 @@ public class ProductCategoryController {
      * @return 结果
      */
     @PostMapping("/upsertCategory")
-    public ResponseData<Void> upsertCategory(@RequestBody ProductCategory category) {
+    public ResponseData<Void> upsertCategory(@RequestBody ProductCategoryDO category) {
         return ResponseData.judge(productCategoryService.saveOrUpdate(category));
     }
 

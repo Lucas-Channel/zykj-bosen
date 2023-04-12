@@ -143,6 +143,7 @@ CREATE TABLE `bs_product`  (
                                `merchant_name` varchar(70) not NULL COMMENT '商家名称',
                                `product_type` int not NULL COMMENT '商品类型',
                                `delivery_type` int not NULL COMMENT '配送方式',
+                               `sales_all_area` int not NULL COMMENT '是否全国可售',
                                `merchant_category_id` varchar(70) not NULL COMMENT '商家品类',
                                `freight_calculate_model` int not NULL COMMENT '运费承担方',
                                `freight_template_id` varchar(70) not NULL COMMENT '运费模板id',

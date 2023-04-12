@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 @TableName("bs_product_category_brand")
-public class ProductCategoryBrand extends BaseEntityData {
+public class ProductCategoryBrandDO extends BaseEntityData {
     /**
      * 分类ID
      */

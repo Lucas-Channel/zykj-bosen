@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -63,7 +64,7 @@ public class ProductController {
      */
     @PostMapping("/submitApproveProduct")
     public ResponseData<Void> submitApproveProduct(@RequestBody @Valid @NotBlank(message = "商品id不能为空") String id) {
-        return null;
+        return productService.submitApproveProduct(id);
     }
 
 
@@ -73,7 +74,16 @@ public class ProductController {
      * @return 结果
      */
     @PostMapping("/deleteByIds")
-    public ResponseData<Void> deleteByIds(@RequestBody List<Long> ids) {
-        return ResponseData.judge(productService.removeBatchByIds(ids));
+    public ResponseData<Void> deleteByIds(@RequestBody @Valid @NotEmpty(message = "商品id不能为空") List<Long> ids) {
+        return productService.deleteByIds(ids);
+    }
+
+    /**
+     * 上架/下架
+     * @return
+     */
+    @PostMapping("/upOrDown")
+    public ResponseData<Void> upOrDown(@RequestBody @Valid @NotEmpty(message = "上架商品id不能为空") List<Long> ids) {
+        return productService.upOrDown(ids);
     }
 }

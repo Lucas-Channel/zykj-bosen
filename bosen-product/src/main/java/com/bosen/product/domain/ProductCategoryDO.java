@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 @TableName("bs_product_category")
-public class ProductCategory extends BaseEntityData {
+public class ProductCategoryDO extends BaseEntityData {
 
     private String name;
 

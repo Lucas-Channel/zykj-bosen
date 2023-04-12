@@ -1,18 +1,25 @@
 package com.bosen.product.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.bosen.common.constant.common.YesOrNoConstant;
 import com.bosen.common.constant.response.PageData;
+import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.exception.BusinessException;
 import com.bosen.common.vo.request.ApproveInfoVO;
+import com.bosen.product.constant.ProductApproveStatusEnums;
+import com.bosen.product.domain.ProductApproveRecordDO;
+import com.bosen.product.domain.ProductAreaDO;
 import com.bosen.product.domain.ProductAttributeDO;
 import com.bosen.product.domain.ProductDO;
 import com.bosen.product.mapper.ProductMapper;
+import com.bosen.product.service.IProductApproveRecordService;
+import com.bosen.product.service.IProductAreaService;
 import com.bosen.product.service.IProductAttributeService;
 import com.bosen.product.service.IProductService;
-import com.bosen.product.service.IProductSkuService;
 import com.bosen.product.vo.request.ProductQueryVO;
 import com.bosen.product.vo.request.ProductUpsertVO;
 import com.bosen.product.vo.response.ProductDetailVO;
@@ -21,7 +28,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +41,10 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
     private IProductAttributeService productAttributeService;
 
     @Resource
-    private IProductSkuService skuService;
+    private IProductAreaService productAreaService;
+
+    @Resource
+    private IProductApproveRecordService productApproveRecordService;
 
     @Override
     public ResponseData<PageData<ProductDetailVO>> listPages(ProductQueryVO queryVO) {
@@ -54,27 +67,37 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
         // step1 保存spu基本信息
         ProductDO productDO = new ProductDO();
         BeanUtils.copyProperties(formData, productDO);
+        productDO.setStatus(ProductApproveStatusEnums.WAIT_SUBMIT_APPROVE.getCode());
         boolean saveOrUpdate = this.saveOrUpdate(productDO);
         // step2 保存spu属性和规格
         if (saveOrUpdate) {
             // step2.1 删除历史属性和规格
             productAttributeService.lambdaUpdate().eq(ProductAttributeDO::getProductId, productDO.getId()).remove();
-            // 保存商品属性
+            // step2.2 保存商品属性
             List<ProductAttributeDO> productAttributeDOS = formData.getAttrList().stream().map(i -> {
                 ProductAttributeDO attributeDO = new ProductAttributeDO();
                 BeanUtils.copyProperties(i, attributeDO);
-                //attributeDO.setProductId(productDO.getId());
+                attributeDO.setProductId(productDO.getId());
                 return attributeDO;
             }).collect(Collectors.toList());
             productAttributeService.saveBatch(productAttributeDOS);
-            // 保存规格
+            // step2.3 保存规格
             productAttributeDOS = formData.getSpecList().stream().map(i -> {
                 ProductAttributeDO attributeDO = new ProductAttributeDO();
                 BeanUtils.copyProperties(i, attributeDO);
-                //attributeDO.setProductId(productDO.getId());
+                attributeDO.setProductId(productDO.getId());
                 return attributeDO;
             }).collect(Collectors.toList());
             productAttributeService.saveBatch(productAttributeDOS);
+            // step2.4 保存spu销售范围
+            productAreaService.lambdaUpdate().eq(ProductAreaDO::getProductId, productDO.getId()).remove();
+            List<ProductAreaDO> areaDOS = formData.getAreaList().stream().map(i -> {
+                ProductAreaDO attributeDO = new ProductAreaDO();
+                BeanUtils.copyProperties(i, attributeDO);
+                attributeDO.setProductId(productDO.getId());
+                return attributeDO;
+            }).collect(Collectors.toList());
+            productAreaService.saveBatch(areaDOS);
         } else {
             throw new BusinessException("保存商品失败");
         }
@@ -82,8 +105,77 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
     }
 
     @Override
+    @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> approveProduct(ApproveInfoVO approveInfoVO) {
+        String adminId = null;
+        String adminRoleId = null;
+        String adminName = null;
+        ProductDO productDO = baseMapper.selectById(approveInfoVO.getOriginalId());
+        if (!Objects.equals(productDO.getStatus(), ProductApproveStatusEnums.WAIT_APPROVE)) {
+            throw new BusinessException(ResponseCode.APPROVE_PRODUCT_STATUS_ERROR);
+        }
+        productDO.setStatus(Objects.equals(approveInfoVO.getAgree(), YesOrNoConstant.YES) ? ProductApproveStatusEnums.AGREE.getCode() : ProductApproveStatusEnums.DISAGREE.getCode());
+        this.updateById(productDO);
+        // 添加审核记录
+        ProductApproveRecordDO approveRecordDO = new ProductApproveRecordDO();
+        approveRecordDO.setProductId(approveInfoVO.getOriginalId())
+                .setOperationUserId(adminId)
+                .setOperationUserRoleId(adminRoleId)
+                .setOperationUserName(adminName)
+                .setStatus(productDO.getStatus())
+                .setAgreeAdvice(approveInfoVO.getReason());
+        productApproveRecordService.save(approveRecordDO);
+        return ResponseData.success();
+    }
 
+    @Override
+    @Transactional(rollbackFor = BusinessException.class)
+    public ResponseData<Void> submitApproveProduct(String id) {
+        String merchantId = null;
+        String merchantRoleId = null;
+        String merchantName = null;
+        ProductDO productDO = baseMapper.selectById(id);
+        if (!Objects.equals(productDO.getStatus(), ProductApproveStatusEnums.WAIT_SUBMIT_APPROVE)) {
+            throw new BusinessException(ResponseCode.SUBMIT_APPROVE_PRODUCT_STATUS_ERROR);
+        }
+        if (!Objects.equals(productDO.getMerchantId(), merchantId) && !Objects.equals(productDO.getMerchantRoleId(), merchantRoleId)) {
+            throw new BusinessException(ResponseCode.SUBMIT_APPROVE_PRODUCT_BY_SELF_ERROR);
+        }
+        productDO.setStatus(ProductApproveStatusEnums.WAIT_APPROVE.getCode());
+        this.updateById(productDO);
+        // 添加审核记录
+        ProductApproveRecordDO approveRecordDO = new ProductApproveRecordDO();
+        approveRecordDO.setProductId(id)
+                .setOperationUserId(merchantId)
+                .setOperationUserRoleId(merchantRoleId)
+                .setOperationUserName(merchantName)
+                .setStatus(productDO.getStatus())
+                .setAgreeAdvice("提交审核");
+        productApproveRecordService.save(approveRecordDO);
+        return ResponseData.success();
+    }
+
+    @Override
+    @Transactional(rollbackFor = BusinessException.class)
+    public ResponseData<Void> deleteByIds(List<Long> ids) {
+        // 待审核，上架，审核通过
+        List<Integer> statusList = new ArrayList<>(Arrays.asList(ProductApproveStatusEnums.WAIT_APPROVE.getCode(),
+                ProductApproveStatusEnums.UP.getCode(), ProductApproveStatusEnums.AGREE.getCode()));
+        List<ProductDO> list = baseMapper.selectBatchIds(ids);
+        List<ProductDO> notDelete = list.stream().filter(i -> statusList.contains(i.getStatus())).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(notDelete)) {
+            throw new BusinessException(ResponseCode.CANNOT_DELETE_PRODUCT_ERROR);
+        }
+        list.forEach(i -> {
+            i.setDelFlag(1);
+        });
+        return ResponseData.judge(this.updateBatchById(list));
+    }
+
+    @Override
+    public ResponseData<Void> upOrDown(List<Long> ids) {
+        // 判断商品是否可以上架
+        // 上架用户是否是商家自身
         return null;
     }
 }

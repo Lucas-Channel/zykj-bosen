@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.exception.BusinessException;
-import com.bosen.product.domain.ProductCategoryBrand;
+import com.bosen.product.domain.ProductCategoryBrandDO;
 import com.bosen.product.mapper.ProductCategoryBrandMapper;
 import com.bosen.product.service.IProductCategoryBrandService;
 import com.bosen.product.vo.request.ProductCategoryBrandQueryVO;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * @date 2023/3/2
  */
 @Service
-public class ProductCategoryBrandServiceImpl extends ServiceImpl<ProductCategoryBrandMapper, ProductCategoryBrand> implements IProductCategoryBrandService {
+public class ProductCategoryBrandServiceImpl extends ServiceImpl<ProductCategoryBrandMapper, ProductCategoryBrandDO> implements IProductCategoryBrandService {
     @Override
     public ResponseData<PageData<ProductCategoryBrandDetailVO>> pageList(ProductCategoryBrandQueryVO queryVO) {
         Page<ProductCategoryBrandDetailVO> page = new Page<>(queryVO.getCurrent(), queryVO.getSize());
@@ -55,8 +55,8 @@ public class ProductCategoryBrandServiceImpl extends ServiceImpl<ProductCategory
     @Override
     @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> upsertCategoryBrand(ProductCategoryBrandUpsertVO upsertVO) {
-        List<ProductCategoryBrand> collect = upsertVO.getBrandIds().stream().map(i -> {
-            ProductCategoryBrand brand = new ProductCategoryBrand();
+        List<ProductCategoryBrandDO> collect = upsertVO.getBrandIds().stream().map(i -> {
+            ProductCategoryBrandDO brand = new ProductCategoryBrandDO();
             brand.setBrandId(i);
             brand.setCategoryId(upsertVO.getCategoryId());
             if (Objects.isNull(upsertVO.getId())) {

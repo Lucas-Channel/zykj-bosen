@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.exception.BusinessException;
-import com.bosen.product.domain.ProductCategoryAttribute;
+import com.bosen.product.domain.ProductCategoryAttributeDO;
 import com.bosen.product.mapper.ProductCategoryAttributeMapper;
 import com.bosen.product.service.IProductCategoryAttributeService;
 import com.bosen.product.vo.request.ProductCategoryAttributeQueryVO;
@@ -23,14 +23,14 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductCategoryAttributeServiceImpl extends ServiceImpl<ProductCategoryAttributeMapper, ProductCategoryAttribute> implements IProductCategoryAttributeService {
+public class ProductCategoryAttributeServiceImpl extends ServiceImpl<ProductCategoryAttributeMapper, ProductCategoryAttributeDO> implements IProductCategoryAttributeService {
 
     @Override
     public ResponseData<PageData<ProductCategoryAttributeDetailVO>> pageList(ProductCategoryAttributeQueryVO queryVO) {
-        Page<ProductCategoryAttribute> page = this.page(new Page<>(queryVO.getCurrent(), queryVO.getSize()), new LambdaQueryWrapper<ProductCategoryAttribute>()
-                .eq(Objects.nonNull(queryVO.getCategoryId()), ProductCategoryAttribute::getCategoryId, queryVO.getCategoryId())
-                .like(StringUtils.hasLength(queryVO.getName()), ProductCategoryAttribute::getName, queryVO.getName())
-                .eq(ProductCategoryAttribute::getType, queryVO.getType()));
+        Page<ProductCategoryAttributeDO> page = this.page(new Page<>(queryVO.getCurrent(), queryVO.getSize()), new LambdaQueryWrapper<ProductCategoryAttributeDO>()
+                .eq(Objects.nonNull(queryVO.getCategoryId()), ProductCategoryAttributeDO::getCategoryId, queryVO.getCategoryId())
+                .like(StringUtils.hasLength(queryVO.getName()), ProductCategoryAttributeDO::getName, queryVO.getName())
+                .eq(ProductCategoryAttributeDO::getType, queryVO.getType()));
         return ResponseData.success(new PageData<>(page.getTotal(), page.getRecords().stream().map(i -> {
             ProductCategoryAttributeDetailVO detailVO = new ProductCategoryAttributeDetailVO();
             BeanUtils.copyProperties(i, detailVO);
@@ -41,13 +41,13 @@ public class ProductCategoryAttributeServiceImpl extends ServiceImpl<ProductCate
     @Override
     @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> upsert(List<ProductCategoryAttributeUpsert> upsert) {
-        List<ProductCategoryAttribute> attributes = upsert.stream().map(i -> {
-            ProductCategoryAttribute productCategoryAttribute = new ProductCategoryAttribute();
-            BeanUtils.copyProperties(i, productCategoryAttribute);
+        List<ProductCategoryAttributeDO> attributes = upsert.stream().map(i -> {
+            ProductCategoryAttributeDO productCategoryAttributeDO = new ProductCategoryAttributeDO();
+            BeanUtils.copyProperties(i, productCategoryAttributeDO);
             if (Objects.nonNull(i.getCategoryId())) {
-                productCategoryAttribute.setCreateTime(LocalDateTime.now());
+                productCategoryAttributeDO.setCreateTime(LocalDateTime.now());
             }
-            return productCategoryAttribute;
+            return productCategoryAttributeDO;
         }).collect(Collectors.toList());
         return ResponseData.judge(this.saveOrUpdateBatch(attributes));
     }

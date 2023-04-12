@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 @TableName("bs_product_category_attribute")
-public class ProductCategoryAttribute extends BaseEntityData {
+public class ProductCategoryAttributeDO extends BaseEntityData {
 
     /**
      * 商品分类ID

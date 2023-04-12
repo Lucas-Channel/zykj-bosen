@@ -76,6 +76,14 @@ public enum ResponseCode {
     USER_NAME_OR_PHONE_HAS_EXIT_ERROR(1218, "当前账号名称/手机号已存在"),
 
     ONLY_UPDATE_MEMBER_SELF_INFO_ERROR(1219, "只能更新自己的会员信息"),
+
+    SUBMIT_APPROVE_PRODUCT_STATUS_ERROR(1220, "只有待提交审核的商品才可以提交审核"),
+
+    SUBMIT_APPROVE_PRODUCT_BY_SELF_ERROR(1221, "只有商家自身才可以提交审核"),
+
+    CANNOT_DELETE_PRODUCT_ERROR(1222, "待审核，已上架，审核通过的商品不能删除"),
+
+    APPROVE_PRODUCT_STATUS_ERROR(1223, "只有待审核商品才能进行审核"),
     ;
 
 

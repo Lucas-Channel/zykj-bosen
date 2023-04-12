@@ -3,9 +3,11 @@ package com.bosen.product.domain;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.bosen.common.constant.common.YesOrNoConstant;
 import com.bosen.common.domain.BaseEntityData;
 import com.bosen.product.constant.DeliveryTypeEnum;
 import com.bosen.product.constant.FreightCalculateModelEnum;
+import com.bosen.product.constant.ProductApproveStatusEnums;
 import com.bosen.product.constant.ProductTypeEnums;
 import lombok.Data;
 
@@ -89,7 +91,8 @@ public class ProductDO extends BaseEntityData implements Serializable {
     private String detail;
 
     /**
-     * 商品状态(0-下架 1-上架，2-待审核，3-审核不通过, 4-审核通过)
+     * 商品状态(0-待提交审核，1-待审核，2-审核不通过, 3-审核通过,4-下架 5-上架，)
+     * @see ProductApproveStatusEnums
      */
     private Integer status;
 
@@ -150,5 +153,13 @@ public class ProductDO extends BaseEntityData implements Serializable {
      * @see DeliveryTypeEnum
      */
     private Integer deliveryType;
+
+    /**
+     * 是否全国可售
+     * @see YesOrNoConstant
+     */
+    private Integer salesAllArea = 1;
+
+
 
 }

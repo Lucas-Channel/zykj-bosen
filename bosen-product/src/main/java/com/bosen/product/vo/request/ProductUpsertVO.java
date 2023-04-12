@@ -134,5 +134,8 @@ public class ProductUpsertVO {
     private List<ProductAttributeUpsertVO> specList;
 
     @NotEmpty
-    private List<ProductSkuUpsertVO> skuList;
+    private List<ProductAreaUpsertVO> areaList;
+
+//    @NotEmpty
+//    private List<ProductSkuUpsertVO> skuList;
 }

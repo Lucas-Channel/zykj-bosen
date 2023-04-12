@@ -9,6 +9,8 @@ import com.bosen.product.vo.request.ProductQueryVO;
 import com.bosen.product.vo.request.ProductUpsertVO;
 import com.bosen.product.vo.response.ProductDetailVO;
 
+import java.util.List;
+
 public interface IProductService extends IService<ProductDO> {
     ResponseData<PageData<ProductDetailVO>> listPages(ProductQueryVO queryVO);
 
@@ -17,4 +19,10 @@ public interface IProductService extends IService<ProductDO> {
     ResponseData<Void> upsertProduct(ProductUpsertVO formData);
 
     ResponseData<Void> approveProduct(ApproveInfoVO approveInfoVO);
+
+    ResponseData<Void> submitApproveProduct(String id);
+
+    ResponseData<Void> deleteByIds(List<Long> ids);
+
+    ResponseData<Void> upOrDown(List<Long> ids);
 }
