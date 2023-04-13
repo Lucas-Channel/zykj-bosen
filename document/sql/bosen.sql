@@ -446,7 +446,7 @@ CREATE TABLE `bs_admin_merchant_level` (
 -- bs_oauth_client_details definition
 
 CREATE TABLE `bs_oauth_client_details` (
-                                           `id` bigint NOT NULL AUTO_INCREMENT,
+                                           `id` varchar(32) NOT NULL AUTO_INCREMENT,
                                            `client_id` varchar(48) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
                                            `resource_ids` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
                                            `client_secret` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,

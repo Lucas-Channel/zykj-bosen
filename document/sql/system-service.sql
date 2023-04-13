@@ -3,7 +3,7 @@
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_unit`;
 CREATE TABLE `bs_unit`  (
-                                     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                     `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                      `unit_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '单位编码',
                                      `unit_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '单位名称',
                                      `status` int NULL DEFAULT NULL COMMENT '启用状态：1，启用，0禁用',
@@ -23,7 +23,7 @@ CREATE TABLE `bs_unit`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_currency`;
 CREATE TABLE `bs_currency`  (
-                            `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                            `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
                             `currency_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '编码',
                             `currency_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '名称',
                             `currency_icon` varchar(64) DEFAULT NULL COMMENT '启用状态：1，启用，0禁用',
@@ -43,7 +43,7 @@ INSERT INTO `bs_currency` VALUES (1, 'RMB', '人民币', '', '2021-07-11 19:56:5
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_pay_method`;
 CREATE TABLE `bs_pay_method`  (
-                                `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                 `pay_method_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '编码',
                                 `pay_method_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '名称',
                                 `icon_url` varchar(64) DEFAULT NULL COMMENT '图标地址',
@@ -68,8 +68,8 @@ CREATE TABLE `bs_pay_method`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_pay_method_params`;
 CREATE TABLE `bs_pay_method_params`  (
-                                  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
-                                  `pay_method_id` bigint NOT NULL COMMENT '支付方式id',
+                                  `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                  `pay_method_id` varchar(32) NOT NULL COMMENT '支付方式id',
                                   `param_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '编码',
                                   `param_val` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '值',
                                   `param_remark` varchar(64) DEFAULT NULL COMMENT '说明',
@@ -92,7 +92,7 @@ CREATE TABLE `bs_pay_method_params`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_sys_params`;
 CREATE TABLE `bs_sys_params`  (
-                                         `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                         `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                          `code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '编码',
                                          `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '名称',
                                          `val` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '值',
@@ -116,12 +116,12 @@ CREATE TABLE `bs_sys_params`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_area`;
 CREATE TABLE `bs_area`  (
-                                  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                  `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                   `code` varchar(64) NOT NULL COMMENT '编码',
                                   `name` varchar(64) NOT NULL COMMENT '名称',
                                   `level` int NOT NULL COMMENT '层级',
                                   `sort` int DEFAULT NULL COMMENT '排序',
-                                  `parent_id` bigint NULL DEFAULT NULL COMMENT '父类id',
+                                  `parent_id` varchar(32) NULL DEFAULT NULL COMMENT '父类id',
                                   `create_time` datetime(0) DEFAULT NULL,
                                   `update_time` datetime(0) DEFAULT NULL,
                                   `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
