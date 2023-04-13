@@ -69,6 +69,17 @@ public class ProductController {
 
 
     /**
+     * 商品-提交审核-批量
+     * @param ids 商品id
+     * @return
+     */
+    @PostMapping("/submitApproveProductBatch")
+    public ResponseData<Void> submitApproveProductBatch(@RequestBody @Valid @NotBlank(message = "商品id不能为空") List<String> ids) {
+        return productService.submitApproveProductBatch(ids);
+    }
+
+
+    /**
      * 删除商品
      * @param ids ids
      * @return 结果

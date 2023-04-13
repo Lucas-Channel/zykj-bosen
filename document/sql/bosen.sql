@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS `bs_admin_user_b`;
 CREATE TABLE `bs_admin_user_b` (
-        `id` bigint(20) NOT NULL AUTO_INCREMENT,
+        `id` varchar(32) NOT NULL AUTO_INCREMENT,
         `username` varchar(64) DEFAULT NULL,
         `password` varchar(64) DEFAULT NULL,
         `icon` varchar(500) DEFAULT NULL COMMENT '头像',
@@ -31,8 +31,8 @@ INSERT INTO `bs_admin_user_b` VALUES (1, 'admin', '$2a$10$NZ5o7r2E.ayT2ZoxgjlI.e
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_portal_member_b`;
 CREATE TABLE `bs_portal_member_b` (
-       `id` bigint(20) NOT NULL AUTO_INCREMENT,
-       `member_level_id` bigint(20) DEFAULT NULL,
+       `id` varchar(32) NOT NULL AUTO_INCREMENT,
+       `member_level_id` varchar(32) DEFAULT NULL,
        `username` varchar(64) DEFAULT NULL COMMENT '用户名',
        `password` varchar(64) DEFAULT NULL COMMENT '密码',
        `nick_name` varchar(64) DEFAULT NULL COMMENT '昵称',
@@ -76,7 +76,7 @@ INSERT INTO `bs_portal_member_b` VALUES (7, '4', 'lion', '$2a$10$NZ5o7r2E.ayT2Zo
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_portal_member_level`;
 CREATE TABLE `bs_portal_member_level` (
-       `id` bigint(20) NOT NULL AUTO_INCREMENT,
+       `id` varchar(32) NOT NULL AUTO_INCREMENT,
        `name` varchar(100) DEFAULT NULL,
        `growth_point` int(11) DEFAULT NULL,
        `default_status` int(1) DEFAULT NULL COMMENT '是否为默认等级：0->不是；1->是',
@@ -110,8 +110,8 @@ INSERT INTO `bs_portal_member_level` VALUES ('4', '普通会员', '1', '1', '199
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_portal_member_login_log`;
 CREATE TABLE `bs_portal_member_login_log` (
-        `id` bigint(20) NOT NULL AUTO_INCREMENT,
-        `member_id` bigint(20) DEFAULT NULL,
+        `id` varchar(32) NOT NULL AUTO_INCREMENT,
+        `member_id` varchar(32) DEFAULT NULL,
         `create_time` datetime DEFAULT NULL,
         `ip` varchar(64) DEFAULT NULL,
         `city` varchar(64) DEFAULT NULL,
@@ -126,8 +126,8 @@ CREATE TABLE `bs_portal_member_login_log` (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_portal_member_receive_address`;
 CREATE TABLE `bs_portal_member_receive_address` (
-     `id` bigint(20) NOT NULL AUTO_INCREMENT,
-     `member_id` bigint(20) DEFAULT NULL,
+     `id` varchar(32) NOT NULL AUTO_INCREMENT,
+     `member_id` varchar(32) DEFAULT NULL,
      `name` varchar(100) DEFAULT NULL COMMENT '收货人名称',
      `phone_number` varchar(64) DEFAULT NULL,
      `default_status` int(1) DEFAULT NULL COMMENT '是否为默认',
@@ -157,8 +157,8 @@ INSERT INTO `bs_portal_member_receive_address` VALUES ('4', '1', '大梨', '1803
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_portal_member_statistics_info`;
 CREATE TABLE `bs_portal_member_statistics_info` (
-     `id` bigint(20) NOT NULL AUTO_INCREMENT,
-     `member_id` bigint(20) DEFAULT NULL,
+     `id` varchar(32) NOT NULL AUTO_INCREMENT,
+     `member_id` varchar(32) DEFAULT NULL,
      `consume_amount` decimal(10,2) DEFAULT NULL COMMENT '累计消费金额',
      `order_count` int(11) DEFAULT NULL COMMENT '订单数量',
      `coupon_count` int(11) DEFAULT NULL COMMENT '优惠券数量',
@@ -182,8 +182,8 @@ CREATE TABLE `bs_portal_member_statistics_info` (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_sys_menu`;
 CREATE TABLE `bs_sys_menu` (
-                               `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                               `parent_id` bigint(20) DEFAULT NULL COMMENT '父级ID',
+                               `id` varchar(32) NOT NULL AUTO_INCREMENT,
+                               `parent_id` varchar(32) DEFAULT NULL COMMENT '父级ID',
                                `create_time` datetime DEFAULT NULL COMMENT '创建时间',
                                `title` varchar(100) DEFAULT NULL COMMENT '菜单名称',
                                `level` int(4) DEFAULT NULL COMMENT '菜单级数',
@@ -232,8 +232,8 @@ INSERT INTO `bs_sys_menu` VALUES ('25', '21', '2020-02-07 16:31:13', '资源列�
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_menu_permission`;
 CREATE TABLE `bs_menu_permission` (
-                                      `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                                      `menu_id` bigint(20) DEFAULT NULL COMMENT '菜单id',
+                                      `id` varchar(32) NOT NULL AUTO_INCREMENT,
+                                      `menu_id` varchar(32) DEFAULT NULL COMMENT '菜单id',
                                       `name` varchar(100) DEFAULT NULL COMMENT '权限名称',
                                       `value` varchar(200) DEFAULT NULL COMMENT '权限值',
                                       `icon` varchar(500) DEFAULT NULL COMMENT '图标',
@@ -257,7 +257,7 @@ INSERT INTO `bs_menu_permission` VALUES (2, '1', '商品列表', 'pms:product:re
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_sys_role`;
 CREATE TABLE `bs_sys_role` (
-                               `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                               `id` varchar(32) NOT NULL AUTO_INCREMENT,
                                `name` varchar(100) DEFAULT NULL COMMENT '名称',
                                `code` varchar(100) DEFAULT NULL COMMENT '编码',
                                `description` varchar(500) DEFAULT NULL COMMENT '描述',
@@ -278,9 +278,9 @@ INSERT INTO `bs_sys_role` VALUES (1, '超级管理员', 'admin', '拥有所有�
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_role_menu_relation`;
 CREATE TABLE `bs_role_menu_relation` (
-                                         `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                                         `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
-                                         `menu_id` bigint(20) DEFAULT NULL COMMENT '菜单ID',
+                                         `id` varchar(32) NOT NULL AUTO_INCREMENT,
+                                         `role_id` varchar(32) DEFAULT NULL COMMENT '角色ID',
+                                         `menu_id` varchar(32) DEFAULT NULL COMMENT '菜单ID',
                                          PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8 COMMENT='后台角色菜单关系表';
 
@@ -295,9 +295,9 @@ INSERT INTO `bs_role_menu_relation` VALUES (2, '3', '2');
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_role_permission_relation`;
 CREATE TABLE `bs_role_permission_relation` (
-                                               `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                                               `role_id` bigint(20) DEFAULT NULL,
-                                               `permission_id` bigint(20) DEFAULT NULL,
+                                               `id` varchar(32) NOT NULL AUTO_INCREMENT,
+                                               `role_id` varchar(32) DEFAULT NULL,
+                                               `permission_id` varchar(32) DEFAULT NULL,
                                                PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='后台用户角色和权限关系表';
 
@@ -314,11 +314,11 @@ INSERT INTO `bs_role_permission_relation` VALUES (3, '3', '3');
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_user_role_relation`;
 CREATE TABLE `bs_user_role_relation` (
-                                         `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                                         `admin_user_id` bigint(20) DEFAULT NULL,
-                                         `role_id` bigint(20) DEFAULT NULL,
+                                         `id` varchar(32) NOT NULL AUTO_INCREMENT,
+                                         `admin_user_id` varchar(32) DEFAULT NULL,
+                                         `role_id` varchar(32) DEFAULT NULL,
                                          PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='后台用户和角色关系表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台用户和角色关系表';
 
 -- ----------------------------
 -- Records of bs_user_role_relation
@@ -334,9 +334,9 @@ INSERT INTO `bs_user_role_relation` VALUES (3, 1, 3);
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_user_permission_relation`;
 CREATE TABLE `bs_user_permission_relation` (
-     `id` bigint(20) NOT NULL AUTO_INCREMENT,
-     `admin_id` bigint(20) DEFAULT NULL,
-     `permission_id` bigint(20) DEFAULT NULL,
+     `id` varchar(32) NOT NULL AUTO_INCREMENT,
+     `admin_id` varchar(32) DEFAULT NULL,
+     `permission_id` varchar(32) DEFAULT NULL,
      PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台用户和权限关系表(除角色中定义的权限以外的加减权限)';
 
@@ -346,11 +346,11 @@ CREATE TABLE `bs_user_permission_relation` (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_merchant`;
 CREATE TABLE `bs_merchant` (
-                                               `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                                               `id` varchar(32) NOT NULL AUTO_INCREMENT,
                                                `merchant_name` varchar(100) DEFAULT NULL,
                                                `register_mobile` varchar(100) DEFAULT NULL,
                                                `password` varchar(100) DEFAULT NULL,
-                                               `admin_merchant_level_id` bigint(20) DEFAULT NULL,
+                                               `admin_merchant_level_id` varchar(32) DEFAULT NULL,
                                                `merchant_email` varchar(20) DEFAULT NULL,
                                                `relation_mobile` varchar(20) DEFAULT NULL,
                                                `relation_name` varchar(100) DEFAULT NULL,
@@ -377,8 +377,8 @@ CREATE TABLE `bs_merchant` (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_merchant_member_level`;
 CREATE TABLE `bs_merchant_member_level` (
-                                               `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                                               `merchant_id` bigint(20) DEFAULT NULL,
+                                               `id` varchar(32) NOT NULL AUTO_INCREMENT,
+                                               `merchant_id` varchar(32) DEFAULT NULL,
                                                `name` varchar(20) DEFAULT NULL,
                                                `creator_user` varchar(50) DEFAULT NULL,
                                                `create_time` datetime(0) DEFAULT NULL,
@@ -394,16 +394,16 @@ CREATE TABLE `bs_merchant_member_level` (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_merchant_role_relation`;
 CREATE TABLE `bs_merchant_role_relation` (
-                                         `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                                         `merchant_id` bigint(20) DEFAULT NULL,
-                                         `role_id` bigint(20) DEFAULT NULL,
+                                         `id` varchar(32) NOT NULL AUTO_INCREMENT,
+                                         `merchant_id` varchar(32) DEFAULT NULL,
+                                         `role_id` varchar(32) DEFAULT NULL,
                                          `creator_user` varchar(50) DEFAULT NULL,
                                          `create_time` datetime(0) DEFAULT NULL,
                                          `updater_user` varchar(50) DEFAULT NULL,
                                          `update_time` datetime(0) DEFAULT NULL,
                                          `del_flag` int DEFAULT 0,
                                          PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='入驻商家-角色信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='入驻商家-角色信息';
 
 
 -- ----------------------------
@@ -411,8 +411,8 @@ CREATE TABLE `bs_merchant_role_relation` (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_merchant_business_license`;
 CREATE TABLE `bs_merchant_business_license` (
-                                             `id` bigint(20) NOT NULL AUTO_INCREMENT,
-                                             `merchant_id` bigint(20) DEFAULT NULL,
+                                             `id` varchar(32) NOT NULL AUTO_INCREMENT,
+                                             `merchant_id` varchar(32) DEFAULT NULL,
                                              `bank_account` varchar(50) DEFAULT NULL,
                                              `bank_deposit` varchar(50) DEFAULT NULL,
                                              `company_name` varchar(50) DEFAULT NULL,
@@ -425,14 +425,14 @@ CREATE TABLE `bs_merchant_business_license` (
                                              `update_time` datetime(0) DEFAULT NULL,
                                              `del_flag` int DEFAULT 0,
                                              PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='平台入驻商家-营业信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='平台入驻商家-营业信息';
 
 -- ----------------------------
 -- Table structure for bs_admin_merchant_level
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_admin_merchant_level`;
 CREATE TABLE `bs_admin_merchant_level` (
-                                             `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                                             `id` varchar(32) NOT NULL AUTO_INCREMENT,
                                              `name` varchar(50) DEFAULT NULL,
                                              `creator_user` varchar(50) DEFAULT NULL,
                                              `create_time` datetime(0) DEFAULT NULL,
@@ -440,7 +440,7 @@ CREATE TABLE `bs_admin_merchant_level` (
                                              `update_time` datetime(0) DEFAULT NULL,
                                              `del_flag` int DEFAULT 0,
                                              PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='后台-商家等级';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台-商家等级';
 
 
 -- bs_oauth_client_details definition
@@ -476,3 +476,45 @@ VALUES(2, 'admin-app', NULL, '$2a$10$2cFW0KaOkxRraxjB98uCOOAmk1ViiPmE6EOVjACGN69
 INSERT INTO bs_oauth_client_details
 (id, client_id, resource_ids, client_secret, `scope`, authorized_grant_types, web_server_redirect_uri, authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove, creator_user, create_time, updater_user, update_time, del_flag)
 VALUES(3, 'merchant-app', NULL, '$2a$10$2cFW0KaOkxRraxjB98uCOOAmk1ViiPmE6EOVjACGN69PAacx4kJmm', 'all', 'authorization_code,password,refresh_token,client_credentials,SMS', '', NULL, 86400, 604800, NULL, 'true', NULL, NULL, NULL, NULL, 0);
+
+
+-- ----------------------------
+-- Table structure for bs_shop
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_shop`;
+CREATE TABLE `bs_shop` (
+                                           `id` varchar(32) NOT NULL AUTO_INCREMENT,
+                                           `name` varchar(50) DEFAULT NULL COMMENT '商城名称',
+                                           `shop_environment` int DEFAULT NULL COMMENT '商城所属',
+                                           `logo_url` varchar(100) DEFAULT NULL COMMENT '商城图标',
+                                           `describe` varchar(500) DEFAULT NULL COMMENT '商城描述',
+                                           `status` int DEFAULT NULL COMMENT '状态',
+                                           `creator_user` varchar(50) DEFAULT NULL,
+                                           `create_time` datetime(0) DEFAULT NULL,
+                                           `updater_user` varchar(50) DEFAULT NULL,
+                                           `update_time` datetime(0) DEFAULT NULL,
+                                           `del_flag` int DEFAULT 0,
+                                           PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商城';
+
+-- ----------------------------
+-- Table structure for bs_store
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_store`;
+CREATE TABLE `bs_store` (
+                           `id` varchar(32) NOT NULL AUTO_INCREMENT,
+                           `merchant_id` varchar(64) not null COMMENT '商家id',
+                           `merchant_role_id` varchar(64) not NULL COMMENT '商家角色id',
+                           `name` varchar(50) DEFAULT NULL COMMENT '商城名称',
+                           `logo_url` varchar(100) DEFAULT NULL COMMENT '商城图标',
+                           `describe` varchar(500) DEFAULT NULL COMMENT '商城描述',
+                           `status` int DEFAULT NULL COMMENT '状态',
+                           `credit_score` decimal(11,2) NULL DEFAULT NULL COMMENT '信誉分',
+                           `creator_user` varchar(50) DEFAULT NULL,
+                           `create_time` datetime(0) DEFAULT NULL,
+                           `updater_user` varchar(50) DEFAULT NULL,
+                           `update_time` datetime(0) DEFAULT NULL,
+                           `del_flag` int DEFAULT 0,
+                           PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='店铺';
+

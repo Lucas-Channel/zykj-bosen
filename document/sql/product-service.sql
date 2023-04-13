@@ -5,7 +5,7 @@
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product_brand`;
 CREATE TABLE `bs_product_brand`  (
-                                     `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                     `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                      `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '品牌名称',
                                      `logo_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'LOGO图片',
                                      `sort` int NULL DEFAULT NULL COMMENT '排序',
@@ -22,9 +22,9 @@ CREATE TABLE `bs_product_brand`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product_category`;
 CREATE TABLE `bs_product_category`  (
-                                        `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                        `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                         `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '商品分类名称',
-                                        `parent_id` bigint NOT NULL COMMENT '父级ID',
+                                        `parent_id` varchar(32) NOT NULL COMMENT '父级ID',
                                         `level` int NULL DEFAULT NULL COMMENT '层级',
                                         `icon_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '图标地址',
                                         `sort` int NULL DEFAULT NULL COMMENT '排序',
@@ -42,8 +42,8 @@ CREATE TABLE `bs_product_category`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product_category_attribute`;
 CREATE TABLE `bs_product_category_attribute`  (
-                                                  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
-                                                  `category_id` bigint NOT NULL COMMENT '分类ID',
+                                                  `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                                  `category_id` varchar(32) NOT NULL COMMENT '分类ID',
                                                   `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '属性名称',
                                                   `type` tinyint NOT NULL COMMENT '类型(1:规格;2:属性;)',
                                                   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
@@ -60,9 +60,9 @@ CREATE TABLE `bs_product_category_attribute`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product_category_brand`;
 CREATE TABLE `bs_product_category_brand`  (
-                                              `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
-                                              `category_id` bigint NOT NULL,
-                                              `brand_id` bigint NOT NULL,
+                                              `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                              `category_id` varchar(32) NOT NULL,
+                                              `brand_id` varchar(32) NOT NULL,
                                               `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                               `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
                                               `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
@@ -77,9 +77,9 @@ CREATE TABLE `bs_product_category_brand`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product_sku`;
 CREATE TABLE `bs_product_sku`  (
-                                   `id` bigint NOT NULL AUTO_INCREMENT,
+                                   `id` varchar(32) NOT NULL AUTO_INCREMENT,
                                    `sku_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品编码',
-                                   `product_id` bigint NOT NULL COMMENT '商品 ID',
+                                   `product_id` varchar(32) NOT NULL COMMENT '商品 ID',
                                    `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品名称',
                                    `spec_name_val` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品规格值拼接',
                                    `spec_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品规格值，以英文逗号(,)分割',
@@ -116,10 +116,10 @@ CREATE TABLE `bs_product_sku`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product`;
 CREATE TABLE `bs_product`  (
-                               `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                               `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '商品名称',
-                               `category_id` bigint NOT NULL COMMENT '商品类型ID',
-                               `brand_id` bigint NULL DEFAULT NULL COMMENT '商品品牌ID',
+                               `category_id` varchar(32) NOT NULL COMMENT '商品类型ID',
+                               `brand_id` varchar(32) NULL DEFAULT NULL COMMENT '商品品牌ID',
                                `origin_price` decimal(11,2) NOT NULL COMMENT '原价【起】，默认规格价格',
                                `sales_price` decimal(11,2) NOT NULL COMMENT '现价【起】，默认规格价格',
                                `selling_point` varchar(500) NULL COMMENT '卖点',
@@ -138,8 +138,8 @@ CREATE TABLE `bs_product`  (
                                `push_date_time` datetime NULL DEFAULT NULL COMMENT '上架时间',
                                `pull_date_time` datetime NULL DEFAULT NULL COMMENT '下架时间',
                                `apply_date_time` datetime NULL DEFAULT NULL COMMENT '审核时间',
-                               `merchant_id` bigint not null COMMENT '商家id',
-                               `merchant_role_id` bigint not NULL COMMENT '商家角色id',
+                               `merchant_id` varchar(32) not null COMMENT '商家id',
+                               `merchant_role_id` varchar(32) not NULL COMMENT '商家角色id',
                                `merchant_name` varchar(70) not NULL COMMENT '商家名称',
                                `product_type` int not NULL COMMENT '商品类型',
                                `delivery_type` int not NULL COMMENT '配送方式',
@@ -148,6 +148,9 @@ CREATE TABLE `bs_product`  (
                                `freight_calculate_model` int not NULL COMMENT '运费承担方',
                                `freight_template_id` varchar(70) not NULL COMMENT '运费模板id',
                                `delivery_company_id` varchar(70) not NULL COMMENT '物流公司id',
+                               `store_id` varchar(32) not NULL COMMENT '店铺id',
+                               `store_name` varchar(50) not NULL COMMENT '店铺名称',
+                               `store_logo` varchar(70) not NULL COMMENT '店铺logo',
                                PRIMARY KEY (`id`) USING BTREE,
                                INDEX `fk_brand`(`brand_id`) USING BTREE,
                                INDEX `fk_category`(`category_id`) USING BTREE
@@ -159,7 +162,7 @@ CREATE TABLE `bs_product`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product_label`;
 CREATE TABLE `bs_product_label`  (
-                               `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                               `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                `label_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '标签名称',
                                `label_id` varchar(64) NOT NULL COMMENT '标签id',
                                `product_id` varchar(64) NULL DEFAULT NULL COMMENT '商品ID',
@@ -176,9 +179,9 @@ CREATE TABLE `bs_product_label`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product_attribute`;
 CREATE TABLE `bs_product_attribute`  (
-                                         `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
-                                         `product_id` bigint NOT NULL COMMENT '产品ID',
-                                         `attribute_id` bigint NULL DEFAULT NULL COMMENT '属性ID',
+                                         `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                         `product_id` varchar(32) NOT NULL COMMENT '产品ID',
+                                         `attribute_id` varchar(32) NULL DEFAULT NULL COMMENT '属性ID',
                                          `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '属性名称',
                                          `type` tinyint NOT NULL COMMENT '类型(1:规格;2:属性;)',
                                          `sort` int DEFAULT NULL COMMENT '排序',
@@ -199,9 +202,9 @@ CREATE TABLE `bs_product_attribute`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product_attribute_value`;
 CREATE TABLE `bs_product_attribute_value`  (
-                                         `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
-                                         `product_id` bigint NOT NULL COMMENT '产品ID',
-                                         `product_attribute_id` bigint NULL DEFAULT NULL COMMENT '商品规格/属性ID',
+                                         `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                         `product_id` varchar(32) NOT NULL COMMENT '产品ID',
+                                         `product_attribute_id` varchar(32) NULL DEFAULT NULL COMMENT '商品规格/属性ID',
                                          `value` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '规格/属性值',
                                          `type` tinyint NOT NULL COMMENT '类型(1:规格;2:属性;)',
                                          `pic_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '规格图片',
@@ -221,8 +224,8 @@ CREATE TABLE `bs_product_attribute_value`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product_area`;
 CREATE TABLE `bs_product_area`  (
-                                         `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
-                                         `product_id` bigint NOT NULL COMMENT '产品ID',
+                                         `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                         `product_id` varchar(32) NOT NULL COMMENT '产品ID',
                                          `province_code` varchar(100) NULL DEFAULT NULL COMMENT '省份编码',
                                          `province_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '省份名称',
                                          `allow_all_city` tinyint NOT NULL COMMENT '是否不限制城市',
@@ -248,7 +251,7 @@ CREATE TABLE `bs_product_area`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_product_package_detail`;
 CREATE TABLE `bs_product_package_detail`  (
-                               `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                               `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                `product_id` varchar(64) NOT NULL COMMENT '商品spuID',
                                `sku_id` varchar(64) NOT NULL COMMENT '商品skuID',
                                `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
@@ -267,7 +270,7 @@ CREATE TABLE `bs_product_package_detail`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_freight_template`;
 CREATE TABLE `bs_freight_template`  (
-                               `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+                               `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
                                `name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '名称',
                                `pricing_mode` int NOT NULL COMMENT '计价方式 1-按重量',
                                `transport_mode` int NULL DEFAULT NULL COMMENT '运送方式',
@@ -288,3 +291,23 @@ CREATE TABLE `bs_freight_template`  (
                                PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '运费模板';
 
+
+-- ----------------------------
+-- Table structure for bs_product_approve_record
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_product_approve_record`;
+CREATE TABLE `bs_product_approve_record`  (
+                                    `id` varchar(32) NOT NULL AUTO_INCREMENT COMMENT '主键',
+                                    `product_id` varchar(32) NOT NULL COMMENT '产品ID',
+                                    `status` int NULL DEFAULT NULL COMMENT '状态',
+                                    `operation_user_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '操作用户id',
+                                    `operation_user_role_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '操作用户角色id',
+                                    `operation_user_name` varchar(32) NULL COMMENT '操作用户名称',
+                                    `agree_advice` varchar(200) NULL DEFAULT NULL COMMENT '审核意见',
+                                    `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                    `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                    `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                    `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                    `del_flag` int DEFAULT 0,
+                                    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品销售区域表';

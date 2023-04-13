@@ -2,6 +2,7 @@ package com.bosen.product.controller.admin;
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.common.vo.request.ApproveBatchInfoVO;
 import com.bosen.common.vo.request.ApproveInfoVO;
 import com.bosen.product.service.IProductService;
 import com.bosen.product.vo.request.ProductQueryVO;
@@ -40,4 +41,14 @@ public class ProductController {
         return productService.approveProduct(approveInfoVO);
     }
 
+
+    /**
+     * 商品审核-批量
+     * @param approveBatchInfoVO
+     * @return
+     */
+    @PostMapping("/approveBatch")
+    public ResponseData<Void> approveBatch(@RequestBody @Valid ApproveBatchInfoVO approveBatchInfoVO) {
+        return productService.approveBatch(approveBatchInfoVO);
+    }
 }

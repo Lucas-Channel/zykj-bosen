@@ -160,6 +160,19 @@ public class ProductDO extends BaseEntityData implements Serializable {
      */
     private Integer salesAllArea = 1;
 
+    /**
+     * 店铺id
+     */
+    private String storeId;
 
+    /**
+     * 店铺名称
+     */
+    private String storeName;
+
+    /**
+     * 店铺头像
+     */
+    private String storeLogo;
 
 }

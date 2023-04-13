@@ -9,6 +9,7 @@ import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.exception.BusinessException;
+import com.bosen.common.vo.request.ApproveBatchInfoVO;
 import com.bosen.common.vo.request.ApproveInfoVO;
 import com.bosen.product.constant.ProductApproveStatusEnums;
 import com.bosen.product.domain.ProductApproveRecordDO;
@@ -130,6 +131,33 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
 
     @Override
     @Transactional(rollbackFor = BusinessException.class)
+    public ResponseData<Void> approveBatch(ApproveBatchInfoVO approveBatchInfoVOS) {
+        String adminId = null;
+        String adminRoleId = null;
+        String adminName = null;
+        List<ProductDO> productDOs = baseMapper.selectBatchIds(approveBatchInfoVOS.getOriginalId());
+        List<ProductDO> dos = productDOs.stream().filter(i -> !Objects.equals(i.getStatus(), ProductApproveStatusEnums.WAIT_APPROVE)).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(dos)) {
+            throw new BusinessException(ResponseCode.APPROVE_PRODUCT_STATUS_ERROR);
+        }
+        productDOs.forEach(i -> {
+            i.setStatus(Objects.equals(approveBatchInfoVOS.getAgree(), YesOrNoConstant.YES) ? ProductApproveStatusEnums.AGREE.getCode() : ProductApproveStatusEnums.DISAGREE.getCode());
+            // 添加审核记录
+            ProductApproveRecordDO approveRecordDO = new ProductApproveRecordDO();
+            approveRecordDO.setProductId(i.getId())
+                    .setOperationUserId(adminId)
+                    .setOperationUserRoleId(adminRoleId)
+                    .setOperationUserName(adminName)
+                    .setStatus(i.getStatus())
+                    .setAgreeAdvice(approveBatchInfoVOS.getReason());
+            productApproveRecordService.save(approveRecordDO);
+        });
+        this.updateBatchById(productDOs);
+        return ResponseData.success();
+    }
+
+    @Override
+    @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> submitApproveProduct(String id) {
         String merchantId = null;
         String merchantRoleId = null;
@@ -157,6 +185,37 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
 
     @Override
     @Transactional(rollbackFor = BusinessException.class)
+    public ResponseData<Void> submitApproveProductBatch(List<String> ids) {
+        String merchantId = null;
+        String merchantRoleId = null;
+        String merchantName = null;
+        List<ProductDO> list = baseMapper.selectBatchIds(ids);
+        List<ProductDO> notSit = list.stream().filter(i -> !Objects.equals(i.getStatus(), ProductApproveStatusEnums.WAIT_SUBMIT_APPROVE)).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(notSit)) {
+            throw new BusinessException(ResponseCode.SUBMIT_APPROVE_PRODUCT_STATUS_ERROR);
+        }
+        List<ProductDO> notLoginUser = list.stream().filter(i -> !Objects.equals(i.getMerchantId(), merchantId) && !Objects.equals(i.getMerchantRoleId(), merchantRoleId)).collect(Collectors.toList());
+        if (CollUtil.isNotEmpty(notLoginUser)) {
+            throw new BusinessException(ResponseCode.SUBMIT_APPROVE_PRODUCT_BY_SELF_ERROR);
+        }
+        list.forEach(i -> {
+            i.setStatus(ProductApproveStatusEnums.WAIT_APPROVE.getCode());
+            // 添加审核记录
+            ProductApproveRecordDO approveRecordDO = new ProductApproveRecordDO();
+            approveRecordDO.setProductId(i.getId())
+                    .setOperationUserId(merchantId)
+                    .setOperationUserRoleId(merchantRoleId)
+                    .setOperationUserName(merchantName)
+                    .setStatus(i.getStatus())
+                    .setAgreeAdvice("提交审核");
+            productApproveRecordService.save(approveRecordDO);
+        });
+        this.updateBatchById(list);
+        return ResponseData.success();
+    }
+
+    @Override
+    @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> deleteByIds(List<Long> ids) {
         // 待审核，上架，审核通过
         List<Integer> statusList = new ArrayList<>(Arrays.asList(ProductApproveStatusEnums.WAIT_APPROVE.getCode(),
@@ -173,6 +232,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
     }
 
     @Override
+    @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> upOrDown(List<Long> ids) {
         // 判断商品是否可以上架
         // 上架用户是否是商家自身

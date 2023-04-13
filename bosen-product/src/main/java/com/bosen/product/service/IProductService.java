@@ -3,6 +3,7 @@ package com.bosen.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.common.vo.request.ApproveBatchInfoVO;
 import com.bosen.common.vo.request.ApproveInfoVO;
 import com.bosen.product.domain.ProductDO;
 import com.bosen.product.vo.request.ProductQueryVO;
@@ -20,7 +21,11 @@ public interface IProductService extends IService<ProductDO> {
 
     ResponseData<Void> approveProduct(ApproveInfoVO approveInfoVO);
 
+    ResponseData<Void> approveBatch(ApproveBatchInfoVO approveBatchInfoVOS);
+
     ResponseData<Void> submitApproveProduct(String id);
+
+    ResponseData<Void> submitApproveProductBatch(List<String> ids);
 
     ResponseData<Void> deleteByIds(List<Long> ids);
 
