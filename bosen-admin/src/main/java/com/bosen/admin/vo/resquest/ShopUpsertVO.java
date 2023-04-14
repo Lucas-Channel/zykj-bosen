@@ -1,29 +1,31 @@
-package com.bosen.admin.domain;
+package com.bosen.admin.vo.resquest;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.bosen.admin.constant.ShopEnvironmentEnum;
-import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * 商城
  * @author Lucas
  * @version 2.0.0
- * @date 2023/4/13
+ * @date 2023/4/14
  */
 @Data
-@TableName("bs_shop")
-public class ShopDO extends BaseEntityData implements Serializable {
-    private static final long serialVersionUID = -8353228506198499006L;
+public class ShopUpsertVO implements Serializable {
+    private static final long serialVersionUID = 587356629775366011L;
 
+    private String id;
+
+    @NotEmpty(message = "商城名称不能为空")
     private String name;
 
     /**
      * 商城环境:1.web 2.H5 3.小程序 4.APP
      * @see ShopEnvironmentEnum
      */
+    @NotNull(message = "商城环境不能为空")
     private Integer shopEnvironment;
 
     /**

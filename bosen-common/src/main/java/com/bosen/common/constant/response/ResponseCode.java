@@ -84,6 +84,16 @@ public enum ResponseCode {
     CANNOT_DELETE_PRODUCT_ERROR(1222, "待审核，已上架，审核通过的商品不能删除"),
 
     APPROVE_PRODUCT_STATUS_ERROR(1223, "只有待审核商品才能进行审核"),
+
+    STORE_NOT_EXIT_ERROR(1224, "店铺不存在"),
+
+    WAIT_APPROVE_OPEN_STORE_APPLY_ERROR(1225, "只能审核待审核开店申请的店铺"),
+
+    STORE_HAS_SHOP_ERROR(1226, "该商城下存在改店铺"),
+
+    STORE_SHOP_CANNOT_CLOSE_ERROR(1227, "该店铺不满足关闭条件"),
+
+    WAIT_APPROVE_CLOSE_STORE_APPLY_ERROR(1228, "只能审核待审核关店申请的店铺"),
     ;
 
 

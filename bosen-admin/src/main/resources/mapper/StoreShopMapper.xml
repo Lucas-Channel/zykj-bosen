@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bosen.admin.mapper.StoreShopMapper">
+
+    <select id="listStoreShopForMerchant" resultType="com.bosen.admin.vo.response.StoreShopDetailVO" parameterType="map">
+        select bss.store_id, bss.shop_id, bs.name,
+               bs.logo_url, bs.describe, bs.credit_score,
+               bsp.name shop_name from bs_store bs
+        inner join bs_store_shop bss on bss.store_id = bs.id and bss.del_flag=0
+        inner join bs_shop bsp on bsp.id = bss.shop_id and bsp.del_flag=0
+        where bs.del_flag=0
+            <if test="merchantId != null">
+                and bs.merchant_id = #{merchantId,jdbcType=VARCHAR}
+            </if>
+            <if test="merchantRoleId != null">
+                and bs.merchant_role_id = #{merchantRoleId,jdbcType=VARCHAR}
+            </if>
+            <if test="queryVO.name != null">
+                and bs.name like concat('%',concat(#{queryVO.name,jdbcType=VARCHAR},'%'))
+            </if>
+            <if test="queryVO.status != null">
+                and bss.status = #{queryVO.status,jdbcType=INTEGER}
+            </if>
+            <if test="queryVO.shopId != null">
+                and bss.shop_id = #{queryVO.shopId,jdbcType=VARCHAR}
+            </if>
+    </select>
+
+    <select id="pageList" resultType="com.bosen.admin.vo.response.StoreShopDetailVO" parameterType="map">
+        select bss.store_id, bss.shop_id, bs.name,
+        bs.logo_url, bs.describe, bs.credit_score,
+        bsp.name shop_name from bs_store bs
+        inner join bs_store_shop bss on bss.store_id = bs.id and bss.del_flag=0
+        inner join bs_shop bsp on bsp.id = bss.shop_id and bsp.del_flag=0
+        where bs.del_flag=0
+        <if test="queryVO.name != null">
+            and bs.name like concat('%',concat(#{queryVO.name,jdbcType=VARCHAR},'%'))
+        </if>
+        <if test="queryVO.status != null">
+            and bss.status = #{queryVO.status,jdbcType=INTEGER}
+        </if>
+        <if test="queryVO.shopId != null">
+            and bss.shop_id = #{queryVO.shopId,jdbcType=VARCHAR}
+        </if>
+    </select>
+</mapper>

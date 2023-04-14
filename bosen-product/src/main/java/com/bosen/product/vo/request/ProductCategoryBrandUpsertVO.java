@@ -11,12 +11,12 @@ import java.util.List;
  */
 @Data
 public class ProductCategoryBrandUpsertVO {
-    private Long id;
+    private String id;
 
     @NotNull
-    private Long categoryId;
+    private String categoryId;
 
     @NotEmpty
-    private List<Long> brandIds;
+    private List<String> brandIds;
 
 }

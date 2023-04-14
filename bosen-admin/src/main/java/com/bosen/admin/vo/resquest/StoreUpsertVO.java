@@ -1,37 +1,40 @@
-package com.bosen.admin.domain;
+package com.bosen.admin.vo.resquest;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.bosen.admin.constant.StoreStatusEnum;
-import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * 店铺
+ * 开店申请
  * @author Lucas
  * @version 2.0.0
- * @date 2023/4/13
+ * @date 2023/4/14
  */
 @Data
-@TableName("/bs_store")
-public class StoreDO extends BaseEntityData implements Serializable {
-    private static final long serialVersionUID = -1698675323076867765L;
+public class StoreUpsertVO implements Serializable {
+    private static final long serialVersionUID = -7422649724701006057L;
+
+    private String id;
 
     /**
      * 商家id
      */
+    @NotEmpty(message = "商家id不能为空")
     private String merchantId;
 
     /**
      * 商家角色id
      */
+    @NotEmpty(message = "商家角色id不能为空")
     private String merchantRoleId;
 
     /**
      * 店铺名称
      */
+    @NotEmpty(message = "店铺名称不能为空")
     private String name;
 
     /**

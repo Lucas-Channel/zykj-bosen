@@ -1,23 +1,21 @@
-package com.bosen.admin.domain;
+package com.bosen.admin.vo.response;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.bosen.admin.constant.StoreStatusEnum;
-import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * 店铺
+ * 店铺明细
  * @author Lucas
  * @version 2.0.0
- * @date 2023/4/13
+ * @date 2023/4/14
  */
 @Data
-@TableName("/bs_store")
-public class StoreDO extends BaseEntityData implements Serializable {
-    private static final long serialVersionUID = -1698675323076867765L;
+public class StoreDetailVO implements Serializable {
+    private static final long serialVersionUID = -1071355764910765800L;
+    private String id;
 
     /**
      * 商家id
