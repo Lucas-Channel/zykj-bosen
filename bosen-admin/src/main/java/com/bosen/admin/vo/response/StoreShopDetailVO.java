@@ -46,4 +46,6 @@ public class StoreShopDetailVO implements Serializable {
      * 上架商城名称
      */
     private String shopName;
+
+    private Integer applyStatus;
 }
