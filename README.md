@@ -55,3 +55,37 @@ zykj-bosen
 * 所有接口皆须添加注释。
 * 避免使用DO返回。
 * 查询sql禁止使用子查询，如有需要，数据库设计时，加入冗余字段
+##事务失效相关（事务是一个老生常谈的一个问题，也是开发过程中需要注意的最重要的问题之一）
+* 访问权限问题：只有方法是public，才不会失效
+* 方法被final修饰，事务会失效
+* 直接调用内部方法，比如this
+* 没有注入到spring容器
+* 线程调用
+* 自己捕获异常，但是没有抛出，比如try catch 但是catch只是打印异常或者不做任何操作
+* 异常不一致
+* 使用自定义异常需要注意，Spring事务，默认情况下只会回滚RuntimeException（运行时异常）和Error（错误），非以上状况，不回滚
+##多线程注解问题@Async失效问题（异步处理）
+* 注解@Async的方法不是public方法
+* 注解@Async的返回值只能为void或者Future
+* 注解@Async方法使用static修饰也会失效
+* spring无法扫描到异步类，没加注解@Async  或 @EnableAsync注解
+* 调用方与被调方不能在同一个类
+```aidl
+1、Spring 在扫描bean的时候会扫描方法上是否包含@Async注解，动态地生成一个子类（即proxy代理类），当这个有注解的方法被调用的时候，实际上是由代理类来调用的，代理类在调用时增加异步作用。
+2、如果这个有注解的方法是被同一个类中的其他方法调用的，那么该方法的调用并没有通过代理类，而是直接通过原来的那个 bean，所以就失效了。
+3、所以调用方与被调方不能在同一个类，主要是使用了动态代理，同一个类的时候直接调用，不是通过生成的动态代理类调用。
+4、一般将要异步执行的方法单独抽取成一个类。
+```
+* 在Async 方法上标注@Transactional是没用的，但在Async 方法调用的方法上标注@Transactional 是有效的
+###附说明
+```aidl
+  直接使用 @Async 注解没指定线程池的话，即未设置TaskExecutor时
+  默认使用Spring创建ThreadPoolTaskExecutor
+  核心线程数：8
+  最大线程数：Integer.MAX_VALUE ( 21亿多)
+  队列使用LinkedBlockingQueue
+  容量是：Integer.MAX_VALUE
+  空闲线程保留时间：60s
+  线程池拒绝策略：AbortPolicy
+```
+  
