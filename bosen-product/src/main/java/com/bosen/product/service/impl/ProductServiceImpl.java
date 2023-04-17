@@ -234,8 +234,13 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
     @Override
     @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> upOrDown(List<Long> ids) {
+        // 判断商品是否存在
+        // 判断商品是否存在上架记录
+        // 不存在上架记录，新增，否则，更新上架记录
         // 判断商品是否可以上架
         // 上架用户是否是商家自身
+        // 更新商品上架状态
+        // 同步数据到es，这里可以使用mq操作
         return null;
     }
 }
