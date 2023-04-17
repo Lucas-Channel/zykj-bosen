@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  */
 @Data
 public class ProductSkuDetailVO {
-    private Long id;
+    private String id;
     /**
      * sku编码
      */
@@ -23,7 +23,7 @@ public class ProductSkuDetailVO {
     /**
      * 商品 ID
      */
-    private Long productId;
+    private String productId;
 
     /**
      * 规格ID，多个使用英文逗号(,)分割

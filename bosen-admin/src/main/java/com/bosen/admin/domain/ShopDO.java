@@ -31,7 +31,7 @@ public class ShopDO extends BaseEntityData implements Serializable {
      */
     private String logoUrl;
 
-    private String describe;
+    private String remark;
 
     private Integer status;
 }

@@ -17,7 +17,7 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping("/product/admin")
-public class ProductController {
+public class AdminProductController {
 
     @Resource
     private IProductService productService;

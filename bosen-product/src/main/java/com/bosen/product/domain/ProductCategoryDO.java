@@ -13,7 +13,7 @@ public class ProductCategoryDO extends BaseEntityData {
 
     private String name;
 
-    private Long parentId;
+    private String parentId;
 
     private String iconUrl;
 

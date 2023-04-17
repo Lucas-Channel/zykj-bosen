@@ -30,7 +30,7 @@ public class StoreShopDetailVO implements Serializable {
     /**
      * 描述
      */
-    private String describe;
+    private String remark;
 
     /**
      * 信誉分

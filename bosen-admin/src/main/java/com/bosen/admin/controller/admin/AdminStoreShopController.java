@@ -13,14 +13,14 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
- * 店铺-控制层-平台后台
+ * 店铺开店-控制层-平台后台
  * @author Lucas
  * @version 2.0.0
  * @date 2023/4/14
  */
 @RestController
 @RequestMapping("/store/shop/admin")
-public class StoreShopController {
+public class AdminStoreShopController {
 
     @Resource
     private IStoreShopService storeShopService;
@@ -39,7 +39,7 @@ public class StoreShopController {
      * 审核开店申请
      * @return 结果
      */
-    @PostMapping("/approveOpenStoreApply")
+    @PostMapping("/approveOpenStoreShopApply")
     public ResponseData<Void> approveOpenStoreApply(@RequestBody @Valid ApproveInfoVO approveInfoVO) {
         return storeShopService.approveOpenStoreShopApply(approveInfoVO);
     }

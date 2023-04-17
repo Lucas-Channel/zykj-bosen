@@ -48,7 +48,8 @@ public class StoreServiceImpl extends ServiceImpl<StoreMapper, StoreDO> implemen
     public ResponseData<Void> upsertStore(StoreUpsertVO storeUpsertVO) {
         StoreDO storeDO = new StoreDO();
         BeanUtils.copyProperties(storeUpsertVO, storeDO);
-        storeDO.setStatus(StoreStatusEnum.NORMAL.getCode());
+        String merchantId = null, merchantRoleId = null;
+        storeDO.setMerchantId(merchantId).setMerchantRoleId(merchantRoleId).setStatus(StoreStatusEnum.NORMAL.getCode());
         return ResponseData.judge(this.saveOrUpdate(storeDO));
     }
 

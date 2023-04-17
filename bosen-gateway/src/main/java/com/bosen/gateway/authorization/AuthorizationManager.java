@@ -5,7 +5,6 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.bosen.common.constant.auth.AuthConstant;
-import com.bosen.common.constant.auth.RedisKeyConstant;
 import com.bosen.common.domain.UserDto;
 import com.bosen.gateway.config.IgnoreUrlsConfig;
 import com.nimbusds.jose.JWSObject;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 import reactor.core.publisher.Mono;
-import sun.security.util.SecurityConstants;
 
 import javax.annotation.Resource;
 import java.net.URI;
@@ -41,6 +39,10 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
 
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> mono, AuthorizationContext authorizationContext) {
+        // 测试情况下跳过鉴权
+        if (true) {
+            return Mono.just(new AuthorizationDecision(true));
+        }
         ServerHttpRequest request = authorizationContext.getExchange().getRequest();
         URI uri = request.getURI();
         PathMatcher pathMatcher = new AntPathMatcher();

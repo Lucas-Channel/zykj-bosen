@@ -12,14 +12,14 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * 店铺-控制层-商家后台
+ * 店铺开店-控制层-商家后台
  * @author Lucas
  * @version 2.0.0
  * @date 2023/4/14
  */
 @RestController
 @RequestMapping("/store/shop/merchant")
-public class StoreShopController {
+public class MerchantStoreShopController {
 
     @Resource
     private IStoreShopService storeShopService;
@@ -44,7 +44,7 @@ public class StoreShopController {
     }
 
     /**
-     * 关申请
+     * 关店申请
      * @return 结果
      */
     @PostMapping("/closeStoreShopApply")

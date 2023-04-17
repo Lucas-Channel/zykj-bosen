@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.bosen.admin.constant.StoreStatusEnum;
 import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -15,7 +16,8 @@ import java.math.BigDecimal;
  * @date 2023/4/13
  */
 @Data
-@TableName("/bs_store")
+@Accessors(chain = true)
+@TableName("bs_store")
 public class StoreDO extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = -1698675323076867765L;
 
@@ -42,7 +44,7 @@ public class StoreDO extends BaseEntityData implements Serializable {
     /**
      * 描述
      */
-    private String describe;
+    private String remark;
 
     /**
      * 状态

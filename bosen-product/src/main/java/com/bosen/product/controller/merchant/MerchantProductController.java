@@ -21,7 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/product/merchant")
-public class ProductController {
+public class MerchantProductController {
     @Resource
     private IProductService productService;
 

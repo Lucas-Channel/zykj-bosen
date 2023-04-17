@@ -10,6 +10,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,7 +19,7 @@ public class ProductCategoryServiceImpl extends ServiceImpl<ProductCategoryMappe
     @Override
     public ResponseData<List<ProductCategoryDetailVO>> listCategoryTree() {
         List<ProductCategoryDO> list = this.list();
-        List<ProductCategoryDetailVO> detailVOS = list.stream().filter(i -> i.getParentId().equals(0L))
+        List<ProductCategoryDetailVO> detailVOS = list.stream().filter(i -> Objects.equals(i.getParentId(), "0"))
                 .map(i -> covertTreeNode(i, list)).collect(Collectors.toList());
         return ResponseData.success(detailVOS);
     }

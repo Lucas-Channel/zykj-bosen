@@ -40,7 +40,7 @@ public class StoreDetailVO implements Serializable {
     /**
      * 描述
      */
-    private String describe;
+    private String remark;
 
     /**
      * 状态

@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Data
 public class ProductCategoryBrandDetailVO implements Serializable {
     private static final long serialVersionUID = -3194522499719621771L;
-    private Long id;
+    private String id;
     /**
      * 分类ID
      */

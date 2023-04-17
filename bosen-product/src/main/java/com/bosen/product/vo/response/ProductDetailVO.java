@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 public class ProductDetailVO {
 
-    private Long id;
+    private String id;
     /**
      * 品类
      */

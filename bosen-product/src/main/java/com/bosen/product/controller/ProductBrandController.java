@@ -46,7 +46,7 @@ public class ProductBrandController {
 
     @PostMapping("/deleteByIds")
     @CacheEvict(cacheNames = "product:brand", key = "'list'", allEntries = true)
-    public ResponseData<Void> deleteByIds(@RequestBody List<Long> ids) {
+    public ResponseData<Void> deleteByIds(@RequestBody List<String> ids) {
         return ResponseData.judge(productBrandService.removeBatchByIds(ids));
     }
 
@@ -55,7 +55,7 @@ public class ProductBrandController {
      * @return 结果
      */
     @GetMapping("/mobile/listBrand")
-    @Cacheable(cacheNames = "product:brand", key = "'list'", unless = "!#result?.code == 200")
+    @Cacheable(cacheNames = "product:brand", key = "'list'", unless = "#result?.data == null")
     public ResponseData<List<ProductBrandDetailVO>> listBrand() {
         List<ProductBrandDO> list = productBrandService.lambdaQuery().list();
         return ResponseData.success(list.stream().map(i -> {

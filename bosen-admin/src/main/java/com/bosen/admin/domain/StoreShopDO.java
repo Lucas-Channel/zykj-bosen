@@ -6,6 +6,7 @@ import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * 店铺与商城关系表
@@ -14,7 +15,7 @@ import java.io.Serializable;
  * @date 2023/4/14
  */
 @Data
-@TableName("/bs_store_shop")
+@TableName("bs_store_shop")
 public class StoreShopDO extends BaseEntityData implements Serializable {
 
     private static final long serialVersionUID = -6039670216460894120L;
@@ -33,4 +34,9 @@ public class StoreShopDO extends BaseEntityData implements Serializable {
      * @see StoreOpenCloseStatusEnum
      */
     private Integer status;
+
+    /**
+     * 信誉分
+     */
+    private BigDecimal creditScore;
 }

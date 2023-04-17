@@ -17,7 +17,7 @@ import java.util.List;
 @Data
 public class ProductUpsertVO {
 
-    private Long id;
+    private String id;
 
     /**
      * spu 名称

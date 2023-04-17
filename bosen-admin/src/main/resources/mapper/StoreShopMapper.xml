@@ -4,7 +4,7 @@
 
     <select id="listStoreShopForMerchant" resultType="com.bosen.admin.vo.response.StoreShopDetailVO" parameterType="map">
         select bss.store_id, bss.shop_id, bs.name,
-               bs.logo_url, bs.describe, bs.credit_score,
+               bs.logo_url, bs.remark, bss.credit_score,
                bsp.name shop_name, bss.status apply_status from bs_store_shop bss
         inner join bs_store bs on bss.store_id = bs.id and bss.del_flag=0
         inner join bs_shop bsp on bsp.id = bss.shop_id and bsp.del_flag=0
@@ -28,7 +28,7 @@
 
     <select id="pageList" resultType="com.bosen.admin.vo.response.StoreShopDetailVO" parameterType="map">
         select bss.store_id, bss.shop_id, bs.name,
-        bs.logo_url, bs.describe, bs.credit_score,
+        bs.logo_url, bs.remark, bss.credit_score,
         bsp.name shop_name, bss.status apply_status from bs_store_shop bss
         inner join bs_store bs on bss.store_id = bs.id and bss.del_flag=0
         inner join bs_shop bsp on bsp.id = bss.shop_id and bsp.del_flag=0

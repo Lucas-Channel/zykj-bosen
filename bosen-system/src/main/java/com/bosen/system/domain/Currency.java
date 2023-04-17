@@ -20,7 +20,7 @@ public class Currency implements Serializable {
     private static final long serialVersionUID = 7323169270105023267L;
 
     @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    private String id;
 
     private String currencyCode;
 
