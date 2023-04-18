@@ -1,7 +1,5 @@
-package com.bosen.product.domain;
+package com.bosen.product.vo.request;
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,11 +8,12 @@ import java.io.Serializable;
  * 商品规格/属性 值
  */
 @Data
-@TableName("bs_product_attribute_value")
-public class ProductAttributeValueDO extends BaseEntityData implements Serializable {
+public class ProductAttributeValueUpsertVO implements Serializable {
 
-    private static final long serialVersionUID = 923761090154282826L;
 
+    private static final long serialVersionUID = 1938334666866013546L;
+
+    private String id;
     /**
      * 商品ID
      */

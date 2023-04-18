@@ -40,7 +40,7 @@ public class ProductCategoryBrandServiceImpl extends ServiceImpl<ProductCategory
     @Override
     public ResponseData<List<ProductCategoryWithBrandVO>> listForMobile(ProductCategoryBrandQueryVO queryVO) {
         List<ProductCategoryBrandDetailVO> detailVOS = baseMapper.listForMobile(queryVO);
-        Map<Long, List<ProductCategoryBrandDetailVO>> collect = detailVOS.stream().collect(Collectors.groupingBy(ProductCategoryBrandDetailVO::getCategoryId));
+        Map<String, List<ProductCategoryBrandDetailVO>> collect = detailVOS.stream().collect(Collectors.groupingBy(ProductCategoryBrandDetailVO::getCategoryId));
         List<ProductCategoryWithBrandVO> list = new ArrayList<>();
         collect.forEach((k, v) -> {
             ProductCategoryWithBrandVO de = new ProductCategoryWithBrandVO();

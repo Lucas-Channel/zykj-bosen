@@ -94,6 +94,8 @@ public enum ResponseCode {
     STORE_SHOP_CANNOT_CLOSE_ERROR(1227, "该店铺不满足关闭条件"),
 
     WAIT_APPROVE_CLOSE_STORE_APPLY_ERROR(1228, "只能审核待审核关店申请的店铺"),
+
+    SAVE_PRODUCT_AREA_LIST_NOT_EMPTY_ERROR(1229, "销售区域不能为空"),
     ;
 
 

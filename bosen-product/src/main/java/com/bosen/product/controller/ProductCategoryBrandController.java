@@ -43,7 +43,7 @@ public class ProductCategoryBrandController {
      * @return 结果
      */
     @GetMapping("/listForMobile")
-    @Cacheable(cacheNames = "product:category:brand", key = "'list'", unless = "!#result?.code == 200")
+    @Cacheable(cacheNames = "product:category:brand", key = "'list'", unless = "!(#result?.code == 200)")
     public ResponseData<List<ProductCategoryWithBrandVO>> listForMobile(ProductCategoryBrandQueryVO queryVO) {
         return categoryBrandService.listForMobile(queryVO);
     }

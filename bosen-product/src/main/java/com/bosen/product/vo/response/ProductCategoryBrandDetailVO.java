@@ -14,15 +14,15 @@ public class ProductCategoryBrandDetailVO implements Serializable {
     /**
      * 分类ID
      */
-    private Long categoryId;
+    private String categoryId;
 
-    private Long categoryName;
+    private String categoryName;
 
     /**
      * 品牌ID
      */
-    private Long brandId;
+    private String brandId;
 
-    private Long brandName;
+    private String brandName;
 
 }

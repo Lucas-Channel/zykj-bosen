@@ -2,6 +2,8 @@ package com.bosen.product.vo.request;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class ProductAttributeUpsertVO {
 
@@ -18,7 +20,7 @@ public class ProductAttributeUpsertVO {
      */
     private Integer type;
 
-    private String value;
+    private List<ProductAttributeValueUpsertVO> value;
 
     private String picUrl;
 

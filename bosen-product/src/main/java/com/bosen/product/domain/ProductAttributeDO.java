@@ -1,10 +1,13 @@
 package com.bosen.product.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bosen.common.domain.BaseEntityData;
+import com.bosen.product.vo.request.ProductAttributeValueUpsertVO;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 商品规格/属性实体,一个商品对应多个属性，多个规格，一个规格对应多个规格值
@@ -38,5 +41,8 @@ public class ProductAttributeDO extends BaseEntityData implements Serializable {
      * 排序
      */
     private Integer sort;
+
+    @TableField(exist = false)
+    private List<ProductAttributeValueUpsertVO> value;
 
 }

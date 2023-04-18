@@ -7,7 +7,7 @@ import com.bosen.common.constant.common.YesOrNoConstant;
 import com.bosen.common.domain.BaseEntityData;
 import com.bosen.product.constant.DeliveryTypeEnum;
 import com.bosen.product.constant.FreightCalculateModelEnum;
-import com.bosen.product.constant.ProductApproveStatusEnums;
+import com.bosen.product.constant.ProductApproveStatusEnum;
 import com.bosen.product.constant.ProductTypeEnums;
 import lombok.Data;
 
@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @TableName(value = "bs_product", autoResultMap = true)
 public class ProductDO extends BaseEntityData implements Serializable {
 
-    private static final long serialVersionUID = 8966284598903261678L;
+    private static final long serialVersionUID = 6061006344740033949L;
     /**
      * spu 名称
      */
@@ -92,7 +92,7 @@ public class ProductDO extends BaseEntityData implements Serializable {
 
     /**
      * 商品状态(0-待提交审核，1-待审核，2-审核不通过, 3-审核通过,4-下架 5-上架，)
-     * @see ProductApproveStatusEnums
+     * @see ProductApproveStatusEnum
      */
     private Integer status;
 
@@ -159,20 +159,20 @@ public class ProductDO extends BaseEntityData implements Serializable {
      * @see YesOrNoConstant
      */
     private Integer salesAllArea = 1;
-
-    /**
-     * 店铺id
-     */
-    private String storeId;
-
-    /**
-     * 店铺名称
-     */
-    private String storeName;
-
-    /**
-     * 店铺头像
-     */
-    private String storeLogo;
+//
+//    /**
+//     * 店铺id
+//     */
+//    private String storeId;
+//
+//    /**
+//     * 店铺名称
+//     */
+//    private String storeName;
+//
+//    /**
+//     * 店铺头像
+//     */
+//    private String storeLogo;
 
 }

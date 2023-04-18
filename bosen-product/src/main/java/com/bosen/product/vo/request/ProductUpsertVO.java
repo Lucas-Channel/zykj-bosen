@@ -8,6 +8,7 @@ import com.bosen.product.constant.ProductTypeEnums;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -22,10 +23,13 @@ public class ProductUpsertVO {
     /**
      * spu 名称
      */
+    @NotEmpty(message = "spu 名称不能为空")
     private String name;
+
     /**
      * 平台品类
      */
+    @NotEmpty(message = "平台品类不能为空")
     private String categoryId;
 
     /**
@@ -36,6 +40,7 @@ public class ProductUpsertVO {
     /**
      * 品牌
      */
+    @NotEmpty(message = "品牌不能为空")
     private String brandId;
 
     /**
@@ -72,6 +77,7 @@ public class ProductUpsertVO {
     /**
      * 单位
      */
+    @NotEmpty(message = "单位不能为空")
     private String unit;
 
     /**
@@ -103,12 +109,14 @@ public class ProductUpsertVO {
      * 商品类型
      * @see ProductTypeEnums
      */
+    @NotNull(message = "商品类型不能为空")
     private Integer productType;
 
     /**
      * 运费计算模式: 1,卖家承担运费，2，买家承担运费
      * @see FreightCalculateModelEnum
      */
+    @NotNull(message = "运费计算模式不能为空")
     private Integer freightCalculateModel;
 
     /**
@@ -122,18 +130,26 @@ public class ProductUpsertVO {
     private String deliveryCompanyId;
 
     /**
+     * 是否全球可售
+     */
+    private Integer salesAllArea;
+
+    /**
      * 配送方式
      * @see DeliveryTypeEnum
      */
+    @NotNull(message = "配送方式不能为空")
     private Integer deliveryType;
 
-    @NotEmpty
+    @NotEmpty(message = "属性不能为空")
     private List<ProductAttributeUpsertVO> attrList;
 
-    @NotEmpty
+    @NotEmpty(message = "规格不能为空")
     private List<ProductAttributeUpsertVO> specList;
 
-    @NotEmpty
+    /**
+     * 如果salesAllArea = 0，必填
+     */
     private List<ProductAreaUpsertVO> areaList;
 
 //    @NotEmpty

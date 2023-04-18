@@ -9,17 +9,17 @@ import java.util.stream.Collectors;
  * @version 2.0.0
  * @date 2023/4/3
  */
-public enum ProductApproveStatusEnums {
+public enum ProductApproveStatusEnum {
 
-    WAIT_SUBMIT_APPROVE(0, "待提交审核"),
+    WAIT_SUBMIT_APPROVE_APPLY(0, "待提交审核"),
     WAIT_APPROVE(1, "待审核"),
     DISAGREE(2, "审核不通过"),
     AGREE(3, "审核通过"),
     DOWN(4, "已下架"),
-    UP(4, "已上架"),
+    UP(5, "已上架"),
     ;
 
-    ProductApproveStatusEnums(Integer code, String message) {
+    ProductApproveStatusEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -27,7 +27,7 @@ public enum ProductApproveStatusEnums {
     private Integer code;
     private String message;
 
-    private static Map<Integer,String> messageMap = Arrays.stream(ProductApproveStatusEnums.values()).collect(Collectors.toMap(ProductApproveStatusEnums::getCode, ProductApproveStatusEnums::getMessage));
+    private static Map<Integer,String> messageMap = Arrays.stream(ProductApproveStatusEnum.values()).collect(Collectors.toMap(ProductApproveStatusEnum::getCode, ProductApproveStatusEnum::getMessage));
 
     public static String getMessageByCode(Integer code) {
         return messageMap.get(code);
