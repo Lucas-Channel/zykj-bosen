@@ -14,6 +14,8 @@ import java.util.List;
 public class ProductDetailVO {
 
     private String id;
+
+    private String name;
     /**
      * 品类
      */
