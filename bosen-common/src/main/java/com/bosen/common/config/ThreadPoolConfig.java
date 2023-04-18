@@ -62,7 +62,7 @@ public class ThreadPoolConfig {
     }
 
     /**
-     * 发送短信线程池
+     * 同步数据线程池
      **/
     @Bean("syncDataThreadPool")
     public ThreadPoolTaskExecutor syncDataThreadPool() {
@@ -71,7 +71,7 @@ public class ThreadPoolConfig {
         syncDataThreadPool.setMaxPoolSize(maxPoolSize * 2);
         syncDataThreadPool.setQueueCapacity(queueCapacity);
         syncDataThreadPool.setKeepAliveSeconds(keepAliveSeconds);
-        syncDataThreadPool.setThreadNamePrefix("sendSmsThreadPool--");
+        syncDataThreadPool.setThreadNamePrefix("syncDataThreadPool--");
         syncDataThreadPool.setWaitForTasksToCompleteOnShutdown(true);
         syncDataThreadPool.setAllowCoreThreadTimeOut(true);
         syncDataThreadPool.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
