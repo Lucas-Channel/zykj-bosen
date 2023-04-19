@@ -12,7 +12,9 @@ import com.bosen.common.exception.BusinessException;
 import com.bosen.common.vo.request.ApproveBatchInfoVO;
 import com.bosen.common.vo.request.ApproveInfoVO;
 import com.bosen.product.constant.ProductApproveStatusEnum;
-import com.bosen.product.domain.*;
+import com.bosen.product.domain.ProductApproveRecordDO;
+import com.bosen.product.domain.ProductAreaDO;
+import com.bosen.product.domain.ProductDO;
 import com.bosen.product.mapper.ProductMapper;
 import com.bosen.product.service.*;
 import com.bosen.product.vo.request.ProductQueryVO;
@@ -27,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,9 +36,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
 
     @Resource
     private IProductAttributeService productAttributeService;
-
-    @Resource
-    private IProductAttributeValueService productAttributeValueService;
 
     @Resource
     private IProductAreaService productAreaService;
@@ -73,50 +71,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
         boolean saveOrUpdate = this.saveOrUpdate(productDO);
         // step2 保存spu属性和规格
         if (saveOrUpdate) {
-            // step2.1 删除历史属性和规格
-            productAttributeService.lambdaUpdate().eq(ProductAttributeDO::getProductId, productDO.getId()).remove();
-            productAttributeValueService.lambdaUpdate().eq(ProductAttributeValueDO::getProductId, productDO.getId()).remove();
-            // step2.2 保存商品属性
-            List<ProductAttributeDO> productAttributeDOS = formData.getAttrList().stream().map(i -> {
-                ProductAttributeDO attributeDO = new ProductAttributeDO();
-                BeanUtils.copyProperties(i, attributeDO);
-                attributeDO.setProductId(productDO.getId());
-                return attributeDO;
-            }).collect(Collectors.toList());
-            productAttributeService.saveBatch(productAttributeDOS);
-            List<ProductAttributeValueDO> valueDOList = new CopyOnWriteArrayList<>();
-            productAttributeDOS.forEach(i -> {
-                List<ProductAttributeValueDO> productAttributeValueDOS = i.getValue().stream().map(val -> {
-                    ProductAttributeValueDO productAttributeValueDO = new ProductAttributeValueDO();
-                    BeanUtils.copyProperties(val, productAttributeValueDO);
-                    productAttributeValueDO.setProductId(productDO.getId());
-                    productAttributeValueDO.setProductAttributeId(i.getId());
-                    productAttributeValueDO.setType(2);
-                    return productAttributeValueDO;
-                }).collect(Collectors.toList());
-                valueDOList.addAll(productAttributeValueDOS);
-            });
-            // step2.3 保存规格
-            productAttributeDOS = formData.getSpecList().stream().map(i -> {
-                ProductAttributeDO attributeDO = new ProductAttributeDO();
-                BeanUtils.copyProperties(i, attributeDO);
-                attributeDO.setProductId(productDO.getId());
-                return attributeDO;
-            }).collect(Collectors.toList());
-            productAttributeService.saveBatch(productAttributeDOS);
-            // step2.4 保存商品属性/规格值
-            productAttributeDOS.forEach(i -> {
-                List<ProductAttributeValueDO> productAttributeValueDOS = i.getValue().stream().map(val -> {
-                    ProductAttributeValueDO productAttributeValueDO = new ProductAttributeValueDO();
-                    BeanUtils.copyProperties(val, productAttributeValueDO);
-                    productAttributeValueDO.setProductId(productDO.getId());
-                    productAttributeValueDO.setProductAttributeId(i.getId());
-                    productAttributeValueDO.setType(1);
-                    return productAttributeValueDO;
-                }).collect(Collectors.toList());
-                valueDOList.addAll(productAttributeValueDOS);
-            });
-            productAttributeValueService.saveBatch(valueDOList);
+            productAttributeService.upsertProductAttribute(formData.getAttrList(), formData.getSpecList(), productDO.getId());
             if (Objects.equals(formData.getSalesAllArea(), YesOrNoConstant.NO)) {
                 // step2.4 保存spu销售范围
                 productAreaService.lambdaUpdate().eq(ProductAreaDO::getProductId, productDO.getId()).remove();
