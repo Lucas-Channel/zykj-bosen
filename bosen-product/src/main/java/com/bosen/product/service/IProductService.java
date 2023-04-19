@@ -7,6 +7,7 @@ import com.bosen.common.vo.request.ApproveBatchInfoVO;
 import com.bosen.common.vo.request.ApproveInfoVO;
 import com.bosen.product.domain.ProductDO;
 import com.bosen.product.vo.request.ProductQueryVO;
+import com.bosen.product.vo.request.ProductRackingOrDownVO;
 import com.bosen.product.vo.request.ProductUpsertVO;
 import com.bosen.product.vo.response.ProductDetailVO;
 
@@ -29,5 +30,7 @@ public interface IProductService extends IService<ProductDO> {
 
     ResponseData<Void> deleteByIds(List<Long> ids);
 
-    ResponseData<Void> upOrDown(List<Long> ids);
+    ResponseData<Void> rackingOrDown(ProductRackingOrDownVO productRackingOrDownVO);
+
+    ResponseData<ProductDetailVO> detail(String id);
 }

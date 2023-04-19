@@ -2,12 +2,11 @@ package com.bosen.product.controller.merchant;
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.product.domain.ProductDO;
 import com.bosen.product.service.IProductService;
 import com.bosen.product.vo.request.ProductQueryVO;
+import com.bosen.product.vo.request.ProductRackingOrDownVO;
 import com.bosen.product.vo.request.ProductUpsertVO;
 import com.bosen.product.vo.response.ProductDetailVO;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -40,12 +39,8 @@ public class MerchantProductController {
      * @return 结果
      */
     @GetMapping("/detail/{id}")
-    public ResponseData<ProductDetailVO> detail(@PathVariable Long id) {
-        ProductDO pmsSpuDetailVO = productService.getById(id);
-        ProductDetailVO detailVO = new ProductDetailVO();
-        BeanUtils.copyProperties(pmsSpuDetailVO, detailVO);
-        // 后续需要查询商品的规格属性和sku
-        return ResponseData.success(detailVO);
+    public ResponseData<ProductDetailVO> detail(@PathVariable("id") String id) {
+        return productService.detail(id);
     }
 
     /**
@@ -93,8 +88,8 @@ public class MerchantProductController {
      * 上架/下架
      * @return
      */
-    @PostMapping("/upOrDown")
-    public ResponseData<Void> upOrDown(@RequestBody @Valid @NotEmpty(message = "上架商品id不能为空") List<Long> ids) {
-        return productService.upOrDown(ids);
+    @PostMapping("/rackingOrDown")
+    public ResponseData<Void> rackingOrDown(@RequestBody @Valid ProductRackingOrDownVO productRackingOrDownVO) {
+        return productService.rackingOrDown(productRackingOrDownVO);
     }
 }

@@ -1,4 +1,4 @@
-package com.bosen.product.controller;
+package com.bosen.product.controller.admin;
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
- * 品类品牌
+ * 平台品类品牌
  * @author Lucas
  * @version 2.0.0
  * @date 2023/3/3

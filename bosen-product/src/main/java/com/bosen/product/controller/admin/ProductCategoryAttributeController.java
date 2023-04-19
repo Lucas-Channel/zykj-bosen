@@ -1,4 +1,4 @@
-package com.bosen.product.controller;
+package com.bosen.product.controller.admin;
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 品类默认属性/规格
+ * 平台品类默认属性/规格
  */
 @RestController
 @RequestMapping("/product/category/attribute")

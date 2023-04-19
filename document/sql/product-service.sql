@@ -310,4 +310,25 @@ CREATE TABLE `bs_product_approve_record`  (
                                     `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
                                     `del_flag` int DEFAULT 0,
                                     PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品销售区域表';
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品审核记录';
+
+-- ----------------------------
+-- Table structure for bs_freight_space
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_freight_space`;
+CREATE TABLE `bs_freight_space`  (
+                                        `id` varchar(32) NOT NULL COMMENT '主键',
+                                        `name` varchar(64) NOT NULL COMMENT '名称',
+                                        `code` varchar(64) NOT NULL COMMENT '编码',
+                                        `remark` varchar(500) NULL COMMENT '运费说明',
+                                        `status` int NULL DEFAULT 0 COMMENT '状态 0-无效 1-有效',
+                                        `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                        `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                        `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                        `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                        `del_flag` int DEFAULT 0,
+                                        `merchant_id` varchar(64) not null COMMENT '商家id',
+                                        `merchant_role_id` varchar(64) not NULL COMMENT '商家角色id',
+                                        `merchant_name` varchar(70) not NULL COMMENT '商家名称',
+                                        PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '仓位表';

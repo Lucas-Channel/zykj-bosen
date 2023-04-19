@@ -96,6 +96,10 @@ public enum ResponseCode {
     WAIT_APPROVE_CLOSE_STORE_APPLY_ERROR(1228, "只能审核待审核关店申请的店铺"),
 
     SAVE_PRODUCT_AREA_LIST_NOT_EMPTY_ERROR(1229, "销售区域不能为空"),
+
+    PRODUCT_NOT_EXIT_ERROR(1230, "商品不存在"),
+
+    FREIGHT_SPACE_NOT_EXIT_ERROR(1231, "仓位不存在"),
     ;
 
 

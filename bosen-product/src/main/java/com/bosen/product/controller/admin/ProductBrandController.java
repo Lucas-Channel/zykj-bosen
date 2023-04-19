@@ -1,4 +1,4 @@
-package com.bosen.product.controller;
+package com.bosen.product.controller.admin;
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 管理端：品牌管理
+ * 平台品牌管理
  */
 @RestController
 @RequestMapping("/product/brand")

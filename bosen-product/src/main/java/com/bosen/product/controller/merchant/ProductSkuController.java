@@ -1,4 +1,4 @@
-package com.bosen.product.controller;
+package com.bosen.product.controller.merchant;
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 商家后台sku管理
+ */
 @RestController
 @RequestMapping("/product/sku")
 public class ProductSkuController {

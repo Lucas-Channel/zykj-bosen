@@ -1,4 +1,4 @@
-package com.bosen.product.controller;
+package com.bosen.product.controller.admin;
 
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.product.domain.ProductCategoryDO;
@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 品类管理
+ * 平台品类管理
  */
 @RestController
 @RequestMapping("/product/category")

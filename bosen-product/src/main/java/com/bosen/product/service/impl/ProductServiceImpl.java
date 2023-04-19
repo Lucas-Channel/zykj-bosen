@@ -11,14 +11,20 @@ import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.exception.BusinessException;
 import com.bosen.common.vo.request.ApproveBatchInfoVO;
 import com.bosen.common.vo.request.ApproveInfoVO;
+import com.bosen.product.constant.AttributeTypeEnum;
 import com.bosen.product.constant.ProductApproveStatusEnum;
 import com.bosen.product.domain.ProductApproveRecordDO;
 import com.bosen.product.domain.ProductAreaDO;
 import com.bosen.product.domain.ProductDO;
 import com.bosen.product.mapper.ProductMapper;
-import com.bosen.product.service.*;
+import com.bosen.product.service.IProductApproveRecordService;
+import com.bosen.product.service.IProductAreaService;
+import com.bosen.product.service.IProductAttributeService;
+import com.bosen.product.service.IProductService;
 import com.bosen.product.vo.request.ProductQueryVO;
+import com.bosen.product.vo.request.ProductRackingOrDownVO;
 import com.bosen.product.vo.request.ProductUpsertVO;
+import com.bosen.product.vo.response.ProductAttributeDetailVO;
 import com.bosen.product.vo.response.ProductDetailVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -92,11 +98,11 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
     @Override
     @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> approveProduct(ApproveInfoVO approveInfoVO) {
-        String adminId = null;
-        String adminRoleId = null;
-        String adminName = null;
+        String adminId = "1";
+        String adminRoleId = "1";
+        String adminName = "超级管理员";
         ProductDO productDO = baseMapper.selectById(approveInfoVO.getOriginalId());
-        if (!Objects.equals(productDO.getStatus(), ProductApproveStatusEnum.WAIT_APPROVE)) {
+        if (!Objects.equals(productDO.getStatus(), ProductApproveStatusEnum.WAIT_APPROVE.getCode())) {
             throw new BusinessException(ResponseCode.APPROVE_PRODUCT_STATUS_ERROR);
         }
         productDO.setStatus(Objects.equals(approveInfoVO.getAgree(), YesOrNoConstant.YES) ? ProductApproveStatusEnum.AGREE.getCode() : ProductApproveStatusEnum.DISAGREE.getCode());
@@ -116,11 +122,11 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
     @Override
     @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> approveBatch(ApproveBatchInfoVO approveBatchInfoVOS) {
-        String adminId = null;
-        String adminRoleId = null;
-        String adminName = null;
+        String adminId = "1";
+        String adminRoleId = "1";
+        String adminName = "超级管理员";
         List<ProductDO> productDOs = baseMapper.selectBatchIds(approveBatchInfoVOS.getOriginalId());
-        List<ProductDO> dos = productDOs.stream().filter(i -> !Objects.equals(i.getStatus(), ProductApproveStatusEnum.WAIT_APPROVE)).collect(Collectors.toList());
+        List<ProductDO> dos = productDOs.stream().filter(i -> !Objects.equals(i.getStatus(), ProductApproveStatusEnum.WAIT_APPROVE.getCode())).collect(Collectors.toList());
         if (CollUtil.isNotEmpty(dos)) {
             throw new BusinessException(ResponseCode.APPROVE_PRODUCT_STATUS_ERROR);
         }
@@ -143,10 +149,13 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
     @Override
     @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> submitApproveProduct(String id) {
-        String merchantId = null;
-        String merchantRoleId = null;
-        String merchantName = null;
+        String merchantId = "1";
+        String merchantRoleId = "1";
+        String merchantName = "lucas";
         ProductDO productDO = baseMapper.selectById(id);
+        if (Objects.isNull(productDO)) {
+            throw new BusinessException(ResponseCode.PRODUCT_NOT_EXIT_ERROR);
+        }
         if (!Objects.equals(productDO.getStatus(), ProductApproveStatusEnum.WAIT_SUBMIT_APPROVE_APPLY.getCode())) {
             throw new BusinessException(ResponseCode.SUBMIT_APPROVE_PRODUCT_STATUS_ERROR);
         }
@@ -217,8 +226,9 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
 
     @Override
     @Transactional(rollbackFor = BusinessException.class)
-    public ResponseData<Void> upOrDown(List<Long> ids) {
+    public ResponseData<Void> rackingOrDown(ProductRackingOrDownVO productRackingOrDownVO) {
         // 判断商品是否存在
+
         // 判断商品是否存在上架记录
         // 不存在上架记录，新增，否则，更新上架记录
         // 判断商品是否可以上架
@@ -226,5 +236,20 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
         // 更新商品上架状态
         // 同步数据到es，这里可以使用mq操作
         return null;
+    }
+
+    @Override
+    public ResponseData<ProductDetailVO> detail(String id) {
+        ProductDO productDO = this.getById(id);
+        if (Objects.isNull(productDO)) {
+            throw new BusinessException(ResponseCode.PRODUCT_NOT_EXIT_ERROR);
+        }
+        ProductDetailVO detailVO = new ProductDetailVO();
+        BeanUtils.copyProperties(productDO, detailVO);
+        // 查询商品规格
+        List<ProductAttributeDetailVO> attributeDetailVOS = productAttributeService.listProductAttributeDetailByProductId(id);
+        detailVO.setAttributeList(attributeDetailVOS.stream().filter(i -> Objects.equals(AttributeTypeEnum.ATTR.getCode(), i.getType())).collect(Collectors.toList()));
+        detailVO.setSpecList(attributeDetailVOS.stream().filter(i -> Objects.equals(AttributeTypeEnum.SPEC.getCode(), i.getType())).collect(Collectors.toList()));
+        return ResponseData.success(detailVO);
     }
 }
