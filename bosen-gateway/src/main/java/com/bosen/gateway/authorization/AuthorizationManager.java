@@ -68,7 +68,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
                 return Mono.just(new AuthorizationDecision(false));
             }
             UserDto userDto = JSONUtil.toBean(userStr, UserDto.class);
-            if ((Objects.equals(AuthConstant.ADMIN_CLIENT_ID, userDto.getClientId()) || Objects.equals(AuthConstant.MERCHANT_CLIENT_ID, userDto.getClientId())) && !pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {
+            if ((Objects.equals(AuthConstant.ADMIN_CLIENT_ID, userDto.getClientId()) || Objects.equals(AuthConstant.MERCHANT_CLIENT_ID, userDto.getClientId())) && !pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath()) && !pathMatcher.match(AuthConstant.OTHER_ADMIN_URL_PATTERN, uri.getPath())) {
                 return Mono.just(new AuthorizationDecision(false));
             }
             if (AuthConstant.PORTAL_CLIENT_ID.equals(userDto.getClientId()) && pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {

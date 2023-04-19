@@ -29,8 +29,11 @@ public interface AuthConstant {
 
     /**
      * 后台管理接口路径匹配
+     * todo 需要确认统一后端接口
      */
     String ADMIN_URL_PATTERN = "/bosen-admin/**";
+
+    String OTHER_ADMIN_URL_PATTERN = "/**/admin/**";
 
     /**
      * Redis缓存权限规则key
