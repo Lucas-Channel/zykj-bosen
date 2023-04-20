@@ -228,7 +228,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
     @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> rackingOrDown(ProductRackingOrDownVO productRackingOrDownVO) {
         // 判断商品是否存在
-
+        // 是否设置商品库存
         // 判断商品是否存在上架记录
         // 不存在上架记录，新增，否则，更新上架记录
         // 判断商品是否可以上架

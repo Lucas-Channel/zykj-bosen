@@ -14,7 +14,7 @@ public class ProductSkuMemberPriceDO implements Serializable {
     /**
      * 会员id
      */
-    private Long memberId;
+    private String memberId;
 
     /**
      * 价格

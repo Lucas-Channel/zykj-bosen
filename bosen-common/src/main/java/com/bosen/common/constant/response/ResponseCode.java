@@ -100,6 +100,9 @@ public enum ResponseCode {
     PRODUCT_NOT_EXIT_ERROR(1230, "商品不存在"),
 
     FREIGHT_SPACE_NOT_EXIT_ERROR(1231, "仓位不存在"),
+
+    SKU_NOT_EXIT_ERROR(1232, "SKU不存在"),
+    SKU_HAS_RACKING_ERROR(1233, "该商品已上架，不能修改库存，如需修改，请下架后操作"),
     ;
 
 

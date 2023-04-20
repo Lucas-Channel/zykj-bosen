@@ -2,16 +2,16 @@ package com.bosen.product.controller.merchant;
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.product.domain.ProductSkuDO;
-import com.bosen.product.domain.ProductSkuMemberPriceDO;
-import com.bosen.product.domain.ProductSkuWholesalePriceDO;
 import com.bosen.product.service.IProductSkuService;
+import com.bosen.product.vo.request.ProductSkuMemberPriceUpdateVO;
 import com.bosen.product.vo.request.ProductSkuQueryVO;
 import com.bosen.product.vo.request.ProductSkuUpsertVO;
+import com.bosen.product.vo.request.ProductSkuWholesalePriceUpdateVO;
 import com.bosen.product.vo.response.ProductSkuDetailVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -29,8 +29,8 @@ public class ProductSkuController {
      * @return 结果
      */
     @PostMapping("/updateStock")
-    public ResponseData<Void> updateStock(@RequestBody ProductSkuDO productSkuDO) {
-        return ResponseData.judge(skuService.updateById(productSkuDO));
+    public ResponseData<Void> updateStock(@RequestBody ProductSkuUpsertVO productSkuUpsertVO) {
+        return skuService.updateStock(productSkuUpsertVO);
     }
 
     /**
@@ -59,8 +59,8 @@ public class ProductSkuController {
      * @return 结果
      */
     @PostMapping("/setWholesalePrice")
-    public ResponseData<Void> setWholesalePrice(@RequestBody List<ProductSkuWholesalePriceDO> prices, @RequestParam Long skuId) {
-        return skuService.setWholesalePrice(prices, skuId);
+    public ResponseData<Void> setWholesalePrice(@RequestBody @Valid ProductSkuWholesalePriceUpdateVO updateVO) {
+        return skuService.setWholesalePrice(updateVO.getPrices(), updateVO.getSkuId());
     }
 
     /**
@@ -70,8 +70,8 @@ public class ProductSkuController {
      * @return 结果
      */
     @PostMapping("/setMemberPrice")
-    public ResponseData<Void> setMemberPrice(@RequestBody List<ProductSkuMemberPriceDO> prices, @RequestParam Long skuId) {
-        return skuService.setMemberPrice(prices, skuId);
+    public ResponseData<Void> setMemberPrice(@RequestBody ProductSkuMemberPriceUpdateVO updateVO) {
+        return skuService.setMemberPrice(updateVO.getPrices(), updateVO.getSkuId());
     }
 
 }

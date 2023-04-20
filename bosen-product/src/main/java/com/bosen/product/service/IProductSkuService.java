@@ -9,8 +9,6 @@ import com.bosen.product.domain.ProductSkuWholesalePriceDO;
 import com.bosen.product.vo.request.ProductSkuQueryVO;
 import com.bosen.product.vo.request.ProductSkuUpsertVO;
 import com.bosen.product.vo.response.ProductSkuDetailVO;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -19,7 +17,9 @@ public interface IProductSkuService extends IService<ProductSkuDO> {
 
     ResponseData<PageData<ProductSkuDetailVO>> pageList(ProductSkuQueryVO queryVO);
 
-    ResponseData<Void> setWholesalePrice(List<ProductSkuWholesalePriceDO> prices, Long skuId);
+    ResponseData<Void> setWholesalePrice(List<ProductSkuWholesalePriceDO> prices, String skuId);
 
-    ResponseData<Void> setMemberPrice(List<ProductSkuMemberPriceDO> prices, Long skuId);
+    ResponseData<Void> setMemberPrice(List<ProductSkuMemberPriceDO> prices, String skuId);
+
+    ResponseData<Void> updateStock(ProductSkuUpsertVO productSkuUpsertVO);
 }

@@ -75,6 +75,7 @@ public class FreightSpaceServiceImpl extends ServiceImpl<FreightSpaceMapper, Fre
         String merchantName = "";
         FreightSpaceDO freightSpaceDO = new FreightSpaceDO();
         BeanUtils.copyProperties(upsertVO, freightSpaceDO);
+        freightSpaceDO.setMerchantId(merchantId).setMerchantRoleId(merchantRoleId).setMerchantName(merchantName);
         if (!StringUtils.hasLength(freightSpaceDO.getId())) {
             freightSpaceDO.setStatus(1);
         }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bosen.product.mapper.ProductSkuMapper">
+    <resultMap id="baseMap" type="com.bosen.product.vo.response.ProductSkuDetailVO">
+        <id column="id" property="id" jdbcType="VARCHAR"/>
+        <result column="sku_code" property="skuCode" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="spec_name_val" property="specNameVal" jdbcType="VARCHAR" />
+        <result column="product_id" property="productId" jdbcType="VARCHAR" />
+        <result column="spec_ids" property="specIds" jdbcType="VARCHAR" />
+        <result column="spec_names" property="specNames" jdbcType="VARCHAR" />
+        <result column="origin_price" property="originPrice" jdbcType="DECIMAL" />
+        <result column="sales_price" property="salesPrice" jdbcType="DECIMAL" />
+        <result column="vip_price" property="vipPrice" jdbcType="DECIMAL" />
+        <result column="stock_num" property="stockNum" jdbcType="DECIMAL" />
+        <result column="locked_stock_num" property="lockedStockNum" jdbcType="DECIMAL" />
+        <result column="pic_url" property="picUrl" jdbcType="VARCHAR" />
+        <result column="lot_number" property="lotNumber" jdbcType="VARCHAR" />
+        <result column="sales_count" property="salesCount" jdbcType="DECIMAL" />
+        <result column="auto_splice_spec_for_name" property="autoSpliceSpecForName" jdbcType="INTEGER" />
+        <result column="stock_inventory_warning" property="stockInventoryWarning" jdbcType="DECIMAL" />
+        <result column="bar_code" property="barCode" jdbcType="VARCHAR" />
+        <result column="calculate_inventory" property="calculateInventory" jdbcType="INTEGER" />
+        <result column="validity_start_time" property="validityStartTime" jdbcType="DATE" />
+        <result column="validity_end_time" property="validityEndTime" jdbcType="DATE" />
+        <result column="unit_score" property="unitScore" jdbcType="DECIMAL" />
+        <result column="min_order" property="minOrder" jdbcType="DECIMAL" />
+        <result column="weight" property="weight" jdbcType="DECIMAL" />
+        <result column="freight_space_id" property="freightSpaceId" jdbcType="VARCHAR" />
+        <result column="sell_out" property="sellOut" jdbcType="INTEGER" />
+        <result column="merchant_id" property="merchantId" jdbcType="VARCHAR" />
+        <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
+        <result column="merchant_role_id" property="merchantRoleId" jdbcType="VARCHAR" />
+        <result column="product_name" property="productName" jdbcType="VARCHAR" />
+        <!-- 当对象中有json数据时，使用xml查询，需要以下方式指定-->
+        <result column="wholesale_price" property="wholesalePrice" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
+        <result column="member_price" property="memberPrice" typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler" />
+    </resultMap>
+    <select id="pageList" resultMap="baseMap">
+        select bbs.*, bb.name product_name
+        from bs_product_sku bbs
+        inner join bs_product bb on bb.id = bbs.product_id
+        <where>
+            <if test='queryParams.skuCode != null'>
+                and bbs.sku_code like concat('%',#{queryParams.skuCode},'%')
+            </if>
+            <if test='queryParams.skuName != null'>
+                and bbs.name like concat('%',#{queryParams.skuName},'%')
+            </if>
+            <if test='queryParams.productName !=null'>
+                and bb.name like concat('%',#{queryParams.productName},'%')
+            </if>
+            <if test='queryParams.merchantId !=null'>
+                and bbs.merchant_id = #{queryParams.merchantId}
+            </if>
+            <if test='queryParams.merchantRoleId !=null'>
+                and bbs.merchant_role_id = #{queryParams.merchantRoleId}
+            </if>
+        </where>
+        ORDER BY bb.create_time DESC
+    </select>
+</mapper>

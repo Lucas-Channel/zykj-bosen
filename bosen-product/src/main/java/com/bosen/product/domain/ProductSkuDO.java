@@ -35,7 +35,7 @@ public class ProductSkuDO extends BaseEntityData {
     /**
      * 商品 ID
      */
-    private Long productId;
+    private String productId;
 
     /**
      * 规格ID，多个使用英文逗号(,)分割
@@ -48,9 +48,14 @@ public class ProductSkuDO extends BaseEntityData {
     private String specNames;
 
     /**
-     * 商品价格
+     * 原价
      */
-    private BigDecimal price;
+    private BigDecimal originPrice;
+
+    /**
+     * 销售/零售价
+     */
+    private BigDecimal salesPrice;
 
     /**
      * vip价格
@@ -60,12 +65,12 @@ public class ProductSkuDO extends BaseEntityData {
     /**
      * 库存数量
      */
-    private Integer stockNum;
+    private BigDecimal stockNum;
 
     /**
      * 锁定库存数量
      */
-    private Integer lockedStockNum;
+    private BigDecimal lockedStockNum;
 
     /**
      * 商品图片地址
@@ -92,7 +97,7 @@ public class ProductSkuDO extends BaseEntityData {
     /**
      * 销售数量
      */
-    private Integer salesCount;
+    private BigDecimal salesCount;
 
     /**
      * 是否自动拼接规格值作为skuName
@@ -102,7 +107,7 @@ public class ProductSkuDO extends BaseEntityData {
     /**
      * 库存预警数量
      */
-    private Integer stockInventoryWarning;
+    private BigDecimal stockInventoryWarning;
 
     /**
      * 条形码/二维码
@@ -138,4 +143,29 @@ public class ProductSkuDO extends BaseEntityData {
      * 重量
      */
     private BigDecimal weight;
+
+    /**
+     * 仓位id
+     */
+    private String freightSpaceId;
+
+    /**
+     * 是否售罄
+     */
+    private Integer sellOut;
+
+    /**
+     * 商品所属商家
+     */
+    private String merchantId;
+
+    /**
+     * 商家名称
+     */
+    private String merchantName;
+
+    /**
+     * 商品所属商家角色id
+     */
+    private String merchantRoleId;
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.bosen.common.constant.common.YesOrNoConstant;
 import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -13,6 +14,7 @@ import java.io.Serializable;
  * @date 2023/4/19
  */
 @Data
+@Accessors(chain = true)
 @TableName("bs_freight_space")
 public class FreightSpaceDO extends BaseEntityData implements Serializable {
 

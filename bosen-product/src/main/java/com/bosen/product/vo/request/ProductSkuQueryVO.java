@@ -2,11 +2,13 @@ package com.bosen.product.vo.request;
 
 import com.bosen.common.domain.PageVO;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 商品sku查询参数
  */
 @Data
+@Accessors(chain = true)
 public class ProductSkuQueryVO extends PageVO {
     /**
      * sku编码
@@ -21,6 +23,13 @@ public class ProductSkuQueryVO extends PageVO {
     /**
      * 商品 名称
      */
-    private Long productName;
+    private String productName;
+
+    private String merchantId;
+
+    /**
+     * 商品所属商家角色id
+     */
+    private String merchantRoleId;
 
 }
