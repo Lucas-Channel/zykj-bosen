@@ -13,24 +13,21 @@ import com.bosen.common.vo.request.ApproveBatchInfoVO;
 import com.bosen.common.vo.request.ApproveInfoVO;
 import com.bosen.product.constant.AttributeTypeEnum;
 import com.bosen.product.constant.ProductApproveStatusEnum;
-import com.bosen.product.domain.ProductApproveRecordDO;
-import com.bosen.product.domain.ProductAreaDO;
-import com.bosen.product.domain.ProductDO;
+import com.bosen.product.domain.*;
 import com.bosen.product.mapper.ProductMapper;
-import com.bosen.product.service.IProductApproveRecordService;
-import com.bosen.product.service.IProductAreaService;
-import com.bosen.product.service.IProductAttributeService;
-import com.bosen.product.service.IProductService;
+import com.bosen.product.service.*;
 import com.bosen.product.vo.request.ProductQueryVO;
 import com.bosen.product.vo.request.ProductRackingOrDownVO;
 import com.bosen.product.vo.request.ProductUpsertVO;
 import com.bosen.product.vo.response.ProductAttributeDetailVO;
 import com.bosen.product.vo.response.ProductDetailVO;
+import com.bosen.product.vo.response.ProductStoreShopDetailVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +45,12 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
 
     @Resource
     private IProductApproveRecordService productApproveRecordService;
+
+    @Resource
+    private IProductSkuService productSkuService;
+
+    @Resource
+    private IProductStoreShopService productStoreShopService;
 
     @Override
     public ResponseData<PageData<ProductDetailVO>> listPages(ProductQueryVO queryVO) {
@@ -226,30 +229,80 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
 
     @Override
     @Transactional(rollbackFor = BusinessException.class)
-    public ResponseData<Void> rackingOrDown(ProductRackingOrDownVO productRackingOrDownVO) {
-        // 判断商品是否存在
-        // 是否设置商品库存
-        // 判断商品是否存在上架记录
-        // 不存在上架记录，新增，否则，更新上架记录
-        // 判断商品是否可以上架
-        // 上架用户是否是商家自身
+    public ResponseData<Void> rackingProduct(ProductRackingOrDownVO productRackingOrDownVO) {
+        // 判断商品是否符合上架条件
+        List<ProductDO> productDOList = this.checkRackingProduct(productRackingOrDownVO, "1", "1");
+        // 删除上架记录，物理删除
+        ResponseData<Boolean> responseData = productStoreShopService.deleteByProductIdPhysic(productRackingOrDownVO.getProductIds());
+        // 新增上架记录
+        List<ProductStoreShopDO> list = new ArrayList<>();
+        productRackingOrDownVO.getProductIds().forEach(productId -> {
+            list.addAll(productRackingOrDownVO.getStoreShopList().stream().map(i -> {
+                ProductStoreShopDO productStoreShopDO = new ProductStoreShopDO();
+                BeanUtils.copyProperties(i, productStoreShopDO);
+                productStoreShopDO.setProductId(productId);
+                return productStoreShopDO;
+            }).collect(Collectors.toList()));
+        });
+        boolean saveBatch = productStoreShopService.saveBatch(list);
+        if (!saveBatch) {
+            throw new BusinessException(ResponseCode.SAVE_PRODUCT_STORE_SHOP_ERROR);
+        }
+        productDOList.forEach(i -> {
+            i.setStatus(ProductApproveStatusEnum.UP.getCode());
+            i.setPushDateTime(LocalDateTime.now());
+        });
+        boolean updateBatchById = this.updateBatchById(productDOList);
+        if (!updateBatchById) {
+            throw new BusinessException(ResponseCode.UPDATE_PRODUCT_ERROR);
+        }
+        int a= 1/0;
         // 更新商品上架状态
         // 同步数据到es，这里可以使用mq操作
         return null;
     }
 
+    public List<ProductDO> checkRackingProduct(ProductRackingOrDownVO productRackingOrDownVO, String merchantId, String merchantRoleId) {
+        List<ProductDO> list = this.lambdaQuery()
+                .in(ProductDO::getId, productRackingOrDownVO.getProductIds())
+                .eq(ProductDO::getMerchantId, merchantId)
+                .eq(ProductDO::getMerchantRoleId, merchantRoleId)
+                .in(ProductDO::getStatus, Arrays.asList(ProductApproveStatusEnum.AGREE.getCode(), ProductApproveStatusEnum.DOWN.getCode()))
+                .list();
+        if (!Objects.equals(list.size(), productRackingOrDownVO.getProductIds().size())) {
+            throw new BusinessException(ResponseCode.RACKING_COUNT_ERROR);
+        }
+        // 是否设置商品库存
+        List<ProductSkuDO> skuList = productSkuService.lambdaQuery()
+                .in(ProductSkuDO::getProductId, productRackingOrDownVO.getProductIds())
+                .eq(ProductSkuDO::getMerchantId, merchantId)
+                .eq(ProductSkuDO::getMerchantRoleId, merchantRoleId)
+                .list();
+        int skuProductListSize = skuList.stream().map(ProductSkuDO::getProductId).distinct().collect(Collectors.toList()).size();
+        if (!Objects.equals(skuProductListSize, productRackingOrDownVO.getProductIds().size())) {
+            throw new BusinessException(ResponseCode.RACKING_COUNT_ERROR);
+        }
+        return list;
+    }
+
     @Override
     public ResponseData<ProductDetailVO> detail(String id) {
-        ProductDO productDO = this.getById(id);
-        if (Objects.isNull(productDO)) {
+        ProductDetailVO detailVO = baseMapper.detailById(id);
+        if (Objects.isNull(detailVO)) {
             throw new BusinessException(ResponseCode.PRODUCT_NOT_EXIT_ERROR);
         }
-        ProductDetailVO detailVO = new ProductDetailVO();
-        BeanUtils.copyProperties(productDO, detailVO);
         // 查询商品规格
         List<ProductAttributeDetailVO> attributeDetailVOS = productAttributeService.listProductAttributeDetailByProductId(id);
         detailVO.setAttributeList(attributeDetailVOS.stream().filter(i -> Objects.equals(AttributeTypeEnum.ATTR.getCode(), i.getType())).collect(Collectors.toList()));
         detailVO.setSpecList(attributeDetailVOS.stream().filter(i -> Objects.equals(AttributeTypeEnum.SPEC.getCode(), i.getType())).collect(Collectors.toList()));
+        // 商品上架商城与店铺
+        if (Objects.equals(detailVO.getStatus(), ProductApproveStatusEnum.UP.getCode())) {
+            ResponseData<List<ProductStoreShopDetailVO>> data = productStoreShopService.listByProductId(id);
+            if (!Objects.equals(data.getCode(), ResponseCode.SUCCESS.getCode())) {
+                throw new BusinessException("查询商品上架商城与店铺数据列表失败");
+            }
+            detailVO.setStoreShopDetailList(data.getData());
+        }
         return ResponseData.success(detailVO);
     }
 }
