@@ -27,10 +27,16 @@ public class ProductDetailVO {
      * spu 名称
      */
     private String name;
+
     /**
      * 平台品类
      */
     private String categoryId;
+
+    /**
+     * 平台品类名称
+     */
+    private String categoryName;
 
     /**
      * 商家品类id
@@ -41,6 +47,8 @@ public class ProductDetailVO {
      * 品牌
      */
     private String brandId;
+
+    private String brandName;
 
     /**
      * 原价，默认规格价格
@@ -166,4 +174,9 @@ public class ProductDetailVO {
      * 规格
      */
     private List<ProductAttributeDetailVO> specList;
+
+    /**
+     * 商品上架到商城的店铺
+     */
+    private List<ProductStoreShopDetailVO> storeShopDetailList;
 }

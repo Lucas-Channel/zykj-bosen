@@ -19,6 +19,7 @@ import com.bosen.product.vo.request.ProductSkuQueryVO;
 import com.bosen.product.vo.request.ProductSkuUpsertVO;
 import com.bosen.product.vo.response.ProductSkuDetailVO;
 import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 @Service
 public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, ProductSkuDO> implements IProductSkuService {
 
+    @Lazy
     @Resource
     private IProductService productService;
 
@@ -83,6 +85,7 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
         if (Objects.isNull(productDO)) {
             throw new BusinessException(ResponseCode.PRODUCT_NOT_EXIT_ERROR);
         }
+        // 如果允许上架期间更新库存，需要计算差量同步到es
         if (Objects.equals(productDO.getStatus(), ProductApproveStatusEnum.UP.getCode())) {
             throw new BusinessException(ResponseCode.SKU_HAS_RACKING_ERROR);
         }

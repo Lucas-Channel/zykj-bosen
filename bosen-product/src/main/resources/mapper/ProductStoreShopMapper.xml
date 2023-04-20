@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bosen.product.mapper.ProductStoreShopMapper">
+
+    <!-- 批量删除 -->
+    <delete id="deleteByProductIdPhysic" parameterType="list">
+       delete from bs_product_store_shop where product_id in
+        <foreach collection="productIds" open="(" separator="," close=")" item="item" index="index">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="listByProductId" parameterType="string" resultType="com.bosen.product.vo.response.ProductStoreShopDetailVO">
+        select bs.name shop_name, bpss.shop_id, bpss.store_id, bss.name store_name from bs_product_store_shop bpss
+        inner join bs_shop bs on bs.id = bpss.shop_id
+        inner join bs_store bss on bss.id = bpss.store_id
+        where bpss.produtc_id = #{productId}
+    </select>
+</mapper>
+

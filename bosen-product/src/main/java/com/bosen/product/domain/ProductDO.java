@@ -30,12 +30,12 @@ public class ProductDO extends BaseEntityData implements Serializable {
      */
     private String name;
     /**
-     * 平台品类
+     * 平台品类，id通过逗号拼接，完整目录
      */
     private String categoryId;
 
     /**
-     * 商家品类id
+     * 商家品类id，id通过逗号拼接，完整目录
      */
     private String merchantCategoryId;
 

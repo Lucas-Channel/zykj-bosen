@@ -4,20 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.bosen.product.mapper.ProductMapper">
 
-
     <select id="listPages" resultType="com.bosen.product.vo.response.ProductDetailVO">
-        select bb.*, bpc.name category_name, bpb.name brand_name from bs_product bb
-        inner join bs_product_category bpc on bpc.id = bb.category_id
+        select
+            bb.*,
+            GROUP_CONCAT(DISTINCT bpc.name order by bpc.create_time asc SEPARATOR ' > ' ) category_name,
+            bpb.name brand_name from bs_product bb
+        inner join bs_product_category bpc on FIND_IN_SET(bpc.id, bb.category_id)
         inner join bs_product_brand bpb on bpb.id = bb.brand_id
         <where>
             <if test='queryParams.keywords != null and queryParams.keywords.trim() neq ""'>
                 and bb.name like concat('%',#{queryParams.keywords},'%')
             </if>
             <if test='queryParams.categoryId !=null'>
-                and bb.category_id = #{queryParams.categoryId}
+                and FIND_IN_SET(#{queryParams.categoryId}, bb.category_id)
             </if>
             <if test='queryParams.merchantCategoryId !=null'>
-                and bb.merchant_category_id = #{queryParams.merchantCategoryId}
+                and FIND_IN_SET(#{queryParams.merchantCategoryId}, bb.merchant_category_id)
             </if>
             <if test='queryParams.merchantId !=null'>
                 and bb.merchant_id = #{queryParams.merchantId}
@@ -29,22 +31,18 @@
                 and bb.merchant_name like concat('%',#{queryParams.merchantName},'%')
             </if>
         </where>
+        group by bb.id
         ORDER BY bb.create_time DESC
     </select>
-
-    <select id="listForMobile" resultType="com.bosen.product.vo.response.ProductCategoryBrandDetailVO">
-        select bpcb.*, bpc.name category_name, bpb.name brand_name from bs_product_category_brand bpcb
-        inner join bs_product_category bpc on bpc.id = bpcb.category_id
-        inner join bs_product_brand bpb on bpb.id = bpcb.brand_id
-        <where>
-            <if test='queryParams.categoryName != null and queryParams.categoryName.trim() neq ""'>
-                and bpc.name like concat('%',#{queryParams.categoryName},'%')
-            </if>
-            <if test='queryParams.brandName !=null and queryParams.brandName.trim() neq ""'>
-                and bpb.menu_id = #{queryParams.brandName}
-            </if>
-        </where>
-        ORDER BY bpcb.id DESC
+    <select id="detailById" resultType="com.bosen.product.vo.response.ProductDetailVO" parameterType="string">
+        select
+        bb.*,
+        GROUP_CONCAT(DISTINCT bpc.name order by bpc.create_time asc SEPARATOR ' > ' ) category_name,
+        bpb.name brand_name from bs_product bb
+        inner join bs_product_category bpc on FIND_IN_SET(bpc.id, bb.category_id)
+        inner join bs_product_brand bpb on bpb.id = bb.brand_id
+        where bb.id = #{id}
+        group by bb.id
+        ORDER BY bb.create_time DESC
     </select>
-
 </mapper>

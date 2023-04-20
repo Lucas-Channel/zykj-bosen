@@ -85,11 +85,11 @@ public class MerchantProductController {
     }
 
     /**
-     * 上架/下架
+     * 上架
      * @return
      */
-    @PostMapping("/rackingOrDown")
-    public ResponseData<Void> rackingOrDown(@RequestBody @Valid ProductRackingOrDownVO productRackingOrDownVO) {
-        return productService.rackingOrDown(productRackingOrDownVO);
+    @PostMapping("/rackingProduct")
+    public ResponseData<Void> rackingProduct(@RequestBody @Valid ProductRackingOrDownVO productRackingOrDownVO) {
+        return productService.rackingProduct(productRackingOrDownVO);
     }
 }

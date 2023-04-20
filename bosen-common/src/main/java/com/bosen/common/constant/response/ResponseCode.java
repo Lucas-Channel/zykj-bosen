@@ -102,7 +102,14 @@ public enum ResponseCode {
     FREIGHT_SPACE_NOT_EXIT_ERROR(1231, "仓位不存在"),
 
     SKU_NOT_EXIT_ERROR(1232, "SKU不存在"),
+
     SKU_HAS_RACKING_ERROR(1233, "该商品已上架，不能修改库存，如需修改，请下架后操作"),
+
+    RACKING_COUNT_ERROR(1234, "上架数量不匹配。请确认商品是否是自身商品以及商品是否审核通过或已下架或是否建立仓位库存"),
+
+    SAVE_PRODUCT_STORE_SHOP_ERROR(1235, "保存商品上架记录失败"),
+
+    UPDATE_PRODUCT_ERROR(1236, "更新商品信息失败"),
     ;
 
 

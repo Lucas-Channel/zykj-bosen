@@ -3,7 +3,6 @@ package com.bosen.product.vo.request;
 import lombok.Data;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,11 +17,11 @@ public class ProductRackingOrDownVO implements Serializable {
     private static final long serialVersionUID = -3362076186496528559L;
 
     /**
-     * 是否上架，true，上架，false下架
+     * 上架商品id
      */
-    @NotNull
-    private Boolean rackingFlag;
+    @NotEmpty(message = "上架商品id不能为空")
+    private List<String> productIds;
 
-    @NotEmpty
-    private List<String> ids;
+    @NotEmpty(message = "上架商城与店铺id不能为空")
+    private List<StoreShopVO> storeShopList;
 }

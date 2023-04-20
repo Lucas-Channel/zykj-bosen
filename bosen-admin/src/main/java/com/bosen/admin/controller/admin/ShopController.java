@@ -1,4 +1,4 @@
-package com.bosen.admin.controller;
+package com.bosen.admin.controller.admin;
 
 import com.bosen.admin.domain.ShopDO;
 import com.bosen.admin.service.IShopService;

@@ -10,4 +10,6 @@ import org.apache.ibatis.annotations.Param;
 
 public interface ProductMapper extends BaseMapper<ProductDO> {
     IPage<ProductDetailVO> listPages(Page<ProductDetailVO> page, @Param("queryParams") ProductQueryVO queryVO);
+
+    ProductDetailVO detailById(String id);
 }
