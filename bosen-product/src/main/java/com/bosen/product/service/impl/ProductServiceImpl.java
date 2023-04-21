@@ -22,6 +22,7 @@ import com.bosen.product.vo.request.ProductUpsertVO;
 import com.bosen.product.vo.response.ProductAttributeDetailVO;
 import com.bosen.product.vo.response.ProductDetailVO;
 import com.bosen.product.vo.response.ProductStoreShopDetailVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +35,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> implements IProductService {
 
@@ -256,7 +258,6 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
         if (!updateBatchById) {
             throw new BusinessException(ResponseCode.UPDATE_PRODUCT_ERROR);
         }
-        int a= 1/0;
         // 更新商品上架状态
         // 同步数据到es，这里可以使用mq操作
         return null;
