@@ -70,15 +70,17 @@
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE_DEBUG"/>
         <appender-ref ref="FILE_ERROR"/>
-        <appender-ref ref="LOG_STASH_DEBUG"/>
-        <appender-ref ref="LOG_STASH_ERROR"/>
     </root>
 
     <logger name="com.bosen.common.log.WebLogAspect" level="DEBUG">
-        <appender-ref ref="LOG_STASH_RECORD"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE_DEBUG"/>
+        <appender-ref ref="FILE_ERROR"/>
     </logger>
 
     <logger name="com.bosen" level="DEBUG">
-        <appender-ref ref="LOG_STASH_BUSINESS"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE_DEBUG"/>
+        <appender-ref ref="FILE_ERROR"/>
     </logger>
 </configuration>
