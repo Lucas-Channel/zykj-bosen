@@ -1,4 +1,4 @@
-package com.bosen.component.until;
+package com.bosen.redisson.until;
 
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;

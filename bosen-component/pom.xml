@@ -14,6 +14,7 @@
     <description>组件服务：mq，短信，邮件，上传，redisson</description>
     <modules>
         <module>bosen-component-redisson</module>
+        <module>bosen-component-elasticsearch</module>
     </modules>
 
     <properties>

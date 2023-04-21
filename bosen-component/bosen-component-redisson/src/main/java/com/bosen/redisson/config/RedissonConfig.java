@@ -1,4 +1,4 @@
-package com.bosen.component.config;
+package com.bosen.redisson.config;
 
 import cn.hutool.core.util.StrUtil;
 import lombok.Setter;

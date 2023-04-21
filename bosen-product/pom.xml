@@ -42,5 +42,9 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.bosen.elasticsearch</groupId>
+            <artifactId>bosen-component-elasticsearch</artifactId>
+        </dependency>
     </dependencies>
 </project>

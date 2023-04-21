@@ -11,6 +11,7 @@ import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.exception.BusinessException;
 import com.bosen.common.vo.request.ApproveBatchInfoVO;
 import com.bosen.common.vo.request.ApproveInfoVO;
+import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.product.constant.AttributeTypeEnum;
 import com.bosen.product.constant.ProductApproveStatusEnum;
 import com.bosen.product.domain.*;
@@ -250,6 +251,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
         if (!saveBatch) {
             throw new BusinessException(ResponseCode.SAVE_PRODUCT_STORE_SHOP_ERROR);
         }
+        // 更新商品上架状态
         productDOList.forEach(i -> {
             i.setStatus(ProductApproveStatusEnum.UP.getCode());
             i.setPushDateTime(LocalDateTime.now());
@@ -258,8 +260,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
         if (!updateBatchById) {
             throw new BusinessException(ResponseCode.UPDATE_PRODUCT_ERROR);
         }
-        // 更新商品上架状态
         // 同步数据到es，这里可以使用mq操作
+        ESProductSkuModelDO esProductSkuModelDO = new ESProductSkuModelDO();
         return null;
     }
 
