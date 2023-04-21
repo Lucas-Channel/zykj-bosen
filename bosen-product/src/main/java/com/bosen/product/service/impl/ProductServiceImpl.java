@@ -262,7 +262,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
         }
         // 同步数据到es，这里可以使用mq操作
         ESProductSkuModelDO esProductSkuModelDO = new ESProductSkuModelDO();
-        return null;
+        return ResponseData.success();
     }
 
     public List<ProductDO> checkRackingProduct(ProductRackingOrDownVO productRackingOrDownVO, String merchantId, String merchantRoleId) {
