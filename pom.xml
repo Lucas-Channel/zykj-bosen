@@ -23,6 +23,7 @@
         <module>bosen-component</module>
         <module>bosen-seckill</module>
         <module>bosen-member</module>
+        <module>bosen-template-adorn</module>
     </modules>
 
     <parent>

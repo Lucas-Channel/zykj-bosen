@@ -1,20 +1,20 @@
 package com.bosen.admin.domain;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.bosen.admin.constant.ShopEnvironmentEnum;
 import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.util.Map;
 
-/**
- * 商城
- * @author Lucas
- * @version 2.0.0
- * @date 2023/4/13
- */
+
 @Data
 @TableName("bs_shop")
+@EqualsAndHashCode(callSuper = true)
 public class ShopDO extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = -8353228506198499006L;
 
@@ -34,4 +34,11 @@ public class ShopDO extends BaseEntityData implements Serializable {
     private String remark;
 
     private Integer status;
+
+    /**
+     * 装修内容
+     */
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private Map<String, Object> adornContent;
 }
+

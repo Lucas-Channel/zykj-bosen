@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.bosen.admin.constant.StoreStatusEnum;
 import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -18,6 +19,7 @@ import java.math.BigDecimal;
 @Data
 @Accessors(chain = true)
 @TableName("bs_store")
+@EqualsAndHashCode(callSuper = true)
 public class StoreDO extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = -1698675323076867765L;
 
