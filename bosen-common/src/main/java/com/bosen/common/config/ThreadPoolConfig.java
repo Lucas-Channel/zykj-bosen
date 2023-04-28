@@ -25,19 +25,24 @@ public class ThreadPoolConfig {
     private static final int queueCapacity = 1500;
     private static final int keepAliveSeconds = 60;
 
+    private ThreadPoolTaskExecutor commonPoolExecutor() {
+        ThreadPoolTaskExecutor commonPoolExecutor = new ThreadPoolTaskExecutor();
+        commonPoolExecutor.setCorePoolSize(maxPoolSize);
+        commonPoolExecutor.setMaxPoolSize(maxPoolSize * 2);
+        commonPoolExecutor.setQueueCapacity(queueCapacity);
+        commonPoolExecutor.setKeepAliveSeconds(keepAliveSeconds);
+        commonPoolExecutor.setWaitForTasksToCompleteOnShutdown(true);
+        commonPoolExecutor.setAllowCoreThreadTimeOut(true);
+        return commonPoolExecutor;
+    }
+
     /**
      * 通用线程池配置
      **/
     @Bean("defaultPoolExecutor")
     public ThreadPoolTaskExecutor defaultPoolExecutor() {
-        ThreadPoolTaskExecutor defaultPoolExecutor = new ThreadPoolTaskExecutor();
-        defaultPoolExecutor.setCorePoolSize(maxPoolSize);
-        defaultPoolExecutor.setMaxPoolSize(maxPoolSize * 2);
-        defaultPoolExecutor.setQueueCapacity(queueCapacity);
-        defaultPoolExecutor.setKeepAliveSeconds(keepAliveSeconds);
+        ThreadPoolTaskExecutor defaultPoolExecutor = commonPoolExecutor();
         defaultPoolExecutor.setThreadNamePrefix("defaultPoolExecutor--");
-        defaultPoolExecutor.setWaitForTasksToCompleteOnShutdown(true);
-        defaultPoolExecutor.setAllowCoreThreadTimeOut(true);
         defaultPoolExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
         defaultPoolExecutor.initialize();
         return defaultPoolExecutor;
@@ -48,14 +53,8 @@ public class ThreadPoolConfig {
      **/
     @Bean("sendSmsThreadPool")
     public ThreadPoolTaskExecutor sendSmsThreadPool() {
-        ThreadPoolTaskExecutor sendSmsThreadPool = new ThreadPoolTaskExecutor();
-        sendSmsThreadPool.setCorePoolSize(maxPoolSize);
-        sendSmsThreadPool.setMaxPoolSize(maxPoolSize * 2);
-        sendSmsThreadPool.setQueueCapacity(queueCapacity);
-        sendSmsThreadPool.setKeepAliveSeconds(keepAliveSeconds);
+        ThreadPoolTaskExecutor sendSmsThreadPool = commonPoolExecutor();
         sendSmsThreadPool.setThreadNamePrefix("sendSmsThreadPool--");
-        sendSmsThreadPool.setWaitForTasksToCompleteOnShutdown(true);
-        sendSmsThreadPool.setAllowCoreThreadTimeOut(true);
         sendSmsThreadPool.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
         sendSmsThreadPool.initialize();
         return sendSmsThreadPool;
@@ -66,14 +65,8 @@ public class ThreadPoolConfig {
      **/
     @Bean("syncDataThreadPool")
     public ThreadPoolTaskExecutor syncDataThreadPool() {
-        ThreadPoolTaskExecutor syncDataThreadPool = new ThreadPoolTaskExecutor();
-        syncDataThreadPool.setCorePoolSize(maxPoolSize);
-        syncDataThreadPool.setMaxPoolSize(maxPoolSize * 2);
-        syncDataThreadPool.setQueueCapacity(queueCapacity);
-        syncDataThreadPool.setKeepAliveSeconds(keepAliveSeconds);
+        ThreadPoolTaskExecutor syncDataThreadPool = commonPoolExecutor();
         syncDataThreadPool.setThreadNamePrefix("syncDataThreadPool--");
-        syncDataThreadPool.setWaitForTasksToCompleteOnShutdown(true);
-        syncDataThreadPool.setAllowCoreThreadTimeOut(true);
         syncDataThreadPool.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
         syncDataThreadPool.initialize();
         return syncDataThreadPool;
