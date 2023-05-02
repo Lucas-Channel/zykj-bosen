@@ -12,6 +12,12 @@
     <!--LogStash访问host-->
     <springProperty name="LOG_STASH_HOST" scope="context" source="logstash.host" defaultValue="localhost"/>
 
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
     <!--DEBUG日志输出到文件-->
     <appender name="FILE_DEBUG"
               class="ch.qos.logback.core.rolling.RollingFileAppender">
