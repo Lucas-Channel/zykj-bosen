@@ -24,6 +24,7 @@
         <module>bosen-seckill</module>
         <module>bosen-member</module>
         <module>bosen-template-adorn</module>
+        <module>xxl-job-admin</module>
     </modules>
 
     <parent>
@@ -37,7 +38,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <skipTests>true</skipTests>
-        <docker.host>http://192.168.3.105:2375</docker.host>
+        <docker.host>http://127.0.0.1:2375</docker.host>
         <docker.maven.plugin.version>0.40.0</docker.maven.plugin.version>
         <java.version>1.8</java.version>
         <spring-boot.version>2.7.0</spring-boot.version>
@@ -63,6 +64,8 @@
         <alipay.version>4.35.37.ALL</alipay.version>
         <es.version>2.6.8</es.version>
         <es-client.version>7.17.6</es-client.version>
+        <mybatis-spring-boot-starter.version>2.1.4</mybatis-spring-boot-starter.version>
+        <xxl-job-core.version>2.3.0</xxl-job-core.version>
     </properties>
 
     <dependencies>
@@ -231,6 +234,18 @@
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>elasticsearch-rest-high-level-client</artifactId>
                 <version>${es-client.version}</version>
+            </dependency>
+            <!-- mybatis-starter：mybatis + mybatis-spring + hikari（default） -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot-starter.version}</version>
+            </dependency>
+            <!-- xxl-job-core -->
+            <dependency>
+                <groupId>com.xuxueli</groupId>
+                <artifactId>xxl-job-core</artifactId>
+                <version>${xxl-job-core.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
