@@ -20,6 +20,15 @@ public class StoreShopVO implements Serializable {
     @NotEmpty(message = "店铺id不能为空")
     private String storeId;
 
+    @NotEmpty(message = "店铺名称不能为空")
+    private String storeName;
+
+    /**
+     * 商城名称
+     */
+    @NotEmpty(message = "商城名称不能为空")
+    private String shopName;
+
     /**
      * 商城id
      */

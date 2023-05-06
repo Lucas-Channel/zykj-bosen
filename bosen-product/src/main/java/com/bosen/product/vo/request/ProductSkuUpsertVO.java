@@ -85,9 +85,14 @@ public class ProductSkuUpsertVO implements Serializable {
     private BigDecimal lockedStockNum = BigDecimal.ZERO;
 
     /**
-     * 商品图片地址
+     * 商品主图-图片地址
      */
-    private String picUrl;
+    private String skuImg;
+
+    /**
+     * 商品sku轮播图
+     */
+    private String[] album;
 
     /**
      * 入库批次

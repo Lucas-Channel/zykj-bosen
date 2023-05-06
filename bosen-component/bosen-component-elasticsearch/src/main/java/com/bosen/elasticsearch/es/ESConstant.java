@@ -10,4 +10,9 @@ public class ESConstant {
      * 商品索引
      */
     public static final String ES_PRODUCT_INDEX = "product";
+
+    /**
+     * 品牌索引
+     */
+    public static final String ES_BRAND_INDEX = "brand";
 }

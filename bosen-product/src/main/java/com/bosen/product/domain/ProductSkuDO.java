@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.bosen.common.domain.BaseEntityData;
+import com.bosen.product.constant.ProductApproveStatusEnum;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -73,9 +74,15 @@ public class ProductSkuDO extends BaseEntityData {
     private BigDecimal lockedStockNum;
 
     /**
-     * 商品图片地址
+     * 商品主图-图片地址
      */
-    private String picUrl;
+    private String skuImg;
+
+    /**
+     * 商品sku轮播图
+     */
+    @TableField(typeHandler = JacksonTypeHandler.class)
+    private String[] album;
 
     /**
      * 入库批次
@@ -168,4 +175,10 @@ public class ProductSkuDO extends BaseEntityData {
      * 商品所属商家角色id
      */
     private String merchantRoleId;
+
+    /**
+     * 商品SKU状态(4-下架 5-上架，)
+     * @see ProductApproveStatusEnum
+     */
+    private Integer status;
 }

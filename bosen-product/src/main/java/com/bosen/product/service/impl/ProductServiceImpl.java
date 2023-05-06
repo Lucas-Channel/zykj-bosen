@@ -30,10 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -233,11 +231,45 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
     @Override
     @Transactional(rollbackFor = BusinessException.class)
     public ResponseData<Void> rackingProduct(ProductRackingOrDownVO productRackingOrDownVO) {
-        // 判断商品是否符合上架条件
+        // 判断商品及sku是否符合上架条件
         List<ProductDO> productDOList = this.checkRackingProduct(productRackingOrDownVO, "1", "1");
+        List<ProductSkuDO> skuList = this.checkRackingProductSku(productRackingOrDownVO, "1", "1");
         // 删除上架记录，物理删除
         ResponseData<Boolean> responseData = productStoreShopService.deleteByProductIdPhysic(productRackingOrDownVO.getProductIds());
         // 新增上架记录
+        this.addRecord(productRackingOrDownVO);
+        // 更新商品上架状态
+        this.updateStatus(productDOList, skuList);
+        Map<String, ProductDO> productDOMap = productDOList.stream().collect(Collectors.toMap(ProductDO::getId, Function.identity(), (oldSpu, newSpu) -> oldSpu));
+        // 同步数据到es，这里可以使用mq操作
+        productRackingOrDownVO.getStoreShopList().forEach(ss -> {
+            skuList.forEach(sku -> {
+                ESProductSkuModelDO esProductSkuModelDO = new ESProductSkuModelDO();
+                ProductDO productDO = productDOMap.get(sku.getProductId());
+                esProductSkuModelDO
+                        .setSpuId(sku.getProductId())
+                        .setBrandId(productDO.getBrandId())
+                        .setCategoryId(productDO.getCategoryId())
+                        .setMerchantCategoryId(productDO.getMerchantCategoryId())
+                        .setProductType(productDO.getProductType())
+                        .setShopId(ss.getShopId())
+                        .setShopName(ss.getShopName())
+                        .setStoreId(ss.getStoreId())
+                        .setStoreName(ss.getStoreName())
+                        .setSkuId(sku.getId())
+                        .setSkuName(sku.getName())
+                        .setSkuImg(sku.getSkuImg())
+                        .setAlbum(sku.getAlbum())
+                        .setOriginPrice(sku.getOriginPrice())
+                        .setVipPrice(sku.getVipPrice())
+                        .setSalesPrice(sku.getSalesPrice());
+                // 获取sku下的规格信息
+            });
+        });
+        return ResponseData.success();
+    }
+
+    private void addRecord(ProductRackingOrDownVO productRackingOrDownVO) {
         List<ProductStoreShopDO> list = new ArrayList<>();
         productRackingOrDownVO.getProductIds().forEach(productId -> {
             list.addAll(productRackingOrDownVO.getStoreShopList().stream().map(i -> {
@@ -251,21 +283,28 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
         if (!saveBatch) {
             throw new BusinessException(ResponseCode.SAVE_PRODUCT_STORE_SHOP_ERROR);
         }
-        // 更新商品上架状态
+    }
+
+    private void updateStatus(List<ProductDO> productDOList, List<ProductSkuDO> skuList) {
         productDOList.forEach(i -> {
             i.setStatus(ProductApproveStatusEnum.UP.getCode());
             i.setPushDateTime(LocalDateTime.now());
         });
+        skuList.forEach(i -> {
+            i.setStatus(ProductApproveStatusEnum.UP.getCode());
+            i.setUpdateTime(LocalDateTime.now());
+        });
         boolean updateBatchById = this.updateBatchById(productDOList);
+        boolean skuUpdate = productSkuService.updateBatchById(skuList);
         if (!updateBatchById) {
             throw new BusinessException(ResponseCode.UPDATE_PRODUCT_ERROR);
         }
-        // 同步数据到es，这里可以使用mq操作
-        ESProductSkuModelDO esProductSkuModelDO = new ESProductSkuModelDO();
-        return ResponseData.success();
+        if (!skuUpdate) {
+            throw new BusinessException(ResponseCode.UPDATE_PRODUCT_ERROR);
+        }
     }
 
-    public List<ProductDO> checkRackingProduct(ProductRackingOrDownVO productRackingOrDownVO, String merchantId, String merchantRoleId) {
+    private List<ProductDO> checkRackingProduct(ProductRackingOrDownVO productRackingOrDownVO, String merchantId, String merchantRoleId) {
         List<ProductDO> list = this.lambdaQuery()
                 .in(ProductDO::getId, productRackingOrDownVO.getProductIds())
                 .eq(ProductDO::getMerchantId, merchantId)
@@ -275,6 +314,10 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
         if (!Objects.equals(list.size(), productRackingOrDownVO.getProductIds().size())) {
             throw new BusinessException(ResponseCode.RACKING_COUNT_ERROR);
         }
+        return list;
+    }
+
+    private List<ProductSkuDO> checkRackingProductSku(ProductRackingOrDownVO productRackingOrDownVO, String merchantId, String merchantRoleId) {
         // 是否设置商品库存
         List<ProductSkuDO> skuList = productSkuService.lambdaQuery()
                 .in(ProductSkuDO::getProductId, productRackingOrDownVO.getProductIds())
@@ -285,7 +328,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
         if (!Objects.equals(skuProductListSize, productRackingOrDownVO.getProductIds().size())) {
             throw new BusinessException(ResponseCode.RACKING_COUNT_ERROR);
         }
-        return list;
+        return skuList;
     }
 
     @Override
