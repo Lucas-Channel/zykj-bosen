@@ -13,7 +13,7 @@
 xxl:
     job:
         admin:
-            addresses: http://127.0.0.1:8080/xxl-job-admin
+            addresses: http://127.0.0.1:8099/xxl-job-admin
         accessToken: default_token
         executor:
             ip:

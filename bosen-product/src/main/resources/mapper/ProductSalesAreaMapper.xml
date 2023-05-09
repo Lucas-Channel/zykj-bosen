@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bosen.product.mapper.ProductAreaMapper">
+    <select id="listSalesAreaByProductId" parameterType="string" resultType="com.bosen.elasticsearch.domain.EsProductSalesAreaDO">
+        select province_code, province_name,
+               allow_all_city, city_code, city_name,
+               allow_all_region, region_code, region_name,
+               allow_all_community, community_code, community_name
+        from bs_product_area where product_id =
+    </select>
+</mapper>

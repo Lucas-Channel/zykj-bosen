@@ -33,7 +33,5 @@
             <groupId>com.bosen.elasticsearch</groupId>
             <artifactId>bosen-component-elasticsearch</artifactId>
         </dependency>
-
-
     </dependencies>
 </project>

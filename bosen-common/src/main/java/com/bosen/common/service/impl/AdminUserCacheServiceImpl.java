@@ -1,7 +1,7 @@
 package com.bosen.common.service.impl;
 
 import cn.hutool.json.JSONUtil;
-import com.bosen.common.constant.auth.RedisKeyConstant;
+import com.bosen.common.constant.common.RedisKeyConstant;
 import com.bosen.common.domain.AdminUserCacheVO;
 import com.bosen.common.service.IAdminUserCacheService;
 import com.bosen.common.service.RedisService;

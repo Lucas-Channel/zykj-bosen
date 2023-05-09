@@ -112,6 +112,10 @@ public enum ResponseCode {
     UPDATE_PRODUCT_ERROR(1236, "更新商品信息失败"),
 
     DELETE_PRODUCT_UPPER_RECORD_HISTORY_ERROR(1237, "删除商品历史上架记录失败"),
+
+    SEARCH_SERVICE_ERROR(1238, "搜索服务异常"),
+
+    RACKING_PRODUCT_ERROR(1239, "商品上架失败"),
     ;
 
 

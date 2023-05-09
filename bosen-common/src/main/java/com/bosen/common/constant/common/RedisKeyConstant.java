@@ -1,4 +1,4 @@
-package com.bosen.common.constant.auth;
+package com.bosen.common.constant.common;
 
 /**
  * @author Lucas
@@ -27,4 +27,14 @@ public interface RedisKeyConstant {
     String CACHE_ADMIN_MERCHANT_KEY = "bosen:admin:merchant:";
 
     String TOKEN_KEY = "bs-auth-token:";
+
+    /**
+     * spu销售区域
+     */
+    String PRODUCT_AREA_KEY = "product:sales:area:id";
+
+    /**
+     * sku库存信息
+     */
+    String PRODUCT_SKU_STOCK_INFO_KEY = "product:sku:stock:id";
 }

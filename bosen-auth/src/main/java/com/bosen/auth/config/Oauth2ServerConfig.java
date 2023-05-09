@@ -3,7 +3,7 @@ package com.bosen.auth.config;
 import com.bosen.auth.component.JwtTokenEnhancer;
 import com.bosen.auth.security.ClientDetailsServiceImpl;
 import com.bosen.auth.security.UserServiceImpl;
-import com.bosen.common.constant.auth.RedisKeyConstant;
+import com.bosen.common.constant.common.RedisKeyConstant;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

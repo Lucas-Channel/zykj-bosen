@@ -1,9 +1,11 @@
 package com.bosen.product.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.bosen.common.constant.common.RedisKeyConstant;
 import com.bosen.common.constant.common.YesOrNoConstant;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseCode;
@@ -13,9 +15,11 @@ import com.bosen.common.vo.request.ApproveBatchInfoVO;
 import com.bosen.common.vo.request.ApproveInfoVO;
 import com.bosen.elasticsearch.domain.ESProductAttributeAndValueModelDO;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
+import com.bosen.elasticsearch.domain.EsProductSalesAreaDO;
 import com.bosen.product.constant.AttributeTypeEnum;
 import com.bosen.product.constant.ProductApproveStatusEnum;
 import com.bosen.product.domain.*;
+import com.bosen.product.feign.EsApiFeignService;
 import com.bosen.product.mapper.ProductAttributeValueMapper;
 import com.bosen.product.mapper.ProductMapper;
 import com.bosen.product.service.*;
@@ -27,12 +31,14 @@ import com.bosen.product.vo.response.ProductDetailVO;
 import com.bosen.product.vo.response.ProductStoreShopDetailVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronization;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
@@ -59,6 +65,12 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
 
     @Resource
     private ProductAttributeValueMapper productAttributeValueMapper;
+
+    @Resource
+    private EsApiFeignService esApiFeignService;
+
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public ResponseData<PageData<ProductDetailVO>> listPages(ProductQueryVO queryVO) {
@@ -267,14 +279,19 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
                         .setAlbum(sku.getAlbum())
                         .setOriginPrice(sku.getOriginPrice())
                         .setVipPrice(sku.getVipPrice())
-                        .setSalesPrice(sku.getSalesPrice());
+                        .setSalesPrice(sku.getSalesPrice())
+                        .setSalesAllArea(Objects.equals(productDO.getSalesAllArea(), YesOrNoConstant.YES));
                 // 获取sku下的规格信息
                 List<ESProductAttributeAndValueModelDO> esProductAttributeAndValueModelDOS = productAttributeValueMapper.listEsProductAttributeAndValueBySkuId(sku.getId());
                 esProductSkuModelDO.setAttrs(esProductAttributeAndValueModelDOS);
                 esList.add(esProductSkuModelDO);
             });
             // 调用feign接口，进行商品上架到es
-            // 上架后更新状态，保存上架记录数据，使用事务同步处理器处理
+            ResponseData<Void> data = esApiFeignService.rackingProduct(esList);
+            if (!Objects.equals(data.getCode(), ResponseCode.SUCCESS.getCode())) {
+                throw new BusinessException(ResponseCode.RACKING_PRODUCT_ERROR);
+            }
+            // 上架后更新状态，保存上架记录数据，使用事务同步处理器处理,集成mq之后，放入mq
             TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
                 @Override
                 public void afterCommit() {
@@ -282,10 +299,40 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
                     addRecord(productRackingOrDownVO);
                     // 更新商品上架状态
                     updateStatus(productDOList, skuList);
+                    // 设置spu商品销售范围，缓存至redis，key:productId, val: list
+                    setSalesAreaToRedis(productDOList);
+                    // 缓存商品库存到redis
+                    setStockToRedis(skuList);
                 }
             });
         });
         return ResponseData.success();
+    }
+
+    private void setSalesAreaToRedis(List<ProductDO> productDOList) {
+        List<String> ids = productDOList.stream().filter(i -> !Objects.equals(i.getSalesAllArea(), YesOrNoConstant.YES)).map(ProductDO::getId).collect(Collectors.toList());
+        if (CollUtil.isEmpty(ids)) {
+            return;
+        }
+        List<ProductAreaDO> areaDOS = productAreaService.lambdaQuery().select(ProductAreaDO::getProductId, ProductAreaDO::getProvinceCode, ProductAreaDO::getProvinceName,
+                        ProductAreaDO::getAllowAllCity, ProductAreaDO::getCityCode, ProductAreaDO::getCityName,
+                        ProductAreaDO::getAllowAllRegion, ProductAreaDO::getRegionCode, ProductAreaDO::getRegionName,
+                        ProductAreaDO::getAllowAllCommunity, ProductAreaDO::getCommunityCode, ProductAreaDO::getCommunityName)
+                .in(ProductAreaDO::getProductId, ids).list();
+        areaDOS.stream().map(i -> BeanUtil.copyProperties(i, EsProductSalesAreaDO.class))
+                .collect(Collectors.groupingBy(EsProductSalesAreaDO::getProductId))
+                .forEach((k, v) -> redisTemplate.opsForList().rightPushAll(RedisKeyConstant.PRODUCT_AREA_KEY + "-" + k, v));
+    }
+
+    private void setStockToRedis(List<ProductSkuDO> skuList) {
+        Map<String, Map<String, BigDecimal>> map = new HashMap<>();
+        skuList.forEach(i -> {
+            HashMap<String, BigDecimal> hashMap = new HashMap<>();
+            hashMap.put("stockNum", i.getStockNum());
+            hashMap.put("lockedStockNum", i.getLockedStockNum());
+            map.put(i.getId(), hashMap);
+        });
+        redisTemplate.opsForHash().putAll(RedisKeyConstant.PRODUCT_SKU_STOCK_INFO_KEY, map);
     }
 
     private void addRecord(ProductRackingOrDownVO productRackingOrDownVO) {

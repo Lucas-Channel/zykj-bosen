@@ -3,6 +3,7 @@ package com.bosen.elasticsearch.domain;
 import com.bosen.elasticsearch.es.ESConstant;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.*;
 
 import java.io.Serializable;
@@ -22,6 +23,9 @@ import java.util.List;
 public class ESProductSkuModelDO implements Serializable {
 
     private static final long serialVersionUID = -5351013175951661017L;
+
+    @Id
+    private String id;
 
     @Field(type = FieldType.Keyword)
     private String spuId;
@@ -87,4 +91,16 @@ public class ESProductSkuModelDO implements Serializable {
      */
     @Field(type = FieldType.Nested)
     private List<ESProductAttributeAndValueModelDO> attrs;
+
+    /**
+     * 是否全国销售
+     */
+    @Field(type = FieldType.Boolean)
+    private Boolean salesAllArea = true;
+//
+//    /**
+//     * 销售区域
+//     */
+//    @Field(type = FieldType.Nested)
+//    private List<EsProductSalesAreaDO> salesArea;
 }
