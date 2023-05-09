@@ -7,10 +7,28 @@
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
     <!--应用名称-->
     <springProperty scope="context" name="APP_NAME" source="spring.application.name" defaultValue="springBoot"/>
-    <!--日志文件保存路径-->
-    <property name="LOG_FILE_PATH" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/logs}"/>
     <!--LogStash访问host-->
     <springProperty name="LOG_STASH_HOST" scope="context" source="logstash.host" defaultValue="localhost"/>
+
+    <spingProfile name="dev">
+        <!--日志文件保存路径-->
+        <property name="LOG_FILE_PATH" value="./logs"/>
+    </spingProfile>
+    <spingProfile name="prod">
+        <!--日志文件保存路径-->
+        <property name="LOG_FILE_PATH" value="/data/logs"/>
+    </spingProfile>
+
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <withJansi>false</withJansi>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <!--%green,%red是日志显示的颜色，要用小括号-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %green([%thread]) %logger{50} --- %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
 
     <!--DEBUG日志输出到文件-->
     <appender name="FILE_DEBUG"
@@ -204,18 +222,18 @@
     <logger name="com.alibaba.nacos.client.naming" level="INFO"/>
 
     <root level="DEBUG">
-        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE_DEBUG"/>
-        <appender-ref ref="FILE_ERROR"/>
         <appender-ref ref="LOG_STASH_DEBUG"/>
-        <appender-ref ref="LOG_STASH_ERROR"/>
     </root>
 
     <logger name="com.bosen.common.log.WebLogAspect" level="DEBUG">
         <appender-ref ref="LOG_STASH_RECORD"/>
+        <appender-ref ref="STDOUT"/>
     </logger>
 
     <logger name="com.bosen" level="DEBUG">
         <appender-ref ref="LOG_STASH_BUSINESS"/>
+        <appender-ref ref="STDOUT"/>
     </logger>
 </configuration>
