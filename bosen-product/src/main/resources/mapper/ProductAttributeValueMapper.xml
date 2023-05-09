@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bosen.product.mapper.ProductAttributeValueMapper">
+    <select id="listEsProductAttributeAndValueBySkuId" resultType="com.bosen.elasticsearch.domain.ESProductAttributeAndValueModelDO" parameterType="string">
+        select
+            bpav.product_attribute_id attribute_id,
+            bpa.name attribute_name,
+            bpav.type attribute_type,
+            bpav.id attribute_value_id,
+            bpav.value attribute_value_name
+        from
+            bs_product_attribute_value bpav
+                inner join bs_product_attribute bpa on
+                bpav.product_attribute_id = bpa.id
+                inner join bs_product_sku bps on
+                find_in_set(bpav.id, bps.spec_ids)
+        where
+            bps.id = #{skuId}
+    </select>
+</mapper>

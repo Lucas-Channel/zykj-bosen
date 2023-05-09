@@ -20,16 +20,16 @@ public class ProductAttributeValueDO extends BaseEntityData implements Serializa
      */
     private String productId;
     /**
-     * 属性ID
+     * 属性/规格ID
      */
     private String productAttributeId;
 
     /**
-     * 属性值
+     * 属性/规格值
      */
     private String value;
     /**
-     * 属性类型(1:规格;2:属性;)
+     * 类型(1:规格;2:属性;)
      */
     private Integer type;
 
@@ -39,7 +39,7 @@ public class ProductAttributeValueDO extends BaseEntityData implements Serializa
     private String picUrl;
 
     /**
-     * 是否默认属性值
+     * 是否默认属性/规格值
      */
     private Integer defaultAttributeValue;
 

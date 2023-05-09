@@ -11,10 +11,12 @@ import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.exception.BusinessException;
 import com.bosen.common.vo.request.ApproveBatchInfoVO;
 import com.bosen.common.vo.request.ApproveInfoVO;
+import com.bosen.elasticsearch.domain.ESProductAttributeAndValueModelDO;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.product.constant.AttributeTypeEnum;
 import com.bosen.product.constant.ProductApproveStatusEnum;
 import com.bosen.product.domain.*;
+import com.bosen.product.mapper.ProductAttributeValueMapper;
 import com.bosen.product.mapper.ProductMapper;
 import com.bosen.product.service.*;
 import com.bosen.product.vo.request.ProductQueryVO;
@@ -27,6 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -52,6 +56,9 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
 
     @Resource
     private IProductStoreShopService productStoreShopService;
+
+    @Resource
+    private ProductAttributeValueMapper productAttributeValueMapper;
 
     @Override
     public ResponseData<PageData<ProductDetailVO>> listPages(ProductQueryVO queryVO) {
@@ -236,12 +243,10 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
         List<ProductSkuDO> skuList = this.checkRackingProductSku(productRackingOrDownVO, "1", "1");
         // 删除上架记录，物理删除
         ResponseData<Boolean> responseData = productStoreShopService.deleteByProductIdPhysic(productRackingOrDownVO.getProductIds());
-        // 新增上架记录
-        this.addRecord(productRackingOrDownVO);
-        // 更新商品上架状态
-        this.updateStatus(productDOList, skuList);
+        if (!Objects.equals(responseData.getCode(), ResponseCode.SUCCESS.getCode())) throw new BusinessException(ResponseCode.DELETE_PRODUCT_UPPER_RECORD_HISTORY_ERROR);
         Map<String, ProductDO> productDOMap = productDOList.stream().collect(Collectors.toMap(ProductDO::getId, Function.identity(), (oldSpu, newSpu) -> oldSpu));
-        // 同步数据到es，这里可以使用mq操作
+        // 封装同步到es的数据
+        List<ESProductSkuModelDO> esList = new ArrayList<>();
         productRackingOrDownVO.getStoreShopList().forEach(ss -> {
             skuList.forEach(sku -> {
                 ESProductSkuModelDO esProductSkuModelDO = new ESProductSkuModelDO();
@@ -264,6 +269,20 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
                         .setVipPrice(sku.getVipPrice())
                         .setSalesPrice(sku.getSalesPrice());
                 // 获取sku下的规格信息
+                List<ESProductAttributeAndValueModelDO> esProductAttributeAndValueModelDOS = productAttributeValueMapper.listEsProductAttributeAndValueBySkuId(sku.getId());
+                esProductSkuModelDO.setAttrs(esProductAttributeAndValueModelDOS);
+                esList.add(esProductSkuModelDO);
+            });
+            // 调用feign接口，进行商品上架到es
+            // 上架后更新状态，保存上架记录数据，使用事务同步处理器处理
+            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+                @Override
+                public void afterCommit() {
+                    // 新增上架记录
+                    addRecord(productRackingOrDownVO);
+                    // 更新商品上架状态
+                    updateStatus(productDOList, skuList);
+                }
             });
         });
         return ResponseData.success();

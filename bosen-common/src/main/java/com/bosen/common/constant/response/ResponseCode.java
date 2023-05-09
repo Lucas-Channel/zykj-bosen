@@ -110,6 +110,8 @@ public enum ResponseCode {
     SAVE_PRODUCT_STORE_SHOP_ERROR(1235, "保存商品上架记录失败"),
 
     UPDATE_PRODUCT_ERROR(1236, "更新商品信息失败"),
+
+    DELETE_PRODUCT_UPPER_RECORD_HISTORY_ERROR(1237, "删除商品历史上架记录失败"),
     ;
 
 
