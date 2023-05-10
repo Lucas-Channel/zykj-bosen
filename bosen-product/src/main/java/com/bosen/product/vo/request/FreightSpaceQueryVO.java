@@ -3,6 +3,7 @@ package com.bosen.product.vo.request;
 import com.bosen.common.constant.common.YesOrNoConstant;
 import com.bosen.common.domain.PageVO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -12,6 +13,7 @@ import java.io.Serializable;
  * @date 2023/4/19
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class FreightSpaceQueryVO extends PageVO implements Serializable {
     private static final long serialVersionUID = 6340260605949558508L;
 

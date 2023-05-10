@@ -165,11 +165,6 @@
         <appender-ref ref="LOG_STASH_INFO"/>
     </root>
 
-    <logger name="com.bosen.common.log.WebLogAspect" level="INFO">
-        <appender-ref ref="LOG_STASH_RECORD"/>
-        <appender-ref ref="STDOUT"/>
-    </logger>
-
     <logger name="com.bosen" level="INFO">
         <appender-ref ref="LOG_STASH_BUSINESS"/>
         <appender-ref ref="STDOUT"/>

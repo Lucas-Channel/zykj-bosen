@@ -2,6 +2,7 @@ package com.bosen.admin.vo.resquest;
 
 import com.bosen.common.domain.PageVO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Lucas
@@ -9,6 +10,7 @@ import lombok.Data;
  * @date 2023/2/26
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class RoleQueryVO extends PageVO {
     /**
      * 角色名称

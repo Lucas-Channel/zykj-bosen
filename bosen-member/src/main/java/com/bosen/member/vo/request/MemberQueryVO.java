@@ -4,10 +4,12 @@ import com.bosen.common.constant.common.SexConstant;
 import com.bosen.common.constant.common.UserStatusConstant;
 import com.bosen.common.domain.PageVO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class MemberQueryVO extends PageVO implements Serializable {
 
     private static final long serialVersionUID = 3252503498426666371L;

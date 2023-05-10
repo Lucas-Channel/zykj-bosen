@@ -130,7 +130,7 @@ CREATE TABLE `bs_product`  (
                                `origin_price` decimal(11,2) NOT NULL COMMENT '原价【起】，默认规格价格',
                                `sales_price` decimal(11,2) NOT NULL COMMENT '现价【起】，默认规格价格',
                                `selling_point` varchar(500) NULL COMMENT '卖点',
-                               `sales_counts` int NULL DEFAULT 0 COMMENT '销量',
+                               `sales_counts` decimal(11,2) NULL DEFAULT 0 COMMENT '销量',
                                `pic_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品主图',
                                `album` json NULL COMMENT '商品图册',
                                `unit` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '单位',

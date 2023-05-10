@@ -2,6 +2,7 @@ package com.bosen.product.vo.request;
 
 import com.bosen.common.domain.PageVO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
@@ -9,6 +10,7 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
+@EqualsAndHashCode(callSuper = true)
 public class ProductSkuQueryVO extends PageVO {
     /**
      * sku编码

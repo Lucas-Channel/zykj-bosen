@@ -61,7 +61,7 @@ public class ProductUpsertVO {
     /**
      * 销量
      */
-    private Integer salesCounts;
+    private BigDecimal salesCounts;
 
     /**
      * 商品主图

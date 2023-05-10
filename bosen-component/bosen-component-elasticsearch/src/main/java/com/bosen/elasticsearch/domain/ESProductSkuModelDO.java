@@ -97,10 +97,15 @@ public class ESProductSkuModelDO implements Serializable {
      */
     @Field(type = FieldType.Boolean)
     private Boolean salesAllArea = true;
-//
-//    /**
-//     * 销售区域
-//     */
-//    @Field(type = FieldType.Nested)
-//    private List<EsProductSalesAreaDO> salesArea;
+
+    /**
+     * 销量
+     */
+    private BigDecimal salesCount;
+
+    /**
+     * 上架时间戳
+     */
+    @Field(type = FieldType.Long)
+    private Long upperDate;
 }

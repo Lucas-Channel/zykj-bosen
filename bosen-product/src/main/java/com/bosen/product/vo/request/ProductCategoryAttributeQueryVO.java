@@ -2,6 +2,7 @@ package com.bosen.product.vo.request;
 
 import com.bosen.common.domain.PageVO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author Lucas
@@ -9,6 +10,7 @@ import lombok.Data;
  * @date 2023/3/2
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class ProductCategoryAttributeQueryVO extends PageVO {
     /**
      * 商品分类ID

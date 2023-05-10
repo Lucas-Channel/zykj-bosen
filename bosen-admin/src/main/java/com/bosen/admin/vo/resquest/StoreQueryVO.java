@@ -2,6 +2,7 @@ package com.bosen.admin.vo.resquest;
 
 import com.bosen.common.domain.PageVO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * 查询条件
@@ -10,6 +11,7 @@ import lombok.Data;
  * @date 2023/4/14
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class StoreQueryVO extends PageVO {
     /**
      * 店铺名称

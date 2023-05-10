@@ -63,7 +63,7 @@ public class ProductDO extends BaseEntityData implements Serializable {
     /**
      * 销量
      */
-    private Integer salesCounts;
+    private BigDecimal salesCounts;
 
     /**
      * 商品主图

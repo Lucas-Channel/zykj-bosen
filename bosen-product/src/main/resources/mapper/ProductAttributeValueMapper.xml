@@ -9,7 +9,7 @@
             bpa.name attribute_name,
             bpav.type attribute_type,
             bpav.id attribute_value_id,
-            bpav.value attribute_value_name
+            bpav.value attribute_value
         from
             bs_product_attribute_value bpav
                 inner join bs_product_attribute bpa on

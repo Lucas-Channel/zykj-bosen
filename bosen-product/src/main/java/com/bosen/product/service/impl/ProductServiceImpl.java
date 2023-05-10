@@ -2,6 +2,7 @@ package com.bosen.product.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -40,6 +41,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -280,6 +282,8 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
                         .setOriginPrice(sku.getOriginPrice())
                         .setVipPrice(sku.getVipPrice())
                         .setSalesPrice(sku.getSalesPrice())
+                        .setUpperDate(LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli())
+                        .setSalesCount(Objects.nonNull(sku.getSalesCount()) ? sku.getSalesCount() : BigDecimal.ZERO)
                         .setSalesAllArea(Objects.equals(productDO.getSalesAllArea(), YesOrNoConstant.YES));
                 // 获取sku下的规格信息
                 List<ESProductAttributeAndValueModelDO> esProductAttributeAndValueModelDOS = productAttributeValueMapper.listEsProductAttributeAndValueBySkuId(sku.getId());
@@ -321,7 +325,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
                 .in(ProductAreaDO::getProductId, ids).list();
         areaDOS.stream().map(i -> BeanUtil.copyProperties(i, EsProductSalesAreaDO.class))
                 .collect(Collectors.groupingBy(EsProductSalesAreaDO::getProductId))
-                .forEach((k, v) -> redisTemplate.opsForList().rightPushAll(RedisKeyConstant.PRODUCT_AREA_KEY + "-" + k, v));
+                .forEach((k, v) -> redisTemplate.opsForValue().set(RedisKeyConstant.PRODUCT_AREA_KEY + "-" + k, JSONUtil.toJsonStr(v)));
     }
 
     private void setStockToRedis(List<ProductSkuDO> skuList) {

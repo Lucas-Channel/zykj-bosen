@@ -2,6 +2,7 @@ package com.bosen.admin.vo.resquest;
 
 import com.bosen.common.domain.PageVO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotNull;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
  * @date 2023/2/26
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class MenuPermissionQueryVO extends PageVO {
 
     /**

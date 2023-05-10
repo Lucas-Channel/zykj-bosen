@@ -2,11 +2,13 @@ package com.bosen.product.vo.request;
 
 import com.bosen.common.domain.PageVO;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  *  商品分页查询对象
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class ProductQueryVO extends PageVO {
 
     /**
