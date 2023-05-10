@@ -5,6 +5,7 @@ import com.bosen.common.constant.response.ResponseData;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.elasticsearch.domain.EsProductSalesAreaDO;
 import com.bosen.search.vo.request.ProductQueryVO;
+import com.bosen.search.vo.request.UpdateSkuSalesCountVO;
 
 import java.util.List;
 
@@ -35,4 +36,11 @@ public interface IEsProductService {
      * @return 结果
      */
     ResponseData<PageData<ESProductSkuModelDO>> pageData(ProductQueryVO queryVO);
+
+    /**
+     * 更新es中sku的已销数量
+     * @param updateSkuSalesCountVOS 参数
+     * @return 结果
+    **/
+    ResponseData<Void> updateEsSalesCount(List<UpdateSkuSalesCountVO> updateSkuSalesCountVOS);
 }

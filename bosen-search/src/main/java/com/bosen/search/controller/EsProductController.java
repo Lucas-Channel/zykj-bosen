@@ -6,6 +6,7 @@ import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.elasticsearch.domain.EsProductSalesAreaDO;
 import com.bosen.search.service.IEsProductService;
 import com.bosen.search.vo.request.ProductQueryVO;
+import com.bosen.search.vo.request.UpdateSkuSalesCountVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -42,5 +43,16 @@ public class EsProductController {
     @PostMapping("/pageData")
     public ResponseData<PageData<ESProductSkuModelDO>> pageData(@RequestBody ProductQueryVO queryVO) {
         return esProductService.pageData(queryVO);
+    }
+
+    /**
+     * 更新sku已售数量
+     * @param updateSkuSalesCountVOS 参数
+     * @return 结果
+     */
+    @PostMapping("/updateEsSalesCount")
+    public ResponseData<Void> updateEsSalesCount(@RequestBody List<UpdateSkuSalesCountVO> updateSkuSalesCountVOS) {
+        // todo 需要接入登录
+        return esProductService.updateEsSalesCount(updateSkuSalesCountVOS);
     }
 }

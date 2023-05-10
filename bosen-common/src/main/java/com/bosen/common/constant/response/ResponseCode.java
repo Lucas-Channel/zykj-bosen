@@ -116,6 +116,8 @@ public enum ResponseCode {
     SEARCH_SERVICE_ERROR(1238, "搜索服务异常"),
 
     RACKING_PRODUCT_ERROR(1239, "商品上架失败"),
+
+    UPDATE_PRODUCT_SKU_SALES_COUNT_ERROR(1240, "更新商品sku已售数量失败"),
     ;
 
 

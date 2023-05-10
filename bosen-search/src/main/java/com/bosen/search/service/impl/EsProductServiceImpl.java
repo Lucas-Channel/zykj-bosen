@@ -13,6 +13,7 @@ import com.bosen.search.constant.SortTypeEnum;
 import com.bosen.search.mapper.EsProductMapper;
 import com.bosen.search.service.IEsProductService;
 import com.bosen.search.vo.request.ProductQueryVO;
+import com.bosen.search.vo.request.UpdateSkuSalesCountVO;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -32,6 +33,7 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -85,6 +87,27 @@ public class EsProductServiceImpl implements IEsProductService {
         FieldSortBuilder sortBuilder = getSortBuilder(queryVO);
         PageData<ESProductSkuModelDO> esProductList = getEsProductList(queryBuilder, sortBuilder, queryVO);
         return ResponseData.success(esProductList);
+    }
+
+    @Override
+    @Transactional
+    public ResponseData<Void> updateEsSalesCount(List<UpdateSkuSalesCountVO> updateSkuSalesCountVOS) {
+        List<ESProductSkuModelDO> list = esProductMapper.findBySkuIdIn(updateSkuSalesCountVOS.stream().map(UpdateSkuSalesCountVO::getSkuId).collect(Collectors.toList()));
+        if (CollUtil.isNotEmpty(list)) {
+            Map<String, BigDecimal> map = updateSkuSalesCountVOS.stream().collect(Collectors.toMap(UpdateSkuSalesCountVO::getSkuId, UpdateSkuSalesCountVO::getSalesCount, (v1, v2) -> v1));
+            list.forEach(i -> {
+                i.setSalesCount(i.getSalesCount().add(map.get(i.getSkuId())));
+            });
+            try {
+                esProductMapper.saveAll(list);
+            } catch (Exception e) {
+                if (!e.getMessage().contains("200 OK")) {
+                    log.error("更新数据失败：》》》》》》{}", e.getMessage());
+                    throw new BusinessException(ResponseCode.UPDATE_PRODUCT_SKU_SALES_COUNT_ERROR);
+                }
+            }
+        }
+        return ResponseData.success();
     }
 
     /**
