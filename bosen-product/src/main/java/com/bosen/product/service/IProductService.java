@@ -5,6 +5,7 @@ import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.vo.request.ApproveBatchInfoVO;
 import com.bosen.common.vo.request.ApproveInfoVO;
+import com.bosen.elasticsearch.vo.request.DownProductRequestVO;
 import com.bosen.product.domain.ProductDO;
 import com.bosen.product.vo.request.ProductQueryVO;
 import com.bosen.product.vo.request.ProductRackingOrDownVO;
@@ -33,4 +34,6 @@ public interface IProductService extends IService<ProductDO> {
     ResponseData<Void> rackingProduct(ProductRackingOrDownVO productRackingOrDownVO);
 
     ResponseData<ProductDetailVO> detail(String id);
+
+    ResponseData<Void> downProduct(DownProductRequestVO downProductRequestVO);
 }

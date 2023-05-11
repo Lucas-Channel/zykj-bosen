@@ -10,6 +10,7 @@ import com.bosen.common.exception.BusinessException;
 import com.bosen.elasticsearch.domain.ESProductAttributeAndValueModelDO;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.elasticsearch.domain.EsProductSalesAreaDO;
+import com.bosen.elasticsearch.vo.request.DownProductRequestVO;
 import com.bosen.search.constant.SortTypeEnum;
 import com.bosen.search.mapper.EsProductMapper;
 import com.bosen.search.service.IEsProductService;
@@ -120,6 +121,19 @@ public class EsProductServiceImpl implements IEsProductService {
             map.put(k, listMap);
         });
         return ResponseData.success(map);
+    }
+
+    @Override
+    public ResponseData<Void> downProduct(DownProductRequestVO downProductRequestVO) {
+        try {
+            esProductMapper.deleteBySpuIdInAndShopIdInAndStoreIdIn(downProductRequestVO.getSpuIds(), downProductRequestVO.getShopIds(), downProductRequestVO.getStoreIds());
+        } catch (Exception e) {
+            if (!e.getMessage().contains("200 OK")) {
+                log.error("下架商品失败：》》》》》》{}", e.getMessage());
+                throw new BusinessException(ResponseCode.UPDATE_PRODUCT_SKU_SALES_COUNT_ERROR);
+            }
+        }
+        return null;
     }
 
     /**

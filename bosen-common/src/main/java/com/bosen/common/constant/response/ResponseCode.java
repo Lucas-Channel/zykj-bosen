@@ -118,6 +118,10 @@ public enum ResponseCode {
     RACKING_PRODUCT_ERROR(1239, "商品上架失败"),
 
     UPDATE_PRODUCT_SKU_SALES_COUNT_ERROR(1240, "更新商品sku已售数量失败"),
+
+    DOWN_PRODUCT_ERROR(1241, "商品下架失败"),
+
+    DOWN_PRODUCT_ONLY_UP_ERROR(1242, "只能下架商品状态为已上架的商品"),
     ;
 
 

@@ -2,6 +2,7 @@ package com.bosen.product.controller.merchant;
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.elasticsearch.vo.request.DownProductRequestVO;
 import com.bosen.product.service.IProductService;
 import com.bosen.product.vo.request.ProductQueryVO;
 import com.bosen.product.vo.request.ProductRackingOrDownVO;
@@ -86,10 +87,20 @@ public class MerchantProductController {
 
     /**
      * 上架
-     * @return
+     * @return 结果
      */
     @PostMapping("/rackingProduct")
     public ResponseData<Void> rackingProduct(@RequestBody @Valid ProductRackingOrDownVO productRackingOrDownVO) {
         return productService.rackingProduct(productRackingOrDownVO);
+    }
+
+    /**
+     * 下架
+     * @param downProductRequestVO 参数
+     * @return 结果
+     */
+    @PostMapping("/downProduct")
+    public ResponseData<Void> downProduct(@RequestBody DownProductRequestVO downProductRequestVO) {
+        return productService.downProduct(downProductRequestVO);
     }
 }

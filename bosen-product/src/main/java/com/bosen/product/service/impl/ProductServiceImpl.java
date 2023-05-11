@@ -17,6 +17,7 @@ import com.bosen.common.vo.request.ApproveInfoVO;
 import com.bosen.elasticsearch.domain.ESProductAttributeAndValueModelDO;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.elasticsearch.domain.EsProductSalesAreaDO;
+import com.bosen.elasticsearch.vo.request.DownProductRequestVO;
 import com.bosen.product.constant.AttributeTypeEnum;
 import com.bosen.product.constant.ProductApproveStatusEnum;
 import com.bosen.product.domain.*;
@@ -420,5 +421,33 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
             detailVO.setStoreShopDetailList(data.getData());
         }
         return ResponseData.success(detailVO);
+    }
+
+    @Override
+    @Transactional
+    public ResponseData<Void> downProduct(DownProductRequestVO downProductRequestVO) {
+        // 是否存在非上架状态的商品
+        List<ProductDO> list = this.lambdaQuery().ne(ProductDO::getStatus, ProductApproveStatusEnum.UP.getCode())
+                .in(ProductDO::getId, downProductRequestVO.getSpuIds())
+                .list();
+        if (CollUtil.isNotEmpty(list)) {
+            throw new BusinessException(ResponseCode.DOWN_PRODUCT_ONLY_UP_ERROR);
+        }
+        // 删除上架记录，物理删除
+        ResponseData<Boolean> responseData = productStoreShopService.deleteByProductIdPhysic(downProductRequestVO.getSpuIds());
+        if (!Objects.equals(responseData.getCode(), ResponseCode.SUCCESS.getCode())) throw new BusinessException(ResponseCode.DELETE_PRODUCT_UPPER_RECORD_HISTORY_ERROR);
+        // 删除es中的记录
+        ResponseData<Void> data = esApiFeignService.downProduct(downProductRequestVO);
+        if (!Objects.equals(data.getCode(), ResponseCode.SUCCESS.getCode())) {
+            throw new BusinessException(ResponseCode.DOWN_PRODUCT_ERROR);
+        }
+        // 修改商品状态为已下架
+        List<ProductDO> productDOList = this.lambdaQuery().in(ProductDO::getId, downProductRequestVO.getSpuIds())
+                .list();
+        productDOList.forEach(i -> {
+            i.setStatus(ProductApproveStatusEnum.DOWN.getCode());
+            i.setPullDateTime(LocalDateTime.now());
+        });
+        return ResponseData.success();
     }
 }

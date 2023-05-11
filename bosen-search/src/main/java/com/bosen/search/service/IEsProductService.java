@@ -5,6 +5,7 @@ import com.bosen.common.constant.response.ResponseData;
 import com.bosen.elasticsearch.domain.ESProductAttributeAndValueModelDO;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.elasticsearch.domain.EsProductSalesAreaDO;
+import com.bosen.elasticsearch.vo.request.DownProductRequestVO;
 import com.bosen.search.vo.request.ProductQueryVO;
 import com.bosen.search.vo.request.UpdateSkuSalesCountVO;
 
@@ -52,4 +53,11 @@ public interface IEsProductService {
      * @return 集合
      */
     ResponseData<Map<String, Map<String, List<ESProductAttributeAndValueModelDO>>>> getSpuHasRackingAttribute(String spuId, String shopId, String storeId);
+
+    /**
+     * 依据spu下架商品
+     * @param downProductRequestVO 参数
+     * @return 结果
+     */
+    ResponseData<Void> downProduct(DownProductRequestVO downProductRequestVO);
 }

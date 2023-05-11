@@ -45,6 +45,7 @@
         <dependency>
             <groupId>com.bosen.elasticsearch</groupId>
             <artifactId>bosen-component-elasticsearch</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>
