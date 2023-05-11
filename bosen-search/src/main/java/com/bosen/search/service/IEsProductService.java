@@ -2,12 +2,14 @@ package com.bosen.search.service;
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.elasticsearch.domain.ESProductAttributeAndValueModelDO;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.elasticsearch.domain.EsProductSalesAreaDO;
 import com.bosen.search.vo.request.ProductQueryVO;
 import com.bosen.search.vo.request.UpdateSkuSalesCountVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * es 商品搜索接口
@@ -43,4 +45,11 @@ public interface IEsProductService {
      * @return 结果
     **/
     ResponseData<Void> updateEsSalesCount(List<UpdateSkuSalesCountVO> updateSkuSalesCountVOS);
+
+    /**
+     * 获取spu下已上架的sku属性规格信息
+     * @param spuId 商品id
+     * @return 集合
+     */
+    ResponseData<Map<String, Map<String, List<ESProductAttributeAndValueModelDO>>>> getSpuHasRackingAttribute(String spuId);
 }

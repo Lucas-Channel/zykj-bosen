@@ -2,6 +2,7 @@ package com.bosen.search.controller;
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.elasticsearch.domain.ESProductAttributeAndValueModelDO;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.elasticsearch.domain.EsProductSalesAreaDO;
 import com.bosen.search.service.IEsProductService;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ES 商品搜索服务
@@ -54,5 +56,15 @@ public class EsProductController {
     public ResponseData<Void> updateEsSalesCount(@RequestBody List<UpdateSkuSalesCountVO> updateSkuSalesCountVOS) {
         // todo 需要接入登录
         return esProductService.updateEsSalesCount(updateSkuSalesCountVOS);
+    }
+
+    /**
+     * 获取spu下已上架的sku属性规格信息
+     * @param spuId 商品id
+     * @return 集合
+     */
+    @GetMapping("/getSpuHasRackingAttribute/{spuId}")
+    public ResponseData<Map<String, Map<String, List<ESProductAttributeAndValueModelDO>>>> getSpuHasRackingAttribute(@PathVariable("spuId") String spuId) {
+        return esProductService.getSpuHasRackingAttribute(spuId);
     }
 }

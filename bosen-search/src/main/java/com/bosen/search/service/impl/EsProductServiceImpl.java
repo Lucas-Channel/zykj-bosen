@@ -7,6 +7,7 @@ import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.exception.BusinessException;
+import com.bosen.elasticsearch.domain.ESProductAttributeAndValueModelDO;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.elasticsearch.domain.EsProductSalesAreaDO;
 import com.bosen.search.constant.SortTypeEnum;
@@ -32,9 +33,7 @@ import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -108,6 +107,19 @@ public class EsProductServiceImpl implements IEsProductService {
             }
         }
         return ResponseData.success();
+    }
+
+    @Override
+    public ResponseData<Map<String, Map<String, List<ESProductAttributeAndValueModelDO>>>> getSpuHasRackingAttribute(String spuId) {
+        List<ESProductSkuModelDO> skuModelDOS = esProductMapper.findBySpuId(spuId);
+        List<ESProductAttributeAndValueModelDO> attrs = skuModelDOS.stream().map(ESProductSkuModelDO::getAttrs).flatMap(Collection::stream).collect(Collectors.toList());
+        Map<String, List<ESProductAttributeAndValueModelDO>> collect = attrs.stream().collect(Collectors.groupingBy(ESProductAttributeAndValueModelDO::getAttributeType));
+        Map<String, Map<String, List<ESProductAttributeAndValueModelDO>>> map = new HashMap<>();
+        collect.forEach((k, v) -> {
+            Map<String, List<ESProductAttributeAndValueModelDO>> listMap = v.stream().collect(Collectors.groupingBy(ESProductAttributeAndValueModelDO::getAttributeName));
+            map.put(k, listMap);
+        });
+        return ResponseData.success(map);
     }
 
     /**
