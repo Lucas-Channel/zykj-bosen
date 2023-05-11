@@ -51,5 +51,5 @@ public interface IEsProductService {
      * @param spuId 商品id
      * @return 集合
      */
-    ResponseData<Map<String, Map<String, List<ESProductAttributeAndValueModelDO>>>> getSpuHasRackingAttribute(String spuId);
+    ResponseData<Map<String, Map<String, List<ESProductAttributeAndValueModelDO>>>> getSpuHasRackingAttribute(String spuId, String shopId, String storeId);
 }

@@ -91,7 +91,7 @@ public class EsProductServiceImpl implements IEsProductService {
     @Override
     @Transactional
     public ResponseData<Void> updateEsSalesCount(List<UpdateSkuSalesCountVO> updateSkuSalesCountVOS) {
-        List<ESProductSkuModelDO> list = esProductMapper.findBySkuIdIn(updateSkuSalesCountVOS.stream().map(UpdateSkuSalesCountVO::getSkuId).collect(Collectors.toList()));
+        List<ESProductSkuModelDO> list = updateSkuSalesCountVOS.stream().map(i -> esProductMapper.findBySkuIdAndShopIdAndStoreId(i.getSkuId(), i.getShopId(), i.getStoreId())).collect(Collectors.toList());
         if (CollUtil.isNotEmpty(list)) {
             Map<String, BigDecimal> map = updateSkuSalesCountVOS.stream().collect(Collectors.toMap(UpdateSkuSalesCountVO::getSkuId, UpdateSkuSalesCountVO::getSalesCount, (v1, v2) -> v1));
             list.forEach(i -> {
@@ -110,8 +110,8 @@ public class EsProductServiceImpl implements IEsProductService {
     }
 
     @Override
-    public ResponseData<Map<String, Map<String, List<ESProductAttributeAndValueModelDO>>>> getSpuHasRackingAttribute(String spuId) {
-        List<ESProductSkuModelDO> skuModelDOS = esProductMapper.findBySpuId(spuId);
+    public ResponseData<Map<String, Map<String, List<ESProductAttributeAndValueModelDO>>>> getSpuHasRackingAttribute(String spuId, String shopId, String storeId) {
+        List<ESProductSkuModelDO> skuModelDOS = esProductMapper.findBySpuIdAndShopIdAndStoreId(spuId, shopId, storeId);
         List<ESProductAttributeAndValueModelDO> attrs = skuModelDOS.stream().map(ESProductSkuModelDO::getAttrs).flatMap(Collection::stream).collect(Collectors.toList());
         Map<String, List<ESProductAttributeAndValueModelDO>> collect = attrs.stream().collect(Collectors.groupingBy(ESProductAttributeAndValueModelDO::getAttributeType));
         Map<String, Map<String, List<ESProductAttributeAndValueModelDO>>> map = new HashMap<>();

@@ -64,7 +64,7 @@ public class EsProductController {
      * @return 集合
      */
     @GetMapping("/getSpuHasRackingAttribute/{spuId}")
-    public ResponseData<Map<String, Map<String, List<ESProductAttributeAndValueModelDO>>>> getSpuHasRackingAttribute(@PathVariable("spuId") String spuId) {
-        return esProductService.getSpuHasRackingAttribute(spuId);
+    public ResponseData<Map<String, Map<String, List<ESProductAttributeAndValueModelDO>>>> getSpuHasRackingAttribute(@PathVariable("spuId") String spuId, String shopId, String storeId) {
+        return esProductService.getSpuHasRackingAttribute(spuId, shopId, storeId);
     }
 }

@@ -17,4 +17,8 @@ public class UpdateSkuSalesCountVO implements Serializable {
     private BigDecimal salesCount;
 
     private String skuId;
+
+    private String shopId;
+
+    private String storeId;
 }

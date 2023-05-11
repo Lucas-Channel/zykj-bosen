@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface EsProductMapper extends ElasticsearchRepository<ESProductSkuModelDO, String> {
 
-    List<ESProductSkuModelDO> findBySkuIdIn(List<String> skuIds);
+    ESProductSkuModelDO findBySkuIdAndShopIdAndStoreId(String skuId, String shopId, String storeId);
 
-    List<ESProductSkuModelDO> findBySpuId(String spuId);
+    List<ESProductSkuModelDO> findBySpuIdAndShopIdAndStoreId(String spuId, String shopId, String storeId);
 }
