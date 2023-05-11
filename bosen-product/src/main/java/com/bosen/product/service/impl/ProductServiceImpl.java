@@ -448,6 +448,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
             i.setStatus(ProductApproveStatusEnum.DOWN.getCode());
             i.setPullDateTime(LocalDateTime.now());
         });
+        this.updateBatchById(productDOList);
         return ResponseData.success();
     }
 }
