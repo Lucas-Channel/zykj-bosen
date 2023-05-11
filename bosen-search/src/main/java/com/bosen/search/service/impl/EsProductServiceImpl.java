@@ -133,7 +133,7 @@ public class EsProductServiceImpl implements IEsProductService {
                 throw new BusinessException(ResponseCode.UPDATE_PRODUCT_SKU_SALES_COUNT_ERROR);
             }
         }
-        return null;
+        return ResponseData.success();
     }
 
     /**

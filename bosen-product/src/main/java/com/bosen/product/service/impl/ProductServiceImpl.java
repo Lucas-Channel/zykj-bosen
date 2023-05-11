@@ -291,25 +291,25 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
                 esProductSkuModelDO.setAttrs(esProductAttributeAndValueModelDOS);
                 esList.add(esProductSkuModelDO);
             });
-            // 调用feign接口，进行商品上架到es
-            ResponseData<Void> data = esApiFeignService.rackingProduct(esList);
-            if (!Objects.equals(data.getCode(), ResponseCode.SUCCESS.getCode())) {
-                throw new BusinessException(ResponseCode.RACKING_PRODUCT_ERROR);
+        });
+        // 调用feign接口，进行商品上架到es
+        ResponseData<Void> data = esApiFeignService.rackingProduct(esList);
+        if (!Objects.equals(data.getCode(), ResponseCode.SUCCESS.getCode())) {
+            throw new BusinessException(ResponseCode.RACKING_PRODUCT_ERROR);
+        }
+        // 上架后更新状态，保存上架记录数据，使用事务同步处理器处理,集成mq之后，放入mq
+        TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+            @Override
+            public void afterCommit() {
+                // 新增上架记录
+                addRecord(productRackingOrDownVO);
+                // 更新商品上架状态
+                updateStatus(productDOList, skuList);
+                // 设置spu商品销售范围，缓存至redis，key:productId, val: list
+                setSalesAreaToRedis(productDOList);
+                // 缓存商品库存到redis
+                setStockToRedis(skuList);
             }
-            // 上架后更新状态，保存上架记录数据，使用事务同步处理器处理,集成mq之后，放入mq
-            TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
-                @Override
-                public void afterCommit() {
-                    // 新增上架记录
-                    addRecord(productRackingOrDownVO);
-                    // 更新商品上架状态
-                    updateStatus(productDOList, skuList);
-                    // 设置spu商品销售范围，缓存至redis，key:productId, val: list
-                    setSalesAreaToRedis(productDOList);
-                    // 缓存商品库存到redis
-                    setStockToRedis(skuList);
-                }
-            });
         });
         return ResponseData.success();
     }

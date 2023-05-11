@@ -19,5 +19,5 @@ public interface EsProductMapper extends ElasticsearchRepository<ESProductSkuMod
 
     List<ESProductSkuModelDO> findBySpuIdAndShopIdAndStoreId(String spuId, String shopId, String storeId);
 
-    void deleteBySpuIdInAndShopIdInAndStoreIdIn(List<String> spuIds, List<String> shopIds, List<String> storeIds);
+    int deleteBySpuIdInAndShopIdInAndStoreIdIn(List<String> spuIds, List<String> shopIds, List<String> storeIds);
 }
