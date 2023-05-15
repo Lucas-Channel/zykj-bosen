@@ -25,6 +25,7 @@
         <module>bosen-member</module>
         <module>bosen-template-adorn</module>
         <module>xxl-job-admin</module>
+        <module>bosen-drools-engine</module>
     </modules>
 
     <parent>

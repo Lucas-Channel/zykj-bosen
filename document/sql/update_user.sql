@@ -14,7 +14,7 @@ CREATE TABLE `bs_user_account` (
     `update_time` datetime DEFAULT NULL COMMENT '记录更新时间',
     `del_flag` int DEFAULT 0 COMMENT '删除标志',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='用户账户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户账户表';
 
 DROP TABLE IF EXISTS `bs_user_info`;
 CREATE TABLE `bs_user_info` (
@@ -24,7 +24,7 @@ CREATE TABLE `bs_user_info` (
     `sex` int DEFAULT NULL COMMENT '性别',
     `birth_date` datetime DEFAULT NULL COMMENT '生日',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='用户信息表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表';
 
 DROP TABLE IF EXISTS `bs_role`;
 CREATE TABLE `bs_role` (
@@ -33,7 +33,7 @@ CREATE TABLE `bs_role` (
     `description` varchar(400) DEFAULT NULL COMMENT '角色描述补充信息',
     `status` int DEFAULT 1 COMMENT '0-未启用，1-启用',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 DROP TABLE IF EXISTS `bs_resource`;
 CREATE TABLE `bs_resource` (
@@ -44,7 +44,7 @@ CREATE TABLE `bs_resource` (
    `description` varchar(400) DEFAULT NULL COMMENT '资源描述补充信息',
    `status` int DEFAULT 1 COMMENT '0-未启用，1-启用',
    PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='资源表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资源表';
 
 DROP TABLE IF EXISTS `bs_user_role`;
 CREATE TABLE `bs_user_role` (
@@ -52,7 +52,7 @@ CREATE TABLE `bs_user_role` (
     `user_id` varchar(32) DEFAULT NULL COMMENT '用户ID,关联bs_user_account.id',
     `role_id` varchar(32) DEFAULT NULL COMMENT '角色ID,关联bs_role.id',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='用户角色关联表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色关联表';
 
 DROP TABLE IF EXISTS `bs_role_resource`;
 CREATE TABLE `bs_role_resource` (
@@ -60,5 +60,5 @@ CREATE TABLE `bs_role_resource` (
     `role_id` varchar(32) DEFAULT NULL COMMENT '角色ID,关联bs_role.id',
     `resource_id` varchar(32) DEFAULT NULL COMMENT '资源ID,bs_resource.id',
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COMMENT='用户角色关联表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色关联表';
 
