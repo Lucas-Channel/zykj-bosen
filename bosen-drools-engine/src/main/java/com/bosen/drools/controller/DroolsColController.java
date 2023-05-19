@@ -18,7 +18,7 @@ import java.util.List;
  * @since 2023-05-15 14:10:48
  */
 @RestController
-@RequestMapping("bsDroolsCol")
+@RequestMapping("/drools/col")
 public class DroolsColController {
     /**
      * 服务对象

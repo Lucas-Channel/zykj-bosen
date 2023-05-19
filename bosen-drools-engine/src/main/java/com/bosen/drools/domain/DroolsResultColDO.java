@@ -1,6 +1,11 @@
 package com.bosen.drools.domain;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.bosen.common.domain.BaseEntityData;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.io.Serializable;
 
 /**
@@ -10,29 +15,33 @@ import java.io.Serializable;
  * @since 2023-05-15 14:10:48
  */
 @Data
-@TableName(bs_drools_result_col)
+@TableName("bs_drools_result_col")
+@EqualsAndHashCode(callSuper = true)
 public class DroolsResultColDO extends BaseEntityData implements Serializable {
-    //主键
-    private String id;
-    //规则结果列编码
+    private static final long serialVersionUID = 2130171630226580676L;
+    /**
+     * 规则结果列编码
+     */
     private String droolsResultColCode;
-    //规则结果列名称
+
+    /**
+     * 规则结果列名称
+     */
     private String droolsResultColName;
-    //规则结果列代码
+
+    /**
+     * 规则结果列代码
+     */
     private String droolsResultColScript;
-    //描述
+
+    /**
+     * 描述
+     */
     private String droolsResultColDesc;
-    //启用状态：1，启用，0禁用
+
+    /**
+     * 启用状态：1，启用，0禁用
+     */
     private Integer status;
-    
-    private Date createTime;
-    
-    private Date updateTime;
-    
-    private String updaterUser;
-    
-    private String creatorUser;
-    
-    private Integer delFlag;
 }
 
