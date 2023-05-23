@@ -22,10 +22,10 @@ public enum ProductTypeEnums {
         this.message = message;
     }
 
-    private Integer code;
-    private String message;
+    private final Integer code;
+    private final String message;
 
-    private static Map<Integer,String> messageMap = Arrays.stream(ProductTypeEnums.values()).collect(Collectors.toMap(ProductTypeEnums::getCode,ProductTypeEnums::getMessage));
+    private static final Map<Integer,String> messageMap = Arrays.stream(ProductTypeEnums.values()).collect(Collectors.toMap(ProductTypeEnums::getCode,ProductTypeEnums::getMessage));
 
     public static String getMessageByCode(Integer code) {
         return messageMap.get(code);

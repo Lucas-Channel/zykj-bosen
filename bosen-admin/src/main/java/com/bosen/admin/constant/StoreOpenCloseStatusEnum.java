@@ -23,10 +23,10 @@ public enum StoreOpenCloseStatusEnum {
         this.message = message;
     }
 
-    private Integer code;
-    private String message;
+    private final Integer code;
+    private final String message;
 
-    private static Map<Integer,String> messageMap = Arrays.stream(StoreOpenCloseStatusEnum.values()).collect(Collectors.toMap(StoreOpenCloseStatusEnum::getCode, StoreOpenCloseStatusEnum::getMessage));
+    private static final Map<Integer,String> messageMap = Arrays.stream(StoreOpenCloseStatusEnum.values()).collect(Collectors.toMap(StoreOpenCloseStatusEnum::getCode, StoreOpenCloseStatusEnum::getMessage));
 
     public static String getMessageByCode(Integer code) {
         return messageMap.get(code);

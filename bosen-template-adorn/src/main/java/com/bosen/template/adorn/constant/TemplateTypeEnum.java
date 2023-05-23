@@ -23,12 +23,13 @@ public enum TemplateTypeEnum {
 
     TemplateTypeEnum(Integer code, String message) {
         this.code = code;
+        this.message = message;
     }
 
-    private Integer code;
-    private String message;
+    private final Integer code;
+    private final String message;
 
-    private static Map<Integer,String> messageMap = Arrays.stream(TemplateTypeEnum.values()).collect(Collectors.toMap(TemplateTypeEnum::getCode,TemplateTypeEnum::getMessage));
+    private static final Map<Integer,String> messageMap = Arrays.stream(TemplateTypeEnum.values()).collect(Collectors.toMap(TemplateTypeEnum::getCode,TemplateTypeEnum::getMessage));
 
     public static String getMessageByCode(Integer code) {
         return messageMap.get(code);

@@ -17,10 +17,10 @@ public enum AttributeTypeEnum {
         this.message = message;
     }
 
-    private Integer code;
-    private String message;
+    private final Integer code;
+    private final String message;
 
-    private static Map<Integer,String> messageMap = Arrays.stream(AttributeTypeEnum.values()).collect(Collectors.toMap(AttributeTypeEnum::getCode,AttributeTypeEnum::getMessage));
+    private static final Map<Integer,String> messageMap = Arrays.stream(AttributeTypeEnum.values()).collect(Collectors.toMap(AttributeTypeEnum::getCode,AttributeTypeEnum::getMessage));
 
     public static String getMessageByCode(Integer code) {
         return messageMap.get(code);
