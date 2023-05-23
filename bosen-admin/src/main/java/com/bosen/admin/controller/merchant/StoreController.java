@@ -35,7 +35,7 @@ public class StoreController {
 
     /**
      * 我的店铺-获取商家店铺列表
-     * @return
+     * @return 结果
      */
     @GetMapping("/getAllStore")
     public ResponseData<List<StoreDetailVO>> getAllStore() {

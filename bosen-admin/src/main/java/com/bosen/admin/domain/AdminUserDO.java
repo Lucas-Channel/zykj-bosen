@@ -5,6 +5,7 @@ import com.bosen.common.constant.common.SexConstant;
 import com.bosen.common.constant.common.UserStatusConstant;
 import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
  * @version 2.0.0
  * @date 2023/2/23
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @Accessors(chain = true)
 @TableName(value = "bs_admin_user_b")

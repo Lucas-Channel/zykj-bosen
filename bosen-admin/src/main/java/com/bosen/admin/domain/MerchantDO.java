@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.bosen.common.constant.common.UserStatusConstant;
 import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
  * @version 2.0.0
  * @date 2023/3/19
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("bs_merchant")
 public class MerchantDO extends BaseEntityData implements Serializable {

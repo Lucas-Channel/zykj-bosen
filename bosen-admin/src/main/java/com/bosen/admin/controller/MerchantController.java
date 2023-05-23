@@ -83,8 +83,8 @@ public class MerchantController {
 
     /**
      * 删除用户
-     * @param id
-     * @return
+     * @param id id
+     * @return 结果
      */
     @PostMapping(value = "/delete/{id}")
     public ResponseData<Void> delete(@PathVariable Long id) {
@@ -93,9 +93,9 @@ public class MerchantController {
 
     /**
      * 修改用户状态
-     * @param id
-     * @param status
-     * @return
+     * @param id id
+     * @param status 状态
+     * @return 结果
      */
     @PostMapping(value = "/updateStatus/{id}")
     public ResponseData<Void> updateStatus(@PathVariable Long id,@RequestParam(value = "status") Integer status) {
