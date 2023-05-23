@@ -15,29 +15,24 @@ import java.io.Serializable;
  * @since 2023-05-15 14:10:48
  */
 @Data
-@TableName("bs_drools_result_col")
+@TableName("bs_drools_action_col")
 @EqualsAndHashCode(callSuper = true)
-public class DroolsResultColDO extends BaseEntityData implements Serializable {
+public class DroolsActionColDO extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = 2130171630226580676L;
     /**
      * 规则结果列编码
      */
-    private String droolsResultColCode;
+    private String droolsActionColCode;
 
     /**
      * 规则结果列名称
      */
-    private String droolsResultColName;
-
-    /**
-     * 规则结果列代码
-     */
-    private String droolsResultColScript;
+    private String droolsActionColName;
 
     /**
      * 描述
      */
-    private String droolsResultColDesc;
+    private String droolsActionColDesc;
 
     /**
      * 启用状态：1，启用，0禁用

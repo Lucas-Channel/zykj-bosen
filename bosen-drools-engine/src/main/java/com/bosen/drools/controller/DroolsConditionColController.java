@@ -4,37 +4,37 @@ package com.bosen.drools.controller;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.domain.PageVO;
-import com.bosen.drools.domain.DroolsResultColDO;
-import com.bosen.drools.service.IDroolsResultColService;
+import com.bosen.drools.domain.DroolsConditionColDO;
+import com.bosen.drools.service.IDroolsConditionColService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 规则结果列表(BsDroolsResultCol)表控制层
+ * 规则列表(BsDroolsCol)表控制层
  *
  * @author Lucas
  * @since 2023-05-15 14:10:48
  */
 @RestController
-@RequestMapping("/drools/result/col")
-public class DroolsResultColController {
+@RequestMapping("/drools/col")
+public class DroolsConditionColController {
     /**
      * 服务对象
      */
     @Resource
-    private IDroolsResultColService bsDroolsResultColService;
+    private IDroolsConditionColService bsDroolsColService;
 
     /**
      * 分页查询所有数据
      *
      * @param page 分页对象
-     * @param bsDroolsResultCol 查询实体
+     * @param bsDroolsCol 查询实体
      * @return 所有数据
      */
     @GetMapping("/pageList")
-    public ResponseData<PageData<DroolsResultColDO>> pageList(PageVO pageVO) {
+    public ResponseData<PageData<DroolsConditionColDO>> pageList(PageVO pageVO) {
         return ResponseData.success();
     }
 
@@ -45,18 +45,18 @@ public class DroolsResultColController {
      * @return 单条数据
      */
     @GetMapping("/detail/{id}")
-    public ResponseData<DroolsResultColDO> selectOne(@PathVariable("id") String id) {
-        return ResponseData.success(this.bsDroolsResultColService.getById(id));
+    public ResponseData<DroolsConditionColDO> selectOne(@PathVariable("id") String id) {
+        return ResponseData.success(this.bsDroolsColService.getById(id));
     }
 
     /**
      * 新增/修改数据
      *
-     * @param bsDroolsResultCol 实体对象
+     * @param bsDroolsCol 实体对象
      * @return 新增结果
      */
     @PostMapping("upsert")
-    public ResponseData<Void> upsert(@RequestBody DroolsResultColDO bsDroolsResultCol) {
+    public ResponseData<Void> upsert(@RequestBody DroolsConditionColDO bsDroolsCol) {
         return ResponseData.success();
     }
 
@@ -68,7 +68,7 @@ public class DroolsResultColController {
      */
     @DeleteMapping("/deleteByIds")
     public ResponseData<Void> deleteByIds(@RequestParam("idList") List<String> idList) {
-        return ResponseData.judge(this.bsDroolsResultColService.removeByIds(idList));
+        return ResponseData.judge(this.bsDroolsColService.removeByIds(idList));
     }
 }
 

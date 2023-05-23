@@ -9,35 +9,30 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * 规则列表(BsDroolsCol)表实体类
+ * 规则列条件表(BsDroolsCol)表实体类
  *
  * @author Lucas
  * @since 2023-05-15 14:10:48
  */
 @Data
-@TableName("bs_drools_col")
+@TableName("bs_drools_condition_col")
 @EqualsAndHashCode(callSuper = true)
-public class DroolsColDO extends BaseEntityData implements Serializable {
+public class DroolsConditionColDO extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = 22641156041657755L;
     /**
-     * 规则列编码
+     * 规则条件列编码
      */
-    private String droolsColCode;
+    private String droolsConditionColCode;
 
     /**
-     * 规则列名称
+     * 规则条件列名称
      */
-    private String droolsColName;
-
-    /**
-     * 规则列代码
-     */
-    private String droolsColScript;
+    private String droolsConditionColName;
 
     /**
      * 描述
      */
-    private String droolsColDesc;
+    private String droolsConditionColDesc;
 
     /**
      * 启用状态：1，启用，0禁用
