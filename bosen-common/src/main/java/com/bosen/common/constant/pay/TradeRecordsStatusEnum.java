@@ -56,7 +56,7 @@ public enum TradeRecordsStatusEnum {
     private final Integer code;
     private final String message;
 
-    private static Map<Integer,String> messageMap = Arrays.stream(TradeRecordsStatusEnum.values()).collect(Collectors.toMap(TradeRecordsStatusEnum::getCode,TradeRecordsStatusEnum::getMessage));
+    private static final Map<Integer,String> messageMap = Arrays.stream(TradeRecordsStatusEnum.values()).collect(Collectors.toMap(TradeRecordsStatusEnum::getCode,TradeRecordsStatusEnum::getMessage));
 
     public static String getMessageByCode(Integer code) {
         return messageMap.get(code);

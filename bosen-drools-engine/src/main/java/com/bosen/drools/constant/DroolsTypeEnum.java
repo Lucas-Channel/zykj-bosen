@@ -24,7 +24,7 @@ public enum DroolsTypeEnum {
     private final Integer code;
     private final String message;
 
-    private static Map<Integer,String> messageMap = Arrays.stream(DroolsTypeEnum.values()).collect(Collectors.toMap(DroolsTypeEnum::getCode,DroolsTypeEnum::getMessage));
+    private static final Map<Integer,String> messageMap = Arrays.stream(DroolsTypeEnum.values()).collect(Collectors.toMap(DroolsTypeEnum::getCode,DroolsTypeEnum::getMessage));
 
     public static String getMessageByCode(Integer code) {
         return messageMap.get(code);

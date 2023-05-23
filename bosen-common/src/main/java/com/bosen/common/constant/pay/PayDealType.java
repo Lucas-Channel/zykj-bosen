@@ -36,7 +36,7 @@ public enum PayDealType {
     private final Integer code;
     private final String message;
 
-    private static Map<Integer,String> messageMap = Arrays.stream(PayDealType.values()).collect(Collectors.toMap(PayDealType::getCode,PayDealType::getMessage));
+    private static final Map<Integer,String> messageMap = Arrays.stream(PayDealType.values()).collect(Collectors.toMap(PayDealType::getCode,PayDealType::getMessage));
 
     public static String getMessageByCode(Integer code) {
         return messageMap.get(code);

@@ -26,7 +26,7 @@ public enum PayChannelEnum {
     private final Integer code;
     private final String message;
 
-    private static Map<Integer,String> messageMap = Arrays.stream(PayChannelEnum.values()).collect(Collectors.toMap(PayChannelEnum::getCode,PayChannelEnum::getMessage));
+    private static final Map<Integer,String> messageMap = Arrays.stream(PayChannelEnum.values()).collect(Collectors.toMap(PayChannelEnum::getCode,PayChannelEnum::getMessage));
 
     public static String getMessageByCode(Integer code) {
         return messageMap.get(code);
