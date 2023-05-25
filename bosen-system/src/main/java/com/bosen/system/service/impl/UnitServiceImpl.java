@@ -12,5 +12,6 @@ import org.springframework.stereotype.Service;
  * @date 2023/3/7
  */
 @Service
+@Deprecated
 public class UnitServiceImpl extends ServiceImpl<UnitMapper, UnitDO> implements IUnitService {
 }

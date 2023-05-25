@@ -8,5 +8,6 @@ import com.bosen.system.domain.UnitDO;
  * @version 2.0.0
  * @date 2023/3/7
  */
+@Deprecated
 public interface UnitMapper extends BaseMapper<UnitDO> {
 }

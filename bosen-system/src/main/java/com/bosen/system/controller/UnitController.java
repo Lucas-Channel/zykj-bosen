@@ -14,10 +14,12 @@ import javax.validation.Valid;
 import java.util.List;
 
 /**
+ * 废弃，使用字典
  * @author Lucas
  * @version 2.0.0
  * @date 2023/3/7
  */
+@Deprecated
 @RestController
 @RequestMapping("/unit")
 public class UnitController {
