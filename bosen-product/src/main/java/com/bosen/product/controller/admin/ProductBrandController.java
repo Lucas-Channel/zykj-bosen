@@ -37,7 +37,7 @@ public class ProductBrandController {
 
     /**
      * 新增/修改
-     * @return
+     * @return 结果
      */
     @PostMapping("/upsertBrand")
     @CacheEvict(cacheNames = "product:brand", key = "'list'", allEntries = true)

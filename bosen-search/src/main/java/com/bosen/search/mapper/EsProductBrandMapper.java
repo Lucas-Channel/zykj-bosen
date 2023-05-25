@@ -13,5 +13,5 @@ import java.util.List;
  */
 @Repository
 public interface EsProductBrandMapper extends ElasticsearchRepository<EsProductBrandDO, String> {
-    int deleteByBrandIdIn(List<String> ids);
+    void deleteByBrandIdIn(List<String> ids);
 }

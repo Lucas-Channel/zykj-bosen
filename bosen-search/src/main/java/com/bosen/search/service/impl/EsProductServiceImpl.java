@@ -95,9 +95,7 @@ public class EsProductServiceImpl implements IEsProductService {
         List<ESProductSkuModelDO> list = updateSkuSalesCountVOS.stream().map(i -> esProductMapper.findBySkuIdAndShopIdAndStoreId(i.getSkuId(), i.getShopId(), i.getStoreId())).collect(Collectors.toList());
         if (CollUtil.isNotEmpty(list)) {
             Map<String, BigDecimal> map = updateSkuSalesCountVOS.stream().collect(Collectors.toMap(UpdateSkuSalesCountVO::getSkuId, UpdateSkuSalesCountVO::getSalesCount, (v1, v2) -> v1));
-            list.forEach(i -> {
-                i.setSalesCount(i.getSalesCount().add(map.get(i.getSkuId())));
-            });
+            list.forEach(i -> i.setSalesCount(i.getSalesCount().add(map.get(i.getSkuId()))));
             try {
                 esProductMapper.saveAll(list);
             } catch (Exception e) {

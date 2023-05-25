@@ -129,8 +129,8 @@ public enum ResponseCode {
     ;
 
 
-    private int code;
-    private String message;
+    private final int code;
+    private final String message;
 
     ResponseCode(int code, String message) {
         this.code = code;
