@@ -14,6 +14,7 @@ import com.bosen.system.vo.request.DictItemUpsertVO;
 import com.bosen.system.vo.response.DictItemDetailVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.stream.Collectors;
 
@@ -29,6 +30,7 @@ public class SysDictItemServiceImpl extends ServiceImpl<SysDictItemMapper, SysDi
     @Override
     public ResponseData<PageData<DictItemDetailVO>> pageList(DictItemQueryVO pageVO) {
         Page<SysDictItemDO> page = this.page(new Page<>(pageVO.getCurrent(), pageVO.getSize()), new LambdaQueryWrapper<SysDictItemDO>()
+                        .eq(StringUtils.hasLength(pageVO.getDictId()), SysDictItemDO::getDictId, pageVO.getDictId())
                 .orderByDesc(SysDictItemDO::getCreateTime));
         return ResponseData.success(new PageData<>(page.getTotal(), page.getRecords().stream().map(i -> BeanUtil.copyProperties(i, DictItemDetailVO.class)).collect(Collectors.toList())));
     }

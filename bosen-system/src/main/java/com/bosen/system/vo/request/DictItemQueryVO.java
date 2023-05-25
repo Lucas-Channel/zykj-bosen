@@ -15,4 +15,5 @@ import java.io.Serializable;
 @Data
 public class DictItemQueryVO extends PageVO implements Serializable {
     private static final long serialVersionUID = 7133306338456733166L;
+    private String dictId;
 }
