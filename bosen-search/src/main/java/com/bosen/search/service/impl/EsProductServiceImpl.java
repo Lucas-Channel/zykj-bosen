@@ -130,7 +130,7 @@ public class EsProductServiceImpl implements IEsProductService {
         } catch (Exception e) {
             if (!e.getMessage().contains("200 OK")) {
                 log.error("下架商品失败：》》》》》》{}", e.getMessage());
-                throw new BusinessException(ResponseCode.UPDATE_PRODUCT_SKU_SALES_COUNT_ERROR);
+                throw new BusinessException(ResponseCode.DOWN_PRODUCT_ERROR);
             }
         }
         return ResponseData.success();

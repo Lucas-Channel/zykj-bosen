@@ -122,6 +122,10 @@ public enum ResponseCode {
     DOWN_PRODUCT_ERROR(1241, "商品下架失败"),
 
     DOWN_PRODUCT_ONLY_UP_ERROR(1242, "只能下架商品状态为已上架的商品"),
+
+    RACKING_PRODUCT_BRAND_ERROR(1243, "品牌上架失败"),
+
+    DOWN_PRODUCT_BRAND_ERROR(1244, "品牌下架失败"),
     ;
 
 

@@ -4,6 +4,7 @@ import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.product.domain.ProductBrandDO;
 import com.bosen.product.service.IProductBrandService;
+import com.bosen.product.vo.request.BrandIdsVO;
 import com.bosen.product.vo.request.ProductBrandQueryVO;
 import com.bosen.product.vo.response.ProductBrandDetailVO;
 import org.springframework.beans.BeanUtils;
@@ -63,5 +64,23 @@ public class ProductBrandController {
             BeanUtils.copyProperties(i, de);
             return de;
         }).collect(Collectors.toList()));
+    }
+
+    /**
+     * 上架所有的品牌到es
+     * @return 结果
+     */
+    @PostMapping("/rackingBrand")
+    public ResponseData<Void> rackingBrand(@RequestBody BrandIdsVO brandIdsVO) {
+        return productBrandService.rackingBrand(brandIdsVO);
+    }
+
+    /**
+     * 下架品牌
+     * @return 结果
+     */
+    @PostMapping("/downProductBrand")
+    public ResponseData<Void> downProductBrand(@RequestBody BrandIdsVO brandIdsVO) {
+        return productBrandService.downProductBrand(brandIdsVO);
     }
 }

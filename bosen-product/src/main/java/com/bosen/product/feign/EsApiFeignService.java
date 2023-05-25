@@ -2,6 +2,7 @@ package com.bosen.product.feign;
 
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
+import com.bosen.elasticsearch.domain.EsProductBrandDO;
 import com.bosen.elasticsearch.vo.request.DownProductRequestVO;
 import com.bosen.product.feign.fallback.EsApiFeignServiceFallback;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -32,4 +33,20 @@ public interface EsApiFeignService {
      */
     @PostMapping("/es/api/product/downProduct")
     ResponseData<Void> downProduct(@RequestBody DownProductRequestVO downProductRequestVO);
+
+    /**
+     * 品牌上架
+     * @param brandDOList 品牌集合
+     * @return 结果
+     */
+    @PostMapping("/es/api/brand/rackingProductBrand")
+    ResponseData<Void> rackingProductBrand(@RequestBody List<EsProductBrandDO> brandDOList);
+
+    /**
+     * 品牌下架
+     * @param ids 品牌id集合
+     * @return 结果
+     */
+    @PostMapping("/es/api/brand/downProductBrand")
+    ResponseData<Void> downProductBrand(@RequestBody List<String> ids);
 }
