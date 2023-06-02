@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.system.domain.PayMethodParamsDO;
 import com.bosen.system.vo.request.PayMethodParamsUpsertVO;
+import com.bosen.system.vo.response.PayMethodParamsDetailVO;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ import java.util.List;
  */
 public interface IPayMethodParamsService extends IService<PayMethodParamsDO> {
     ResponseData<Void> upsertParams(List<PayMethodParamsUpsertVO> upsertVO);
+
+    ResponseData<List<PayMethodParamsDetailVO>> getParamsByPayMethId(String payMethodCode);
 }

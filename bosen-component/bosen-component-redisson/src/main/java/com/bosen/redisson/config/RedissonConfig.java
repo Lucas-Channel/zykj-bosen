@@ -53,7 +53,7 @@ public class RedissonConfig {
             }
         } else {
             SingleServerConfig singleServerConfig = config.useSingleServer();
-            singleServerConfig.setAddress(address);
+            singleServerConfig.setAddress("redis://" + address);
             singleServerConfig.setDatabase(database);
             singleServerConfig.setConnectionMinimumIdleSize(minIdle);
             if (StrUtil.isNotBlank(password)) {

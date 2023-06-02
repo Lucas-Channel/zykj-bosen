@@ -8,9 +8,9 @@ CREATE TABLE `bs_user_account` (
     `status` int DEFAULT NULL COMMENT '状态',
     `login_time` datetime DEFAULT NULL COMMENT '最后登录时间',
     `logout_time` datetime DEFAULT NULL COMMENT '最后登出时间',
-    `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '记录创建者',
+    `creator_user` varchar(50) DEFAULT NULL COMMENT '记录创建者',
     `create_time` datetime DEFAULT NULL COMMENT '记录创建时间',
-    `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '记录更新者',
+    `updater_user` varchar(50) DEFAULT NULL COMMENT '记录更新者',
     `update_time` datetime DEFAULT NULL COMMENT '记录更新时间',
     `del_flag` int DEFAULT 0 COMMENT '删除标志',
     PRIMARY KEY (`id`)

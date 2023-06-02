@@ -11,8 +11,8 @@ CREATE TABLE `bs_product_brand`  (
                                      `sort` int NULL DEFAULT NULL COMMENT '排序',
                                      `create_time` datetime(0) DEFAULT NULL,
                                      `update_time` datetime(0) DEFAULT NULL,
-                                     `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                     `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                     `updater_user` varchar(50) DEFAULT NULL,
+                                     `creator_user` varchar(50) DEFAULT NULL,
                                      `del_flag` int DEFAULT 0,
                                      PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品品牌表';
@@ -31,8 +31,8 @@ CREATE TABLE `bs_product_category`  (
                                         `visible` tinyint(1) NULL DEFAULT 1 COMMENT '显示状态:( 0:隐藏 1:显示)',
                                         `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                         `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                        `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                        `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                        `updater_user` varchar(50) DEFAULT NULL,
+                                        `creator_user` varchar(50) DEFAULT NULL,
                                         `del_flag` int DEFAULT 0,
                                         PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品分类表';
@@ -48,8 +48,8 @@ CREATE TABLE `bs_product_category_attribute`  (
                                                   `type` tinyint NOT NULL COMMENT '类型(1:规格;2:属性;)',
                                                   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                                   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                                  `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                                  `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                                  `updater_user` varchar(50) DEFAULT NULL,
+                                                  `creator_user` varchar(50) DEFAULT NULL,
                                                   `del_flag` int DEFAULT 0,
                                                   PRIMARY KEY (`id`) USING BTREE,
                                                   INDEX `fk_pms_attr_pms_category`(`category_id`) USING BTREE
@@ -65,8 +65,8 @@ CREATE TABLE `bs_product_category_brand`  (
                                               `brand_id` varchar(32) NOT NULL,
                                               `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                               `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                              `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                              `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                              `updater_user` varchar(50) DEFAULT NULL,
+                                              `creator_user` varchar(50) DEFAULT NULL,
                                               `del_flag` int DEFAULT 0,
                                               PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci;
@@ -93,8 +93,8 @@ CREATE TABLE `bs_product_sku`  (
                                    `album` json NULL COMMENT '商品图册',
                                    `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                    `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                   `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                   `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                   `updater_user` varchar(50) DEFAULT NULL,
+                                   `creator_user` varchar(50) DEFAULT NULL,
                                    `del_flag` int DEFAULT 0,
                                    `wholesale_price` json NULL COMMENT '批发价格',
                                    `member_price` json NULL COMMENT '指定会员销售价格',
@@ -139,8 +139,8 @@ CREATE TABLE `bs_product`  (
                                `status` int NULL DEFAULT 0 COMMENT '商品状态',
                                `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                               `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                               `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                               `updater_user` varchar(50) DEFAULT NULL,
+                               `creator_user` varchar(50) DEFAULT NULL,
                                `del_flag` int DEFAULT 0,
                                `push_date_time` datetime NULL DEFAULT NULL COMMENT '上架时间',
                                `pull_date_time` datetime NULL DEFAULT NULL COMMENT '下架时间',
@@ -175,8 +175,8 @@ CREATE TABLE `bs_product_label`  (
                                `product_id` varchar(64) NULL DEFAULT NULL COMMENT '商品ID',
                                `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                               `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                               `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                               `updater_user` varchar(50) DEFAULT NULL,
+                               `creator_user` varchar(50) DEFAULT NULL,
                                `del_flag` int DEFAULT 0,
                                PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品标签表';
@@ -194,8 +194,8 @@ CREATE TABLE `bs_product_attribute`  (
                                          `sort` int DEFAULT NULL COMMENT '排序',
                                          `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                          `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                         `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                         `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                         `updater_user` varchar(50) DEFAULT NULL,
+                                         `creator_user` varchar(50) DEFAULT NULL,
                                          `del_flag` int DEFAULT 0,
                                          PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品属性/规格表';
@@ -219,8 +219,8 @@ CREATE TABLE `bs_product_attribute_value`  (
                                          `sort` int DEFAULT NULL COMMENT '排序',
                                          `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                          `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                         `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                         `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                         `updater_user` varchar(50) DEFAULT NULL,
+                                         `creator_user` varchar(50) DEFAULT NULL,
                                          `del_flag` int DEFAULT 0,
                                          PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品属性/规格-值表';
@@ -246,8 +246,8 @@ CREATE TABLE `bs_product_area`  (
                                          `community_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '小区名称',
                                          `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                          `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                         `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                         `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                         `updater_user` varchar(50) DEFAULT NULL,
+                                         `creator_user` varchar(50) DEFAULT NULL,
                                          `del_flag` int DEFAULT 0,
                                          PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品销售区域表';
@@ -263,8 +263,8 @@ CREATE TABLE `bs_product_package_detail`  (
                                `sku_id` varchar(64) NOT NULL COMMENT '商品skuID',
                                `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                               `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                               `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                               `updater_user` varchar(50) DEFAULT NULL,
+                               `creator_user` varchar(50) DEFAULT NULL,
                                `del_flag` int DEFAULT 0,
                                PRIMARY KEY (`id`) USING BTREE,
                                INDEX `fk_product_package_detail`(`product_id`) USING BTREE,
@@ -289,8 +289,8 @@ CREATE TABLE `bs_freight_template`  (
                                `status` int NULL DEFAULT 0 COMMENT '状态 0-无效 1-有效',
                                `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                               `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                               `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                               `updater_user` varchar(50) DEFAULT NULL,
+                               `creator_user` varchar(50) DEFAULT NULL,
                                `del_flag` int DEFAULT 0,
                                `merchant_id` varchar(64) not null COMMENT '商家id',
                                `merchant_role_id` varchar(64) not NULL COMMENT '商家角色id',
@@ -313,8 +313,8 @@ CREATE TABLE `bs_product_approve_record`  (
                                     `agree_advice` varchar(200) NULL DEFAULT NULL COMMENT '审核意见',
                                     `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                     `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                    `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                    `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                    `updater_user` varchar(50) DEFAULT NULL,
+                                    `creator_user` varchar(50) DEFAULT NULL,
                                     `del_flag` int DEFAULT 0,
                                     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品审核记录';
@@ -331,8 +331,8 @@ CREATE TABLE `bs_freight_space`  (
                                         `status` int NULL DEFAULT 0 COMMENT '状态 0-无效 1-有效',
                                         `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                         `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                        `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                        `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                        `updater_user` varchar(50) DEFAULT NULL,
+                                        `creator_user` varchar(50) DEFAULT NULL,
                                         `del_flag` int DEFAULT 0,
                                         `merchant_id` varchar(64) not null COMMENT '商家id',
                                         `merchant_role_id` varchar(64) not NULL COMMENT '商家角色id',
@@ -352,8 +352,8 @@ CREATE TABLE `bs_product_store_shop`  (
                                      `product_id` varchar(32) NULL COMMENT '商品id',
                                      `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                      `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                     `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                     `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                     `updater_user` varchar(50) DEFAULT NULL,
+                                     `creator_user` varchar(50) DEFAULT NULL,
                                      `del_flag` int DEFAULT 0,
                                      PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品上架关联商城和店铺中间表';

@@ -4,6 +4,7 @@ import com.bosen.common.constant.response.ResponseData;
 import com.bosen.system.constants.PayMethodParamCodeEnum;
 import com.bosen.system.service.IPayMethodParamsService;
 import com.bosen.system.vo.request.PayMethodParamsUpsertVO;
+import com.bosen.system.vo.response.PayMethodParamsDetailVO;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -49,5 +50,15 @@ public class PayMethodParamsController {
     @PostMapping("/deleteByIds")
     public ResponseData<Void> deleteByIds(@RequestBody List<Long> ids) {
         return ResponseData.judge(payMethodParamsService.removeBatchByIds(ids));
+    }
+
+    /**
+     * 查询某支付方式下的支付参数
+     * @param payMethodId 支付方式id
+     * @return 结果
+     */
+    @GetMapping("/getParamsByPayMethId/{payMethodId}")
+    public ResponseData<List<PayMethodParamsDetailVO>> getParamsByPayMethId(@PathVariable("payMethodId") String payMethodId) {
+        return payMethodParamsService.getParamsByPayMethId(payMethodId);
     }
 }

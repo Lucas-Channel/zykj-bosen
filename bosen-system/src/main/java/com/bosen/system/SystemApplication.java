@@ -10,7 +10,7 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * 应用启动入口
  */
-@ComponentScan(basePackages = {"com.bosen.common", "com.bosen.system"})
+@ComponentScan(basePackages = {"com.bosen.common", "com.bosen.system", "com.bosen.redisson"})
 @MapperScan("com.bosen.system.mapper.**")
 @EnableFeignClients
 @EnableDiscoveryClient

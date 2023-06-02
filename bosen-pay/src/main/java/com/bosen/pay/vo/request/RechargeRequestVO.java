@@ -1,6 +1,6 @@
 package com.bosen.pay.vo.request;
 
-import com.bosen.common.constant.pay.PayChannelEnum;
+import com.bosen.common.constant.pay.PayMethodEnum;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -31,7 +31,7 @@ public class RechargeRequestVO {
 
     /**
      * 充值方式
-     * @see PayChannelEnum
+     * @see PayMethodEnum
      */
     @NotNull(message = "充值方式不能为空")
     private Integer type;

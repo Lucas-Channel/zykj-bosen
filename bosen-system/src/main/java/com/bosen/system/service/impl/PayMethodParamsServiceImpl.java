@@ -1,5 +1,6 @@
 package com.bosen.system.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.exception.BusinessException;
@@ -7,6 +8,7 @@ import com.bosen.system.domain.PayMethodParamsDO;
 import com.bosen.system.mapper.PayMethodParamsMapper;
 import com.bosen.system.service.IPayMethodParamsService;
 import com.bosen.system.vo.request.PayMethodParamsUpsertVO;
+import com.bosen.system.vo.response.PayMethodParamsDetailVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,5 +33,11 @@ public class PayMethodParamsServiceImpl extends ServiceImpl<PayMethodParamsMappe
             return payMethodParamsDO;
         }).collect(Collectors.toList());
         return ResponseData.judge(this.saveOrUpdateBatch(collect));
+    }
+
+    @Override
+    public ResponseData<List<PayMethodParamsDetailVO>> getParamsByPayMethId(String payMethodId) {
+        List<PayMethodParamsDO> list = this.lambdaQuery().eq(PayMethodParamsDO::getPayMethodId, payMethodId).list();
+        return ResponseData.success(list.stream().map(i -> BeanUtil.copyProperties(i, PayMethodParamsDetailVO.class)).collect(Collectors.toList()));
     }
 }

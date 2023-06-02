@@ -14,8 +14,8 @@ CREATE TABLE `bs_template`  (
                                           `template_type` int default 0 COMMENT '模板类型:0.平台模板 1.企业商城模板 2.店铺模板 3.活动模板',
                                           `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
                                           `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                                          `updater_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-                                          `creator_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+                                          `updater_user` varchar(50) DEFAULT NULL,
+                                          `creator_user` varchar(50) DEFAULT NULL,
                                           `del_flag` int DEFAULT 0,
                                           PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '首页装修模板';
