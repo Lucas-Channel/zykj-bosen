@@ -37,4 +37,9 @@ public interface RedisKeyConstant {
      * sku库存信息
      */
     String PRODUCT_SKU_STOCK_INFO_KEY = "product:sku:stock:id";
+
+    /**
+     * 白名单key
+     */
+    String VISIT_URL_WHITE_LIST_KEY = "bosen:visit:white:list";
 }

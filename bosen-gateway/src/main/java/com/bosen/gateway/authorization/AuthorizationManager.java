@@ -5,8 +5,9 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.bosen.common.constant.auth.AuthConstant;
+import com.bosen.common.constant.common.RedisKeyConstant;
 import com.bosen.common.domain.UserDto;
-import com.bosen.gateway.config.IgnoreUrlsConfig;
+import com.bosen.common.service.RedisService;
 import com.nimbusds.jose.JWSObject;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
@@ -34,8 +35,11 @@ import java.util.stream.Collectors;
 public class AuthorizationManager implements ReactiveAuthorizationManager<AuthorizationContext> {
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
+//    @Resource
+//    private IgnoreUrlsConfig ignoreUrlsConfig;
+
     @Resource
-    private IgnoreUrlsConfig ignoreUrlsConfig;
+    private RedisService redisService;
 
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> mono, AuthorizationContext authorizationContext) {
@@ -43,7 +47,8 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         URI uri = request.getURI();
         PathMatcher pathMatcher = new AntPathMatcher();
         // 白名单路径直接放行
-        List<String> ignoreUrls = ignoreUrlsConfig.getUrls();
+        Object obj = redisService.get(RedisKeyConstant.VISIT_URL_WHITE_LIST_KEY);
+        List<String> ignoreUrls = JSONUtil.toList(JSONUtil.parseArray(obj), String.class);
         for (String ignoreUrl : ignoreUrls) {
             if (pathMatcher.match(ignoreUrl, uri.getPath())) {
                 return Mono.just(new AuthorizationDecision(true));

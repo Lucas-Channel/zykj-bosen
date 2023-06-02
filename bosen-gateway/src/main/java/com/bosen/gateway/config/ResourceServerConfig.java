@@ -1,7 +1,10 @@
 package com.bosen.gateway.config;
 
 import cn.hutool.core.util.ArrayUtil;
+import cn.hutool.json.JSONUtil;
 import com.bosen.common.constant.auth.AuthConstant;
+import com.bosen.common.constant.common.RedisKeyConstant;
+import com.bosen.common.service.RedisService;
 import com.bosen.gateway.authorization.AuthorizationManager;
 import com.bosen.gateway.component.RestAuthenticationEntryPoint;
 import com.bosen.gateway.component.RestfulAccessDeniedHandler;
@@ -21,6 +24,8 @@ import org.springframework.security.oauth2.server.resource.authentication.Reacti
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 /**
  * 资源服务器配置
  */
@@ -29,10 +34,16 @@ import reactor.core.publisher.Mono;
 @EnableWebFluxSecurity
 public class ResourceServerConfig {
     private final AuthorizationManager authorizationManager;
-    private final IgnoreUrlsConfig ignoreUrlsConfig;
+
+//    private final IgnoreUrlsConfig ignoreUrlsConfig;
+
     private final RestfulAccessDeniedHandler restfulAccessDeniedHandler;
+
     private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
     private final IgnoreUrlsRemoveJwtFilter ignoreUrlsRemoveJwtFilter;
+
+    private final RedisService redisService;
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
@@ -42,8 +53,10 @@ public class ResourceServerConfig {
         http.oauth2ResourceServer().authenticationEntryPoint(restAuthenticationEntryPoint);
         //对白名单路径，直接移除JWT请求头
         http.addFilterBefore(ignoreUrlsRemoveJwtFilter,SecurityWebFiltersOrder.AUTHENTICATION);
+        Object obj = redisService.get(RedisKeyConstant.VISIT_URL_WHITE_LIST_KEY);
+        List<String> ignoreUrls = JSONUtil.toList(JSONUtil.parseArray(obj), String.class);
         http.authorizeExchange()
-                .pathMatchers(ArrayUtil.toArray(ignoreUrlsConfig.getUrls(),String.class)).permitAll()//白名单配置
+                .pathMatchers(ArrayUtil.toArray(ignoreUrls,String.class)).permitAll()//白名单配置
                 .anyExchange().access(authorizationManager)//鉴权管理器配置
                 .and().exceptionHandling()
                 .accessDeniedHandler(restfulAccessDeniedHandler)//处理未授权
