@@ -25,6 +25,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * 资源服务器配置
@@ -53,8 +54,8 @@ public class ResourceServerConfig {
         http.oauth2ResourceServer().authenticationEntryPoint(restAuthenticationEntryPoint);
         //对白名单路径，直接移除JWT请求头
         http.addFilterBefore(ignoreUrlsRemoveJwtFilter,SecurityWebFiltersOrder.AUTHENTICATION);
-        Object obj = redisService.get(RedisKeyConstant.VISIT_URL_WHITE_LIST_KEY);
-        List<String> ignoreUrls = JSONUtil.toList(JSONUtil.parseArray(obj), String.class);
+        Set<Object> objects = redisService.sMembers(RedisKeyConstant.VISIT_URL_WHITE_LIST_KEY);
+        List<String> ignoreUrls = JSONUtil.toList(JSONUtil.parseArray(objects), String.class);
         http.authorizeExchange()
                 .pathMatchers(ArrayUtil.toArray(ignoreUrls,String.class)).permitAll()//白名单配置
                 .anyExchange().access(authorizationManager)//鉴权管理器配置

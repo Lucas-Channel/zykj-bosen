@@ -47,8 +47,8 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         URI uri = request.getURI();
         PathMatcher pathMatcher = new AntPathMatcher();
         // 白名单路径直接放行
-        Object obj = redisService.get(RedisKeyConstant.VISIT_URL_WHITE_LIST_KEY);
-        List<String> ignoreUrls = JSONUtil.toList(JSONUtil.parseArray(obj), String.class);
+        Set<Object> objects = redisService.sMembers(RedisKeyConstant.VISIT_URL_WHITE_LIST_KEY);
+        List<String> ignoreUrls = JSONUtil.toList(JSONUtil.parseArray(objects), String.class);
         for (String ignoreUrl : ignoreUrls) {
             if (pathMatcher.match(ignoreUrl, uri.getPath())) {
                 return Mono.just(new AuthorizationDecision(true));

@@ -16,6 +16,7 @@ import reactor.core.publisher.Mono;
 import javax.annotation.Resource;
 import java.net.URI;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 白名单路径访问时需要移除JWT请求头
@@ -34,9 +35,8 @@ public class IgnoreUrlsRemoveJwtFilter implements WebFilter {
         URI uri = request.getURI();
         PathMatcher pathMatcher = new AntPathMatcher();
         //白名单路径移除JWT请求头
-        Object obj = redisService.get(RedisKeyConstant.VISIT_URL_WHITE_LIST_KEY);
-        List<String> ignoreUrls = JSONUtil.toList(JSONUtil.parseArray(obj), String.class);
-//        List<String> ignoreUrls = ignoreUrlsConfig.getUrls();
+        Set<Object> objects = redisService.sMembers(RedisKeyConstant.VISIT_URL_WHITE_LIST_KEY);
+        List<String> ignoreUrls = JSONUtil.toList(JSONUtil.parseArray(objects), String.class);
         for (String ignoreUrl : ignoreUrls) {
             if (pathMatcher.match(ignoreUrl, uri.getPath())) {
                 request = exchange.getRequest().mutate().header(AuthConstant.JWT_TOKEN_HEADER, "").build();

@@ -32,7 +32,7 @@ public class WhiteUrlListInitToRedis {
         if (CollUtil.isNotEmpty(list)) {
             redisService.del(RedisKeyConstant.VISIT_URL_WHITE_LIST_KEY);
             List<String> stringList = list.stream().map(GatewayWhiteUrlsDO::getVisitUrl).collect(Collectors.toList());
-            redisService.set(RedisKeyConstant.VISIT_URL_WHITE_LIST_KEY, stringList);
+            stringList.forEach(i -> redisService.sAdd(RedisKeyConstant.VISIT_URL_WHITE_LIST_KEY, i));
         }
     }
 
