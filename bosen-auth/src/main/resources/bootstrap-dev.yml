@@ -14,7 +14,3 @@ spring:
             refresh: true
         prefix: ${spring.application.name}
 #        extension-configs: 扩展配置
-
-logging:
-  level:
-    root: debug
