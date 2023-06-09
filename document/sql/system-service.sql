@@ -74,6 +74,8 @@ CREATE TABLE `bs_pay_method_params`  (
                                   `param_val` varchar(64)  NOT NULL COMMENT '值',
                                   `param_remark` varchar(64) DEFAULT NULL COMMENT '说明',
                                   `fund_model` int NULL DEFAULT NULL COMMENT '资金归集方式',
+                                  `merchant_id` varchar(64) not null COMMENT '商家id',
+                                  `merchant_role_id` varchar(64) not NULL COMMENT '商家角色id',
                                   `create_time` datetime(0) DEFAULT NULL,
                                   `update_time` datetime(0) DEFAULT NULL,
                                   `updater_user` varchar(50) DEFAULT NULL,

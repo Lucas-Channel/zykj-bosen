@@ -1,10 +1,10 @@
-package com.bosen.product.feign;
+package com.bosen.search.api.feign;
 
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.elasticsearch.domain.EsProductBrandDO;
 import com.bosen.elasticsearch.vo.request.DownProductRequestVO;
-import com.bosen.product.feign.fallback.EsApiFeignServiceFallback;
+import com.bosen.search.api.fallback.EsApiFeignServiceFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

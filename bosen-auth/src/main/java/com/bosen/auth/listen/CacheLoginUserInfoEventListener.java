@@ -1,7 +1,7 @@
 package com.bosen.auth.listen;
 
+import com.bosen.admin.api.feign.AdminFeignService;
 import com.bosen.auth.event.CacheLoginUserInfoEvent;
-import com.bosen.auth.feign.AdminUserFeignService;
 import com.bosen.auth.feign.PortalMemberFeignService;
 import com.bosen.common.constant.auth.AuthConstant;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 public class CacheLoginUserInfoEventListener {
 
     @Resource
-    private AdminUserFeignService adminUserFeignService;
+    private AdminFeignService adminFeignService;
 
     @Resource
     private PortalMemberFeignService memberFeignService;
@@ -29,9 +29,9 @@ public class CacheLoginUserInfoEventListener {
     public void cacheInfo(CacheLoginUserInfoEvent cacheLoginUserInfoEvent) {
         log.info("进来了，监听器");
         if (AuthConstant.ADMIN_CLIENT_ID.equals(cacheLoginUserInfoEvent.getClientId())) {
-            adminUserFeignService.cacheAdminInfo(cacheLoginUserInfoEvent.getId());
+            adminFeignService.cacheAdminInfo(cacheLoginUserInfoEvent.getId());
         } else if (AuthConstant.MERCHANT_CLIENT_ID.equals(cacheLoginUserInfoEvent.getClientId())) {
-            adminUserFeignService.cacheMerchantInfo(cacheLoginUserInfoEvent.getId());
+            adminFeignService.cacheMerchantInfo(cacheLoginUserInfoEvent.getId());
         } else {
             memberFeignService.cacheMemberInfo(cacheLoginUserInfoEvent.getId());
         }

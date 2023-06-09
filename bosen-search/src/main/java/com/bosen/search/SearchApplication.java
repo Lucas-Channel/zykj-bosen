@@ -12,9 +12,9 @@ import org.springframework.context.annotation.ComponentScan;
  * 应用启动入口
  */
 @MapperScan("com.bosen.search.mapper.**")
-@ComponentScan(basePackages = {"com.bosen.common", "com.bosen.search"})
+@ComponentScan(basePackages = {"com.bosen.**"})
 @EnableCaching
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.bosen.**.api")
 @EnableDiscoveryClient
 @SpringBootApplication
 public class SearchApplication {

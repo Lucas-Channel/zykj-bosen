@@ -11,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
  * 应用启动入口
  */
 @MapperScan("com.bosen.template.adorn.mapper.**")
-@ComponentScan(basePackages = {"com.bosen.common", "com.bosen.template.adorn"})
-@EnableFeignClients
+@ComponentScan(basePackages = {"com.bosen.**"})
+@EnableFeignClients(basePackages = "com.bosen.**.api")
 @EnableDiscoveryClient
 @SpringBootApplication
 public class TemplateAdornApplication {

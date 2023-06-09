@@ -1,8 +1,8 @@
 package com.bosen.auth.security;
 
+import com.bosen.admin.api.feign.AdminFeignService;
 import com.bosen.auth.constant.MessageConstant;
 import com.bosen.auth.domain.SecurityUser;
-import com.bosen.auth.feign.AdminUserFeignService;
 import com.bosen.auth.feign.PortalMemberFeignService;
 import com.bosen.common.domain.UserDto;
 import org.springframework.security.authentication.AccountExpiredException;
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserDetailsService {
     @Resource
     private HttpServletRequest request;
     @Resource
-    private AdminUserFeignService adminUserFeignService;
+    private AdminFeignService adminFeignService;
 
     @Resource
     private PortalMemberFeignService memberFeignService;
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserDetailsService {
         if (userDto==null) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }*/
-        UserDto userDto = adminUserFeignService.loadUserByUsername(username);
+        UserDto userDto = adminFeignService.loadUserByUsername(username);
         userDto.setClientId(clientId);
         SecurityUser securityUser = new SecurityUser(userDto);
         if (!securityUser.isEnabled()) {

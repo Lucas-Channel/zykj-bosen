@@ -21,7 +21,6 @@ import com.bosen.elasticsearch.vo.request.DownProductRequestVO;
 import com.bosen.product.constant.AttributeTypeEnum;
 import com.bosen.product.constant.ProductApproveStatusEnum;
 import com.bosen.product.domain.*;
-import com.bosen.product.feign.EsApiFeignService;
 import com.bosen.product.mapper.ProductAttributeValueMapper;
 import com.bosen.product.mapper.ProductMapper;
 import com.bosen.product.service.*;
@@ -31,6 +30,7 @@ import com.bosen.product.vo.request.ProductUpsertVO;
 import com.bosen.product.vo.response.ProductAttributeDetailVO;
 import com.bosen.product.vo.response.ProductDetailVO;
 import com.bosen.product.vo.response.ProductStoreShopDetailVO;
+import com.bosen.search.api.feign.EsApiFeignService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -244,9 +244,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
         if (CollUtil.isNotEmpty(notDelete)) {
             throw new BusinessException(ResponseCode.CANNOT_DELETE_PRODUCT_ERROR);
         }
-        list.forEach(i -> {
-            i.setDelFlag(1);
-        });
+        list.forEach(i -> i.setDelFlag(1));
         return ResponseData.judge(this.updateBatchById(list));
     }
 
@@ -262,36 +260,34 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
         Map<String, ProductDO> productDOMap = productDOList.stream().collect(Collectors.toMap(ProductDO::getId, Function.identity(), (oldSpu, newSpu) -> oldSpu));
         // 封装同步到es的数据
         List<ESProductSkuModelDO> esList = new ArrayList<>();
-        productRackingOrDownVO.getStoreShopList().forEach(ss -> {
-            skuList.forEach(sku -> {
-                ESProductSkuModelDO esProductSkuModelDO = new ESProductSkuModelDO();
-                ProductDO productDO = productDOMap.get(sku.getProductId());
-                esProductSkuModelDO
-                        .setSpuId(sku.getProductId())
-                        .setBrandId(productDO.getBrandId())
-                        .setCategoryId(productDO.getCategoryId())
-                        .setMerchantCategoryId(productDO.getMerchantCategoryId())
-                        .setProductType(productDO.getProductType())
-                        .setShopId(ss.getShopId())
-                        .setShopName(ss.getShopName())
-                        .setStoreId(ss.getStoreId())
-                        .setStoreName(ss.getStoreName())
-                        .setSkuId(sku.getId())
-                        .setSkuName(sku.getName())
-                        .setSkuImg(sku.getSkuImg())
-                        .setAlbum(sku.getAlbum())
-                        .setOriginPrice(sku.getOriginPrice())
-                        .setVipPrice(sku.getVipPrice())
-                        .setSalesPrice(sku.getSalesPrice())
-                        .setUpperDate(LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli())
-                        .setSalesCount(Objects.nonNull(sku.getSalesCount()) ? sku.getSalesCount() : BigDecimal.ZERO)
-                        .setSalesAllArea(Objects.equals(productDO.getSalesAllArea(), YesOrNoConstant.YES));
-                // 获取sku下的规格信息
-                List<ESProductAttributeAndValueModelDO> esProductAttributeAndValueModelDOS = productAttributeValueMapper.listEsProductAttributeAndValueBySkuId(sku.getId());
-                esProductSkuModelDO.setAttrs(esProductAttributeAndValueModelDOS);
-                esList.add(esProductSkuModelDO);
-            });
-        });
+        productRackingOrDownVO.getStoreShopList().forEach(ss -> skuList.forEach(sku -> {
+            ESProductSkuModelDO esProductSkuModelDO = new ESProductSkuModelDO();
+            ProductDO productDO = productDOMap.get(sku.getProductId());
+            esProductSkuModelDO
+                    .setSpuId(sku.getProductId())
+                    .setBrandId(productDO.getBrandId())
+                    .setCategoryId(productDO.getCategoryId())
+                    .setMerchantCategoryId(productDO.getMerchantCategoryId())
+                    .setProductType(productDO.getProductType())
+                    .setShopId(ss.getShopId())
+                    .setShopName(ss.getShopName())
+                    .setStoreId(ss.getStoreId())
+                    .setStoreName(ss.getStoreName())
+                    .setSkuId(sku.getId())
+                    .setSkuName(sku.getName())
+                    .setSkuImg(sku.getSkuImg())
+                    .setAlbum(sku.getAlbum())
+                    .setOriginPrice(sku.getOriginPrice())
+                    .setVipPrice(sku.getVipPrice())
+                    .setSalesPrice(sku.getSalesPrice())
+                    .setUpperDate(LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli())
+                    .setSalesCount(Objects.nonNull(sku.getSalesCount()) ? sku.getSalesCount() : BigDecimal.ZERO)
+                    .setSalesAllArea(Objects.equals(productDO.getSalesAllArea(), YesOrNoConstant.YES));
+            // 获取sku下的规格信息
+            List<ESProductAttributeAndValueModelDO> esProductAttributeAndValueModelDOS = productAttributeValueMapper.listEsProductAttributeAndValueBySkuId(sku.getId());
+            esProductSkuModelDO.setAttrs(esProductAttributeAndValueModelDOS);
+            esList.add(esProductSkuModelDO);
+        }));
         // 调用feign接口，进行商品上架到es
         ResponseData<Void> data = esApiFeignService.rackingProduct(esList);
         if (!Objects.equals(data.getCode(), ResponseCode.SUCCESS.getCode())) {
@@ -342,14 +338,12 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
 
     private void addRecord(ProductRackingOrDownVO productRackingOrDownVO) {
         List<ProductStoreShopDO> list = new ArrayList<>();
-        productRackingOrDownVO.getProductIds().forEach(productId -> {
-            list.addAll(productRackingOrDownVO.getStoreShopList().stream().map(i -> {
-                ProductStoreShopDO productStoreShopDO = new ProductStoreShopDO();
-                BeanUtils.copyProperties(i, productStoreShopDO);
-                productStoreShopDO.setProductId(productId);
-                return productStoreShopDO;
-            }).collect(Collectors.toList()));
-        });
+        productRackingOrDownVO.getProductIds().forEach(productId -> list.addAll(productRackingOrDownVO.getStoreShopList().stream().map(i -> {
+            ProductStoreShopDO productStoreShopDO = new ProductStoreShopDO();
+            BeanUtils.copyProperties(i, productStoreShopDO);
+            productStoreShopDO.setProductId(productId);
+            return productStoreShopDO;
+        }).collect(Collectors.toList())));
         boolean saveBatch = productStoreShopService.saveBatch(list);
         if (!saveBatch) {
             throw new BusinessException(ResponseCode.SAVE_PRODUCT_STORE_SHOP_ERROR);
@@ -395,7 +389,7 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
                 .eq(ProductSkuDO::getMerchantId, merchantId)
                 .eq(ProductSkuDO::getMerchantRoleId, merchantRoleId)
                 .list();
-        int skuProductListSize = skuList.stream().map(ProductSkuDO::getProductId).distinct().collect(Collectors.toList()).size();
+        int skuProductListSize = (int) skuList.stream().map(ProductSkuDO::getProductId).distinct().count();
         if (!Objects.equals(skuProductListSize, productRackingOrDownVO.getProductIds().size())) {
             throw new BusinessException(ResponseCode.RACKING_COUNT_ERROR);
         }

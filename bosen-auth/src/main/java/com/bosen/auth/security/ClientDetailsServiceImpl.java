@@ -1,6 +1,6 @@
 package com.bosen.auth.security;
 
-import com.bosen.auth.feign.AdminUserFeignService;
+import com.bosen.admin.api.feign.AdminFeignService;
 import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.domain.api.ClientDetail;
@@ -21,14 +21,14 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ClientDetailsServiceImpl implements ClientDetailsService {
 
-    private final AdminUserFeignService adminUserFeignService;
+    private final AdminFeignService adminFeignService;
 
     @Override
 //    @Cacheable(cacheNames = "auth", key = "'oauth-client:'+#clientId")
     public ClientDetails loadClientByClientId(String clientId) {
         try {
             // 通过clientId获取getOAuth2ClientById
-            ResponseData<ClientDetail> result = adminUserFeignService.getByClientId(clientId);
+            ResponseData<ClientDetail> result = adminFeignService.getByClientId(clientId);
             if (Objects.equals(result.getCode(), ResponseCode.SUCCESS.getCode()) && Objects.nonNull(result.getData())) {
                 ClientDetail client = result.getData();
                 BaseClientDetails clientDetails = new BaseClientDetails(

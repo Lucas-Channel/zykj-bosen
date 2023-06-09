@@ -18,6 +18,7 @@
 zykj-bosen
 ├─bosen-admin -- 平台后台服务
 ├─bosen-auth  -- 认证服务
+├─bosen-api  -- 接口服务
 ├─bosen-gateway  -- 网关
 ├─bosen-common -- 通用服务
 ├─bosen-marketing -- 营销服务
@@ -51,7 +52,7 @@ zykj-bosen
 * 禁止使用拼音方式进行文件命名和方法名命名，统一使用英文单词编码，如有不明，有道词典。
 * domain目录下为数据库表实体映射对象，只存放数据库表中所存在的字段，该对象用于持久化交互。
 * vo目录下分有request和response，分别为请求和相应。
-* 如有内部调用接口，区分前端调用controller，内部使用api，服务调用feign。
+* api服务为所有api接口服务，需要引用api，直接引入依赖即可
 * 所有接口皆须添加注释。
 * 避免使用DO返回。
 * 查询sql禁止使用子查询，如有需要，数据库设计时，加入冗余字段

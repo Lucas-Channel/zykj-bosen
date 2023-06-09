@@ -1,4 +1,4 @@
-package com.bosen.product.feign.fallback;
+package com.bosen.search.api.fallback;
 
 import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
@@ -6,7 +6,7 @@ import com.bosen.common.exception.BusinessException;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.elasticsearch.domain.EsProductBrandDO;
 import com.bosen.elasticsearch.vo.request.DownProductRequestVO;
-import com.bosen.product.feign.EsApiFeignService;
+import com.bosen.search.api.feign.EsApiFeignService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
