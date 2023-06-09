@@ -11,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
  * 应用启动入口
  */
 @MapperScan("com.bosen.pay.mapper.**")
-@ComponentScan(basePackages = {"com.bosen.common", "com.bosen.pay"})
-@EnableFeignClients
+@ComponentScan(basePackages = {"com.bosen.**"})
+@EnableFeignClients(basePackages = "com.bosen.**.api")
 @EnableDiscoveryClient
 @SpringBootApplication
 public class PayApplication {

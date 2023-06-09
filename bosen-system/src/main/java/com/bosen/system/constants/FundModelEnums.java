@@ -15,11 +15,10 @@ public enum FundModelEnums {
     PLATFORM_EXCHANGE(1, "平台代收"),
 
     /**
-     * 会员直接到账模式 - 2
+     * 商家直接到账模式 - 2
      */
-    DIRECT_TO_ACCOUNT(2, "会员直接到账");
+    DIRECT_TO_ACCOUNT(2, "商家直接到账");
 
-    ;
     private final Integer code;
 
     private final String name;

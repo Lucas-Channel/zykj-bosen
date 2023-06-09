@@ -26,6 +26,7 @@
         <module>bosen-template-adorn</module>
         <module>xxl-job-admin</module>
         <module>bosen-drools-engine</module>
+        <module>bosen-api</module>
     </modules>
 
     <parent>
@@ -250,16 +251,25 @@
                 <artifactId>xxl-job-core</artifactId>
                 <version>${xxl-job-core.version}</version>
             </dependency>
-            <!--集成logstash-->
-            <dependency>
-                <groupId>net.logstash.logback</groupId>
-                <artifactId>logstash-logback-encoder</artifactId>
-                <version>${logstash-logback.version}</version>
-            </dependency>
             <dependency>
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
                 <version>${commons-collections.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bosen.pay.api</groupId>
+                <artifactId>bosen-pay-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bosen.search.api</groupId>
+                <artifactId>bosen-search-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bosen.product.api</groupId>
+                <artifactId>bosen-product-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

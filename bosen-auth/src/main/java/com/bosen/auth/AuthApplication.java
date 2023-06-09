@@ -8,8 +8,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
 @MapperScan("com.bosen.auth.mapper.**")
-@ComponentScan(basePackages = {"com.bosen.common", "com.bosen.auth"})
-@EnableFeignClients
+@ComponentScan(basePackages = {"com.bosen.**"})
+@EnableFeignClients(basePackages = "com.bosen.**.api")
 @EnableDiscoveryClient
 @SpringBootApplication(scanBasePackages = "com.bosen.auth")
 public class AuthApplication {

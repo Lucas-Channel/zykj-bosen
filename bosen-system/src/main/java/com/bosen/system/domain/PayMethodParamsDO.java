@@ -46,4 +46,14 @@ public class PayMethodParamsDO extends BaseEntityData implements Serializable {
      */
     private Integer fundModel;
 
+    /**
+     * 当资金归集方式为商家直接到账 必填
+     */
+    private String merchantId;
+
+    /**
+     * 当资金归集方式为商家直接到账 必填
+     */
+    private String merchantRoleId;
+
 }

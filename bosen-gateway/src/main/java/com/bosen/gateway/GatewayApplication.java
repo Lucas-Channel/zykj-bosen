@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan(basePackages = {"com.bosen.common", "com.bosen.gateway"})
+@ComponentScan(basePackages = {"com.bosen.**"})
 @EnableDiscoveryClient
 @SpringBootApplication
 public class GatewayApplication {

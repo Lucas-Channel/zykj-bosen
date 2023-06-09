@@ -1,6 +1,6 @@
-package com.bosen.auth.feign.fallback;
+package com.bosen.admin.api.fallback;
 
-import com.bosen.auth.feign.AdminUserFeignService;
+import com.bosen.admin.api.feign.AdminFeignService;
 import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.domain.UserDto;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class AdminUserFeignServiceFallback implements AdminUserFeignService {
+public class AdminFeignServiceFallback implements AdminFeignService {
     @Override
     public UserDto loadUserByUsername(String username) {
         throw new BusinessException(ResponseCode.ADMIN_SERVICE_ERROR);

@@ -11,10 +11,10 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * 应用启动入口
  */
-@ComponentScan(basePackages = {"com.bosen.common", "com.bosen.drools"})
+@ComponentScan(basePackages = {"com.bosen.**"})
 @MapperScan("com.bosen.drools.mapper.**")
 @EnableCaching
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.bosen.**.api")
 @EnableDiscoveryClient
 @SpringBootApplication
 public class DroolsApplication {
