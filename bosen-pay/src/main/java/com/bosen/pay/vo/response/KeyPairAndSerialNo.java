@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.security.KeyPair;
 
 /**
@@ -15,8 +16,11 @@ import java.security.KeyPair;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class KeyPairAndSerialNo {
+public class KeyPairAndSerialNo implements Serializable {
+    private static final long serialVersionUID = 5360287015480383113L;
+
     private KeyPair keyPair;
 
     private String serialNumber;
+
 }

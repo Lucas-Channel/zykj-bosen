@@ -16,45 +16,12 @@ import java.io.Serializable;
 public class NativePayRequest implements Serializable {
     private static final long serialVersionUID = 1837758158692297461L;
 
-    /**
-     * 应用ID
-     */
-    @NotBlank(message = "appid 不能为空")
-    private String appId;
+    @NotNull(message = "基础参数不能为空")
+    private NativePayRequestBase base;
 
     /**
-     * 直连商户号
+     * apiv3 key
      */
-    @NotBlank(message = "商户号不能为空")
-    private String mchId;
-
-    /**
-     * 商品描述
-     */
-    @NotBlank(message = "商品描述不能为空")
-    private String description;
-
-    /**
-     * 商户订单号
-     */
-    @NotBlank(message = "商户订单号不能为空")
-    private String outTradeNo;
-
-    /**
-     * 附加数据 附加数据，在查询API和支付通知中原样返回，可作为自定义参数使用，实际情况下只有支付完成状态才会返回该字段
-     */
-    @NotBlank(message = "附加数据不能为空")
-    private String attach;
-
-    /**
-     * 通知地址 通知URL必须为直接可访问的URL，不允许携带查询串，要求必须为https地址。
-     */
-    @NotBlank(message = "回调通知地址不能为空")
-    private String notifyUrl;
-
-    /**
-     * 金额
-     */
-    @NotNull(message = "金额信息不能为空")
-    private WeChatPayAmountVO amount;
+    @NotBlank(message = "apiKey不能为空")
+    private String apiKey;
 }

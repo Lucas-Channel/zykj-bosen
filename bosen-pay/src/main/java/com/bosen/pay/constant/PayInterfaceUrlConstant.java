@@ -10,7 +10,11 @@ public class PayInterfaceUrlConstant {
     /**
      * 微信支付-native支付
      */
-    private static final String WE_CHAT_NATIVE_PAY = "/pay/transactions/native";
+    public static final String WE_CHAT_NATIVE_PAY = "/v3/pay/transactions/native";
 
+    /**
+     * 平台证书
+     */
+    public static final String CERTIFICATES = "/v3/certificates";
 
 }

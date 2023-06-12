@@ -126,6 +126,10 @@ public enum ResponseCode {
     RACKING_PRODUCT_BRAND_ERROR(1243, "品牌上架失败"),
 
     DOWN_PRODUCT_BRAND_ERROR(1244, "品牌下架失败"),
+
+    TURN_URL_ERROR(1245, "地址转换异常"),
+
+   WECHAT_PAY_ERROR(1246, "发起微信支付失败"),
     ;
 
 
