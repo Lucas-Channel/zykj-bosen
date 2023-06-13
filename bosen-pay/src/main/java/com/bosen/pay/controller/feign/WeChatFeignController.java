@@ -1,6 +1,7 @@
 package com.bosen.pay.controller.feign;
 
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.pay.api.vo.request.H5PayRequest;
 import com.bosen.pay.api.vo.request.NativePayRequest;
 import com.bosen.pay.api.vo.request.WeChatRefundRequestVO;
 import com.bosen.pay.service.IWeChatService;
@@ -30,6 +31,17 @@ public class WeChatFeignController {
     public ResponseData<String> nativePay(@RequestBody @Valid NativePayRequest nativePayRequest) {
         return weChatService.nativePay(nativePayRequest);
     }
+
+    /**
+     * h5支付
+     * @param h5PayRequest 参数
+     * @return 支付链接
+     */
+    @PostMapping("/h5Pay")
+    public ResponseData<String> h5PayRequest(@RequestBody @Valid H5PayRequest h5PayRequest) {
+        return weChatService.h5PayRequest(h5PayRequest);
+    }
+
 
     /**
      * 主动查询订单支付结果

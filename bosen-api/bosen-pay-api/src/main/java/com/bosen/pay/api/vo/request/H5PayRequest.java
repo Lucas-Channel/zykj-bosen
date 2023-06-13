@@ -7,17 +7,17 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * native 支付参数
+ * h5支付
  * @author Lucas
  * @version 2.0.0
- * @date 2023/6/5
+ * @date 2023/6/13
  */
 @Data
-public class NativePayRequest implements Serializable {
-    private static final long serialVersionUID = 1837758158692297461L;
+public class H5PayRequest implements Serializable {
+    private static final long serialVersionUID = -4048265855954681127L;
 
-    @NotNull(message = "基础参数不能为空")
-    private PayRequestBase base;
+    @NotNull(message = "基础信息不能为空")
+    private H5PayRequestBase base;
 
     /**
      * apiv3 key
@@ -25,3 +25,4 @@ public class NativePayRequest implements Serializable {
     @NotBlank(message = "apiKey不能为空")
     private String apiKey;
 }
+

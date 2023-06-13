@@ -1,19 +1,20 @@
 package com.bosen.pay.api.vo.request;
 
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
- * native 支付基础参数
+ * 支付基础参数，此处是通用参数，不能变动
  * @author Lucas
  * @version 2.0.0
  * @date 2023/6/5
  */
 @Data
-public class NativePayRequestBase implements Serializable {
+public class PayRequestBase implements Serializable {
 
     private static final long serialVersionUID = -7608974353298177127L;
     /**
@@ -38,6 +39,7 @@ public class NativePayRequestBase implements Serializable {
      * 商户订单号
      */
     @NotBlank(message = "商户订单号不能为空")
+    @Length(min = 6, max = 32, message = "商户订单号至少六位长度")
     private String out_trade_no;
 
     /**

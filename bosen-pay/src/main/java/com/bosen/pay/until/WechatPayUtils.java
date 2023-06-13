@@ -181,7 +181,7 @@ public class WechatPayUtils {
 
     public void refreshCertificate(String mchId, String apiKey) {
         // 获取平台证书列表
-        JsonNode jsonNode = this.doGet(payParamsConfig.getWxBaseUrl() + PayInterfaceUrlConstant.CERTIFICATES, mchId);
+        JsonNode jsonNode = this.doGet(payParamsConfig.getWxBaseUrl() + PayInterfaceUrlConstant.WE_CHAT_CERTIFICATES, mchId);
         // 获取平台验证的相关参数信息
         JsonNode data = jsonNode.get("data");
         if (Objects.nonNull(data)) {

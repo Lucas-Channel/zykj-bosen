@@ -1,6 +1,7 @@
 package com.bosen.pay.service;
 
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.pay.api.vo.request.H5PayRequest;
 import com.bosen.pay.api.vo.request.NativePayRequest;
 import com.bosen.pay.api.vo.request.WeChatRefundRequestVO;
 import com.bosen.pay.vo.response.WeChatCallbackVO;
@@ -21,6 +22,13 @@ public interface IWeChatService {
      * @return 支付链接
      */
     ResponseData<String> nativePay(NativePayRequest nativePayRequest);
+
+    /**
+     * h5支付
+     * @param h5PayRequest 参数
+     * @return 支付链接
+     */
+    ResponseData<String> h5PayRequest(H5PayRequest h5PayRequest);
 
     /**
      * 微信支付回调通知

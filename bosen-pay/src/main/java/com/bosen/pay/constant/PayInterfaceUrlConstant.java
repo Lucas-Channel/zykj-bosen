@@ -15,17 +15,22 @@ public class PayInterfaceUrlConstant {
     /**
      * 平台证书
      */
-    public static final String CERTIFICATES = "/v3/certificates";
+    public static final String WE_CHAT_CERTIFICATES = "/v3/certificates";
 
     /**
      * 商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑
      */
-    public static final String QUERY_ORDER_STATUS = "/v3/pay/transactions/out-trade-no/%s";
+    public static final String WE_CHAT_QUERY_ORDER_STATUS = "/v3/pay/transactions/out-trade-no/%s";
 
     /**
      * 申请退款
      */
-    public static final String REFUNDS = "/v3/refund/domestic/refunds";
+    public static final String WE_CHAT_REFUNDS = "/v3/refund/domestic/refunds";
+
+    /**
+     * 微信支付-h5支付
+     */
+    public static final String WE_CHAT_H5_PAY = "/v3/pay/transactions/h5";
 
 
 

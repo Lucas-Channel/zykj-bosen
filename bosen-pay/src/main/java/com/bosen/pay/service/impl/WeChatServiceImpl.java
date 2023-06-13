@@ -9,6 +9,7 @@ import com.bosen.common.exception.BusinessException;
 import com.bosen.common.service.RedisService;
 import com.bosen.pay.api.constant.WeChatPayStatusConstant;
 import com.bosen.pay.api.constant.WeChatRefundStatusConstant;
+import com.bosen.pay.api.vo.request.H5PayRequest;
 import com.bosen.pay.api.vo.request.NativePayRequest;
 import com.bosen.pay.api.vo.request.WeChatRefundRequestVO;
 import com.bosen.pay.component.PayParamsConfig;
@@ -62,6 +63,13 @@ public class WeChatServiceImpl implements IWeChatService {
         checkUrl();
         Map<String, Object> map = wechatPayUtils.doPost(payParamsConfig.getWxBaseUrl() + PayInterfaceUrlConstant.WE_CHAT_NATIVE_PAY, JSON.toJSONString(nativePayRequest.getBase()), nativePayRequest.getBase().getMchid(), nativePayRequest.getApiKey());
         return ResponseData.success(map.get("code_url").toString());
+    }
+
+    @Override
+    public ResponseData<String> h5PayRequest(H5PayRequest h5PayRequest) {
+        checkUrl();
+        Map<String, Object> map = wechatPayUtils.doPost(payParamsConfig.getWxBaseUrl() + PayInterfaceUrlConstant.WE_CHAT_H5_PAY, JSON.toJSONString(h5PayRequest.getBase()), h5PayRequest.getBase().getMchid(), h5PayRequest.getApiKey());
+        return ResponseData.success(map.get("h5_url").toString());
     }
 
     @Override
@@ -157,7 +165,7 @@ public class WeChatServiceImpl implements IWeChatService {
     @Override
     public ResponseData<Boolean> queryOrderPayStatus(String mchId, String outTradeNo) {
         checkUrl();
-        String doUrl = payParamsConfig.getWxBaseUrl() + String.format(PayInterfaceUrlConstant.QUERY_ORDER_STATUS, outTradeNo) + "?mchid=" + mchId;
+        String doUrl = payParamsConfig.getWxBaseUrl() + String.format(PayInterfaceUrlConstant.WE_CHAT_QUERY_ORDER_STATUS, outTradeNo) + "?mchid=" + mchId;
         JsonNode data = wechatPayUtils.doGet(doUrl, mchId);
         boolean status = false;
         if (Objects.nonNull(data)) {
@@ -173,7 +181,7 @@ public class WeChatServiceImpl implements IWeChatService {
     @Override
     public ResponseData<Void> refund(WeChatRefundRequestVO refundRequestVO) {
         checkUrl();
-        String doUrl = payParamsConfig.getWxBaseUrl() + PayInterfaceUrlConstant.REFUNDS;
+        String doUrl = payParamsConfig.getWxBaseUrl() + PayInterfaceUrlConstant.WE_CHAT_REFUNDS;
         Map<String, Object> map = wechatPayUtils.doPost(doUrl, JSON.toJSONString(refundRequestVO.getBase()), refundRequestVO.getMchId(), refundRequestVO.getApiKey());
         if (WeChatRefundStatusConstant.SUCCESS.equalsIgnoreCase(map.get("status").toString()) || WeChatRefundStatusConstant.PROCESSING.equalsIgnoreCase(map.get("status").toString())) {
             return ResponseData.success();
