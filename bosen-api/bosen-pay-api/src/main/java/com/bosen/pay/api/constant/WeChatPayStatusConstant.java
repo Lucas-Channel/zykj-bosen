@@ -1,6 +1,7 @@
 package com.bosen.pay.api.constant;
 
 /**
+ * 微信支付状态值
  * @author Lucas
  * @version 2.0.0
  * @date 2023/6/13
