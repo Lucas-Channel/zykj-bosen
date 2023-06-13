@@ -189,9 +189,9 @@ public class WechatPayUtils {
                 JsonNode encrypt_certificate = i.get("encrypt_certificate");
                 // 对关键信息进行解密
                 PayAesUtil aesUtil = new PayAesUtil(apiKey.getBytes(StandardCharsets.UTF_8));
-                String associated_data = encrypt_certificate.get("associated_data").toString().replaceAll("\"", "");
-                String nonce = encrypt_certificate.get("nonce").toString().replaceAll("\"", "");
-                String ciphertext = encrypt_certificate.get("ciphertext").toString().replaceAll("\"", "");
+                String associated_data = encrypt_certificate.get("associated_data").asText();
+                String nonce = encrypt_certificate.get("nonce").asText();
+                String ciphertext = encrypt_certificate.get("ciphertext").asText();
                 // 证书内容
                 String certStr;
                 try {
@@ -201,7 +201,7 @@ public class WechatPayUtils {
                     X509Certificate x509Cert = (X509Certificate) cf.generateCertificate(
                             new ByteArrayInputStream(certStr.getBytes(StandardCharsets.UTF_8))
                     );
-                    String serial_no = i.get("serial_no").toString().replaceAll("\"", "");
+                    String serial_no = i.get("serial_no").asText();
                     redisService.set(serial_no, x509Cert);
                     redisService.set(serial_no + "_v3api_key", apiKey);
                 } catch (GeneralSecurityException | IOException e) {

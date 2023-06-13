@@ -28,4 +28,12 @@ public interface IWeChatService {
      * @return 回调结果
      */
     WeChatCallbackVO payCallBack(Map<String, Object> body, HttpServletRequest request);
+
+    /**
+     * 主动查询订单支付结果
+     * @param mchId 商户号
+     * @param outTradeNo 交易单号
+     * @return true支付成功，false支付失败
+     */
+    ResponseData<Boolean> queryOrderPayStatus(String mchId, String outTradeNo);
 }

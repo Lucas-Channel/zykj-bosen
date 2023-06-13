@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.service.RedisService;
+import com.bosen.pay.api.constant.WeChatPayStatusConstant;
 import com.bosen.pay.api.vo.request.NativePayRequest;
 import com.bosen.pay.component.PayParamsConfig;
 import com.bosen.pay.constant.PayInterfaceUrlConstant;
@@ -13,6 +14,7 @@ import com.bosen.pay.until.PayAesUtil;
 import com.bosen.pay.until.WechatPayUtils;
 import com.bosen.pay.until.WechatRSAUtils;
 import com.bosen.pay.vo.response.WeChatCallbackVO;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -93,7 +95,7 @@ public class WeChatServiceImpl implements IWeChatService {
             // 获取微信支付返回的信息
             Map<String, Object> result = JSON.parseObject(decryptToString, new TypeReference<HashMap<String, Object>>() {});
             // 支付状态的判断 如果是success就代表支付成功,根据订单号查询支付状态，如果未支付，更新支付状态 为已支付
-            if ("SUCCESS".equalsIgnoreCase(result.get("trade_state").toString())) {
+            if (WeChatPayStatusConstant.SUCCESS.equalsIgnoreCase(result.get("trade_state").toString())) {
                 // 获取支付的交易单号，流水号，和附属参数
                 String out_trade_no = result.get("out_trade_no").toString();
                 String transaction_id = result.get("transaction_id").toString();
@@ -112,5 +114,20 @@ public class WeChatServiceImpl implements IWeChatService {
             callbackVO.setMessage("回调处理失败");
         }
         return callbackVO;
+    }
+
+    @Override
+    public ResponseData<Boolean> queryOrderPayStatus(String mchId, String outTradeNo) {
+        String doUrl = payParamsConfig.getWxBaseUrl() + String.format(PayInterfaceUrlConstant.QUERY_ORDER_STATUS, outTradeNo) + "?mchid=" + mchId;
+        JsonNode data = wechatPayUtils.doGet(doUrl, mchId);
+        boolean status = false;
+        if (Objects.nonNull(data)) {
+            // 详细内容见官网 https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_4_5.shtml
+            String trade_state = data.get("trade_state").asText();
+            if (WeChatPayStatusConstant.SUCCESS.equalsIgnoreCase(trade_state)) {
+                status = true;
+            }
+        }
+        return ResponseData.success(status);
     }
 }

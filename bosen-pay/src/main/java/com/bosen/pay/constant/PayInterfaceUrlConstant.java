@@ -17,4 +17,11 @@ public class PayInterfaceUrlConstant {
      */
     public static final String CERTIFICATES = "/v3/certificates";
 
+    /**
+     * 商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑
+     */
+    public static final String QUERY_ORDER_STATUS = "/v3/pay/transactions/out-trade-no/%s";
+
+
+
 }
