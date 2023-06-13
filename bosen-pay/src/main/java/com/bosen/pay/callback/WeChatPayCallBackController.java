@@ -35,4 +35,15 @@ public class WeChatPayCallBackController {
     public WeChatCallbackVO payCallBack(@RequestBody Map<String, Object> body, HttpServletRequest request) {
         return weChatService.payCallBack(body, request);
     }
+
+    /**
+     * 微信退款回调通知
+     * @param body 参数
+     * @param request httpRequest
+     * @return 回调处理结果
+     */
+    @PostMapping("/refundNotify")
+    public WeChatCallbackVO refundNotify(@RequestBody Map<String, Object> body, HttpServletRequest request) {
+        return weChatService.refundNotify(body, request);
+    }
 }

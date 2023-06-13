@@ -2,6 +2,7 @@ package com.bosen.pay.controller.feign;
 
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.pay.api.vo.request.NativePayRequest;
+import com.bosen.pay.api.vo.request.WeChatRefundRequestVO;
 import com.bosen.pay.service.IWeChatService;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,5 +42,13 @@ public class WeChatFeignController {
         return weChatService.queryOrderPayStatus(mchId, outTradeNo);
     }
 
-
+    /**
+     * 退款申请
+     * @param refundRequestVO 参数
+     * @return 结果
+     */
+    @PostMapping("/refund")
+    public ResponseData<Void> refund(@RequestBody @Valid WeChatRefundRequestVO refundRequestVO) {
+        return weChatService.refund(refundRequestVO);
+    }
 }

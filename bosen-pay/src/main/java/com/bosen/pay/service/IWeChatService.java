@@ -2,6 +2,7 @@ package com.bosen.pay.service;
 
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.pay.api.vo.request.NativePayRequest;
+import com.bosen.pay.api.vo.request.WeChatRefundRequestVO;
 import com.bosen.pay.vo.response.WeChatCallbackVO;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,10 +31,25 @@ public interface IWeChatService {
     WeChatCallbackVO payCallBack(Map<String, Object> body, HttpServletRequest request);
 
     /**
+     * 微信退款回调通知
+     * @param body 参数
+     * @param request httpRequest
+     * @return 回调处理结果
+     */
+    WeChatCallbackVO refundNotify(Map<String, Object> body, HttpServletRequest request);
+
+    /**
      * 主动查询订单支付结果
      * @param mchId 商户号
      * @param outTradeNo 交易单号
      * @return true支付成功，false支付失败
      */
     ResponseData<Boolean> queryOrderPayStatus(String mchId, String outTradeNo);
+
+    /**
+     * 退款申请
+     * @param refundRequestVO 参数
+     * @return 结果
+     */
+    ResponseData<Void> refund(WeChatRefundRequestVO refundRequestVO);
 }

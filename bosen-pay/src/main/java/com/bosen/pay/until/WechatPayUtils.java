@@ -133,10 +133,10 @@ public class WechatPayUtils {
                 String jsonResult = EntityUtils.toString(httpEntity);
                 return JSON.parseObject(jsonResult, new TypeReference<HashMap<String, Object>>() {});
             } else {
-                throw new BusinessException(ResponseCode.WECHAT_PAY_ERROR);
+                throw new BusinessException(ResponseCode.WECHAT_REQUEST_ERROR);
             }
         } catch (IOException e) {
-            throw new BusinessException(ResponseCode.WECHAT_PAY_ERROR);
+            throw new BusinessException(ResponseCode.WECHAT_REQUEST_ERROR);
         } finally {
             try {
                 httpClient.close();

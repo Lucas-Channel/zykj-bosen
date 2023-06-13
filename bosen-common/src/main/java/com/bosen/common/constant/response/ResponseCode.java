@@ -129,7 +129,9 @@ public enum ResponseCode {
 
     TURN_URL_ERROR(1245, "地址转换异常"),
 
-   WECHAT_PAY_ERROR(1246, "发起微信支付失败"),
+    WECHAT_REQUEST_ERROR(1246, "发起微信请求失败"),
+
+    THIRD_URL_NOT_EXIT_ERROR(1247, "第三方访问域名地址未配置"),
     ;
 
 
