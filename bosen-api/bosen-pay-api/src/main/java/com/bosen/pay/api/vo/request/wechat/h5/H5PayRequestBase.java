@@ -1,5 +1,6 @@
-package com.bosen.pay.api.vo.request;
+package com.bosen.pay.api.vo.request.wechat.h5;
 
+import com.bosen.pay.api.vo.request.wechat.PayRequestBase;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

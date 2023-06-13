@@ -32,6 +32,11 @@ public class PayInterfaceUrlConstant {
      */
     public static final String WE_CHAT_H5_PAY = "/v3/pay/transactions/h5";
 
+    /**
+     * 微信支付-jsapi支付
+     */
+    public static final String WE_CHAT_JSAPI_PAY = "/v3/pay/transactions/jsapi";
+
 
 
 }

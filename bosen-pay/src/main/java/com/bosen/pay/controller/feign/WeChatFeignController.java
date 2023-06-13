@@ -1,9 +1,9 @@
 package com.bosen.pay.controller.feign;
 
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.pay.api.vo.request.H5PayRequest;
-import com.bosen.pay.api.vo.request.NativePayRequest;
-import com.bosen.pay.api.vo.request.WeChatRefundRequestVO;
+import com.bosen.pay.api.vo.request.wechat.h5.H5PayRequest;
+import com.bosen.pay.api.vo.request.wechat.nativepay.NativePayRequest;
+import com.bosen.pay.api.vo.request.wechat.WeChatRefundRequestVO;
 import com.bosen.pay.service.IWeChatService;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +42,15 @@ public class WeChatFeignController {
         return weChatService.h5PayRequest(h5PayRequest);
     }
 
+    /**
+     * jsapi支付
+     * @param h5PayRequest 参数
+     * @return 支付链接
+     */
+    @PostMapping("/jsApiPay")
+    public ResponseData<String> jsApiPayRequest(@RequestBody @Valid H5PayRequest h5PayRequest) {
+        return weChatService.h5PayRequest(h5PayRequest);
+    }
 
     /**
      * 主动查询订单支付结果

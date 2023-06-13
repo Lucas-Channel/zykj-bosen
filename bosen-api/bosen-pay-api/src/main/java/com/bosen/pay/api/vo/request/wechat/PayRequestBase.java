@@ -1,4 +1,4 @@
-package com.bosen.pay.api.vo.request;
+package com.bosen.pay.api.vo.request.wechat;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;

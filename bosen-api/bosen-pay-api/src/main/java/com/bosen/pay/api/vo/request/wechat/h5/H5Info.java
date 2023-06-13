@@ -1,4 +1,4 @@
-package com.bosen.pay.api.vo.request;
+package com.bosen.pay.api.vo.request.wechat.h5;
 
 import com.bosen.pay.api.constant.H5PaySceneTypeConstant;
 import lombok.Data;

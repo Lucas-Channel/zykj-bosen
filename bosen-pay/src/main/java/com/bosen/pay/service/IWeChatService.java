@@ -1,9 +1,9 @@
 package com.bosen.pay.service;
 
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.pay.api.vo.request.H5PayRequest;
-import com.bosen.pay.api.vo.request.NativePayRequest;
-import com.bosen.pay.api.vo.request.WeChatRefundRequestVO;
+import com.bosen.pay.api.vo.request.wechat.h5.H5PayRequest;
+import com.bosen.pay.api.vo.request.wechat.nativepay.NativePayRequest;
+import com.bosen.pay.api.vo.request.wechat.WeChatRefundRequestVO;
 import com.bosen.pay.vo.response.WeChatCallbackVO;
 
 import javax.servlet.http.HttpServletRequest;
