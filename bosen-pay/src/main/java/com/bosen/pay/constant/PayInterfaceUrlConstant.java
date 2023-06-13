@@ -22,6 +22,11 @@ public class PayInterfaceUrlConstant {
      */
     public static final String QUERY_ORDER_STATUS = "/v3/pay/transactions/out-trade-no/%s";
 
+    /**
+     * 申请退款
+     */
+    public static final String REFUNDS = "/v3/refund/domestic/refunds";
+
 
 
 }

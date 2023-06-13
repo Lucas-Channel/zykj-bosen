@@ -1,4 +1,4 @@
-package com.bosen.pay.controller.feign.pc;
+package com.bosen.pay.controller.feign;
 
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.pay.api.vo.request.NativePayRequest;
@@ -15,7 +15,7 @@ import javax.validation.Valid;
  * @date 2023/6/5
  */
 @RestController
-@RequestMapping("/pay/web/wechat")
+@RequestMapping("/pay/wechat")
 public class WeChatFeignController {
     @Resource
     private IWeChatService weChatService;
@@ -40,4 +40,6 @@ public class WeChatFeignController {
     public ResponseData<Boolean> queryOrderPayStatus(String mchId, String outTradeNo) {
         return weChatService.queryOrderPayStatus(mchId, outTradeNo);
     }
+
+
 }
