@@ -1,8 +1,8 @@
 package com.bosen.pay.controller.feign;
 
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.pay.api.vo.request.wechat.h5.H5PayRequest;
-import com.bosen.pay.api.vo.request.wechat.nativepay.NativePayRequest;
+import com.bosen.pay.api.vo.request.wechat.h5.H5PayRequestVO;
+import com.bosen.pay.api.vo.request.wechat.nativepay.NativePayRequestVO;
 import com.bosen.pay.api.vo.request.wechat.WeChatRefundRequestVO;
 import com.bosen.pay.service.IWeChatService;
 import org.springframework.web.bind.annotation.*;
@@ -24,32 +24,32 @@ public class WeChatFeignController {
 
     /**
      * native支付，用于pc端支付，用于扫码支付
-     * @param nativePayRequest 参数
+     * @param nativePayRequestVO 参数
      * @return 支付链接
      */
     @PostMapping("/nativePay")
-    public ResponseData<String> nativePay(@RequestBody @Valid NativePayRequest nativePayRequest) {
-        return weChatService.nativePay(nativePayRequest);
+    public ResponseData<String> nativePay(@RequestBody @Valid NativePayRequestVO nativePayRequestVO) {
+        return weChatService.nativePay(nativePayRequestVO);
     }
 
     /**
      * h5支付
-     * @param h5PayRequest 参数
+     * @param h5PayRequestVO 参数
      * @return 支付链接
      */
     @PostMapping("/h5Pay")
-    public ResponseData<String> h5PayRequest(@RequestBody @Valid H5PayRequest h5PayRequest) {
-        return weChatService.h5PayRequest(h5PayRequest);
+    public ResponseData<String> h5PayRequest(@RequestBody @Valid H5PayRequestVO h5PayRequestVO) {
+        return weChatService.h5PayRequest(h5PayRequestVO);
     }
 
     /**
      * jsapi支付
-     * @param h5PayRequest 参数
+     * @param h5PayRequestVO 参数
      * @return 支付链接
      */
     @PostMapping("/jsApiPay")
-    public ResponseData<String> jsApiPayRequest(@RequestBody @Valid H5PayRequest h5PayRequest) {
-        return weChatService.h5PayRequest(h5PayRequest);
+    public ResponseData<String> jsApiPayRequest(@RequestBody @Valid H5PayRequestVO h5PayRequestVO) {
+        return weChatService.h5PayRequest(h5PayRequestVO);
     }
 
     /**

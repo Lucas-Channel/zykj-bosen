@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @date 2023/6/13
  */
 @Data
-public class H5Info implements Serializable {
+public class H5InfoVO implements Serializable {
     private static final long serialVersionUID = -8561974476821234815L;
 
     /**

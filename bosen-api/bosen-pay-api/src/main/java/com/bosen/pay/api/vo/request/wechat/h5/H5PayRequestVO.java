@@ -1,9 +1,8 @@
 package com.bosen.pay.api.vo.request.wechat.h5;
 
-import com.bosen.pay.api.vo.request.wechat.PayRequestBase;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -13,14 +12,17 @@ import java.io.Serializable;
  * @version 2.0.0
  * @date 2023/6/13
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-public class H5PayRequestBase extends PayRequestBase implements Serializable {
+public class H5PayRequestVO implements Serializable {
     private static final long serialVersionUID = -4048265855954681127L;
+
+    @NotNull(message = "基础信息不能为空")
+    private H5PayRequestBaseVO base;
+
     /**
-     * 场景信息
+     * apiv3 key
      */
-    @NotNull(message = "场景信息不能为空")
-    private H5SceneInfo scene_info;
+    @NotBlank(message = "apiKey不能为空")
+    private String apiKey;
 }
 

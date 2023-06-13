@@ -1,8 +1,8 @@
 package com.bosen.pay.service;
 
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.pay.api.vo.request.wechat.h5.H5PayRequest;
-import com.bosen.pay.api.vo.request.wechat.nativepay.NativePayRequest;
+import com.bosen.pay.api.vo.request.wechat.h5.H5PayRequestVO;
+import com.bosen.pay.api.vo.request.wechat.nativepay.NativePayRequestVO;
 import com.bosen.pay.api.vo.request.wechat.WeChatRefundRequestVO;
 import com.bosen.pay.vo.response.WeChatCallbackVO;
 
@@ -18,17 +18,17 @@ import java.util.Map;
 public interface IWeChatService {
     /**
      * native支付，用于pc端支付，用于扫码支付
-     * @param nativePayRequest 参数
+     * @param nativePayRequestVO 参数
      * @return 支付链接
      */
-    ResponseData<String> nativePay(NativePayRequest nativePayRequest);
+    ResponseData<String> nativePay(NativePayRequestVO nativePayRequestVO);
 
     /**
      * h5支付
-     * @param h5PayRequest 参数
+     * @param h5PayRequestVO 参数
      * @return 支付链接
      */
-    ResponseData<String> h5PayRequest(H5PayRequest h5PayRequest);
+    ResponseData<String> h5PayRequest(H5PayRequestVO h5PayRequestVO);
 
     /**
      * 微信支付回调通知

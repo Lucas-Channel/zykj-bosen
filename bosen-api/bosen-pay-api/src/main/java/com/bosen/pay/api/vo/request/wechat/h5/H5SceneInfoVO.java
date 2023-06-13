@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @date 2023/6/13
  */
 @Data
-public class H5SceneInfo implements Serializable {
+public class H5SceneInfoVO implements Serializable {
     private static final long serialVersionUID = -8561974476821234815L;
 
     /**
@@ -26,5 +26,5 @@ public class H5SceneInfo implements Serializable {
      * h5场景信息
      */
     @NotNull(message = "h5场景信息不能为空")
-    private H5Info h5_info;
+    private H5InfoVO h5_info;
 }

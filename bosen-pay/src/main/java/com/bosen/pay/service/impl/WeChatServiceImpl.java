@@ -9,8 +9,8 @@ import com.bosen.common.exception.BusinessException;
 import com.bosen.common.service.RedisService;
 import com.bosen.pay.api.constant.WeChatPayStatusConstant;
 import com.bosen.pay.api.constant.WeChatRefundStatusConstant;
-import com.bosen.pay.api.vo.request.wechat.h5.H5PayRequest;
-import com.bosen.pay.api.vo.request.wechat.nativepay.NativePayRequest;
+import com.bosen.pay.api.vo.request.wechat.h5.H5PayRequestVO;
+import com.bosen.pay.api.vo.request.wechat.nativepay.NativePayRequestVO;
 import com.bosen.pay.api.vo.request.wechat.WeChatRefundRequestVO;
 import com.bosen.pay.component.PayParamsConfig;
 import com.bosen.pay.constant.PayInterfaceUrlConstant;
@@ -55,20 +55,20 @@ public class WeChatServiceImpl implements IWeChatService {
 
     /**
      * native支付，用于pc端支付，用于扫码支付
-     * @param nativePayRequest 参数
+     * @param nativePayRequestVO 参数
      * @return 支付链接
      */
     @Override
-    public ResponseData<String> nativePay(NativePayRequest nativePayRequest) {
+    public ResponseData<String> nativePay(NativePayRequestVO nativePayRequestVO) {
         checkUrl();
-        Map<String, Object> map = wechatPayUtils.doPost(payParamsConfig.getWxBaseUrl() + PayInterfaceUrlConstant.WE_CHAT_NATIVE_PAY, JSON.toJSONString(nativePayRequest.getBase()), nativePayRequest.getBase().getMchid(), nativePayRequest.getApiKey());
+        Map<String, Object> map = wechatPayUtils.doPost(payParamsConfig.getWxBaseUrl() + PayInterfaceUrlConstant.WE_CHAT_NATIVE_PAY, JSON.toJSONString(nativePayRequestVO.getBase()), nativePayRequestVO.getBase().getMchid(), nativePayRequestVO.getApiKey());
         return ResponseData.success(map.get("code_url").toString());
     }
 
     @Override
-    public ResponseData<String> h5PayRequest(H5PayRequest h5PayRequest) {
+    public ResponseData<String> h5PayRequest(H5PayRequestVO h5PayRequestVO) {
         checkUrl();
-        Map<String, Object> map = wechatPayUtils.doPost(payParamsConfig.getWxBaseUrl() + PayInterfaceUrlConstant.WE_CHAT_H5_PAY, JSON.toJSONString(h5PayRequest.getBase()), h5PayRequest.getBase().getMchid(), h5PayRequest.getApiKey());
+        Map<String, Object> map = wechatPayUtils.doPost(payParamsConfig.getWxBaseUrl() + PayInterfaceUrlConstant.WE_CHAT_H5_PAY, JSON.toJSONString(h5PayRequestVO.getBase()), h5PayRequestVO.getBase().getMchid(), h5PayRequestVO.getApiKey());
         return ResponseData.success(map.get("h5_url").toString());
     }
 

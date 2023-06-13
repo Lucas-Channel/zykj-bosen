@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @date 2023/6/5
  */
 @Data
-public class PayRequestBase implements Serializable {
+public class PayRequestBaseVO implements Serializable {
 
     private static final long serialVersionUID = -7608974353298177127L;
     /**
