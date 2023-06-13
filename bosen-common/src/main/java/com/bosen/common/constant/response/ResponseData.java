@@ -34,11 +34,6 @@ public class ResponseData<T> implements Serializable {
         return new ResponseData<>(responseCode.getCode(), responseCode.getMessage(), null);
     }
 
-    public static <T> ResponseData<T> success(String msg) {
-        ResponseCode responseCode = ResponseCode.SUCCESS;
-        return new ResponseData<>(responseCode.getCode(), msg, null);
-    }
-
     public static <T> ResponseData<T> success(T data) {
         ResponseCode responseCode = ResponseCode.SUCCESS;
         return new ResponseData<>(responseCode.getCode(), responseCode.getMessage(), data);

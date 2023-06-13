@@ -9,9 +9,10 @@ import com.bosen.common.exception.BusinessException;
 import com.bosen.common.service.RedisService;
 import com.bosen.pay.api.constant.WeChatPayStatusConstant;
 import com.bosen.pay.api.constant.WeChatRefundStatusConstant;
-import com.bosen.pay.api.vo.request.wechat.h5.H5PayRequestVO;
-import com.bosen.pay.api.vo.request.wechat.nativepay.NativePayRequestVO;
 import com.bosen.pay.api.vo.request.wechat.WeChatRefundRequestVO;
+import com.bosen.pay.api.vo.request.wechat.h5.H5PayRequestVO;
+import com.bosen.pay.api.vo.request.wechat.jsapi.JsApiPayRequestVO;
+import com.bosen.pay.api.vo.request.wechat.nativepay.NativePayRequestVO;
 import com.bosen.pay.component.PayParamsConfig;
 import com.bosen.pay.constant.PayInterfaceUrlConstant;
 import com.bosen.pay.service.IWeChatService;
@@ -70,6 +71,13 @@ public class WeChatServiceImpl implements IWeChatService {
         checkUrl();
         Map<String, Object> map = wechatPayUtils.doPost(payParamsConfig.getWxBaseUrl() + PayInterfaceUrlConstant.WE_CHAT_H5_PAY, JSON.toJSONString(h5PayRequestVO.getBase()), h5PayRequestVO.getBase().getMchid(), h5PayRequestVO.getApiKey());
         return ResponseData.success(map.get("h5_url").toString());
+    }
+
+    @Override
+    public ResponseData<String> jsApiPayRequest(JsApiPayRequestVO jsApiPayRequestVO) {
+        checkUrl();
+        Map<String, Object> map = wechatPayUtils.doPost(payParamsConfig.getWxBaseUrl() + PayInterfaceUrlConstant.WE_CHAT_JSAPI_PAY, JSON.toJSONString(jsApiPayRequestVO.getBase()), jsApiPayRequestVO.getBase().getMchid(), jsApiPayRequestVO.getApiKey());
+        return ResponseData.success(map.get("prepay_id").toString());
     }
 
     @Override
