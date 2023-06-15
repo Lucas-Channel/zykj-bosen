@@ -6,5 +6,5 @@ package com.bosen.common.constant.common;
  * @date 2023/2/27
  */
 public interface DefaultPassword {
-    String DEFAULT_PASSWORD = "BS123456";
+    String DEFAULT_PASSWORD = "BS~123456";
 }
