@@ -48,7 +48,7 @@ public class AuthController {
         parameters.putIfAbsent("refresh_token",loginVO.getRefresh_token());
         parameters.putIfAbsent("username",loginVO.getUsername());
         parameters.putIfAbsent("password",loginVO.getPassword());
-        UsernamePasswordAuthenticationToken clientUser = new UsernamePasswordAuthenticationToken(new User(loginVO.getClient_id(), loginVO.getPassword(), new ArrayList<>()), null, new ArrayList<>());
+        UsernamePasswordAuthenticationToken clientUser = new UsernamePasswordAuthenticationToken(new User(loginVO.getClient_id(), loginVO.getClient_secret(), new ArrayList<>()), null, new ArrayList<>());
         OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(clientUser, parameters).getBody();
         assert oAuth2AccessToken != null;
         Oauth2TokenDto oauth2TokenDto = Oauth2TokenDto.builder()
