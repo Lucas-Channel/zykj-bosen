@@ -162,5 +162,20 @@ CREATE TABLE `bs_sys_dict_item`  (
                                   `creator_user` varchar(50) DEFAULT NULL,
                                   `del_flag` int DEFAULT 0,
                                   PRIMARY KEY (`id`) USING BTREE,
-                                  INDEX `bs_sys_dict_item_dict_id_idx`(`dict_id`) USING BTREE,
+                                  INDEX `bs_sys_dict_item_dict_id_idx`(`dict_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典管理明细';
+
+
+
+DROP TABLE IF EXISTS `bs_gateway_white_urls`;
+CREATE TABLE `bs_gateway_white_urls`  (
+                                     `id` varchar(32) NOT NULL,
+                                     `visit_url` varchar(100) NOT NULL COMMENT '访问地址',
+                                     `remark` varchar(255) NULL DEFAULT NULL COMMENT '描述',
+                                     `create_time` datetime(0) DEFAULT NULL,
+                                     `update_time` datetime(0) DEFAULT NULL,
+                                     `updater_user` varchar(50) DEFAULT NULL,
+                                     `creator_user` varchar(50) DEFAULT NULL,
+                                     `del_flag` int DEFAULT 0,
+                                     PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '白名单';
