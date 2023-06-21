@@ -19,5 +19,5 @@ public class PayParamsConfig {
      */
     private String wxBaseUrl;
 
-
+    private String alipayBaseUrl;
 }

@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
- * pc支付接口
+ * 微信支付接口
  * @author Lucas
  * @version 2.0.0
  * @date 2023/6/5
