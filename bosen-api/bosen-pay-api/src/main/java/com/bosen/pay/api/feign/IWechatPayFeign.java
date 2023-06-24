@@ -1,7 +1,7 @@
 package com.bosen.pay.api.feign;
 
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.pay.api.fallback.AliPayFeignFallback;
+import com.bosen.pay.api.fallback.WechatPayFeignFallback;
 import com.bosen.pay.api.vo.request.wechat.WeChatRefundRequestVO;
 import com.bosen.pay.api.vo.request.wechat.h5.H5PayRequestVO;
 import com.bosen.pay.api.vo.request.wechat.jsapi.JsApiPayRequestVO;
@@ -19,7 +19,7 @@ import javax.validation.Valid;
  * @version 2.0.0
  * @date 2023/6/21
  */
-@FeignClient(value = "bosen-pay", fallback = AliPayFeignFallback.class)
+@FeignClient(value = "bosen-pay", fallback = WechatPayFeignFallback.class, contextId = "wechatPayFeign")
 public interface IWechatPayFeign {
 
     /**
@@ -27,7 +27,7 @@ public interface IWechatPayFeign {
      * @param nativePayRequestVO 参数
      * @return 支付链接
      */
-    @PostMapping("/nativePay")
+    @PostMapping("/pay/wechat/nativePay")
     ResponseData<String> nativePay(@RequestBody @Valid NativePayRequestVO nativePayRequestVO);
 
     /**
@@ -35,7 +35,7 @@ public interface IWechatPayFeign {
      * @param h5PayRequestVO 参数
      * @return 支付链接
      */
-    @PostMapping("/h5Pay")
+    @PostMapping("/pay/wechat/h5Pay")
     ResponseData<String> h5PayRequest(@RequestBody @Valid H5PayRequestVO h5PayRequestVO);
 
     /**
@@ -43,7 +43,7 @@ public interface IWechatPayFeign {
      * @param jsApiPayRequestVO 参数
      * @return 支付链接
      */
-    @PostMapping("/jsApiPay")
+    @PostMapping("/pay/wechat/jsApiPay")
     ResponseData<String> jsApiPayRequest(@RequestBody @Valid JsApiPayRequestVO jsApiPayRequestVO);
 
     /**
@@ -52,7 +52,7 @@ public interface IWechatPayFeign {
      * @param outTradeNo 交易单号
      * @return true支付成功，false支付失败
      */
-    @GetMapping("/queryOrderPayStatus")
+    @GetMapping("/pay/wechat/queryOrderPayStatus")
     ResponseData<Boolean> queryOrderPayStatus(String mchId, String outTradeNo);
 
     /**
@@ -60,6 +60,6 @@ public interface IWechatPayFeign {
      * @param refundRequestVO 参数
      * @return 结果
      */
-    @PostMapping("/refund")
+    @PostMapping("/pay/wechat/refund")
     ResponseData<Void> refund(@RequestBody @Valid WeChatRefundRequestVO refundRequestVO);
 }

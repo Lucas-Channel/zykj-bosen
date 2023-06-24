@@ -15,7 +15,7 @@ import java.math.BigDecimal;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class AlipayScanCodePayRequestVO extends AlipayRequestBase implements Serializable {
+public class AlipayRequestVO extends AlipayRequestBase implements Serializable {
     private static final long serialVersionUID = -4566430059169609879L;
 
     /**

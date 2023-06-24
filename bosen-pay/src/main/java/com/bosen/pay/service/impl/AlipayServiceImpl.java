@@ -1,32 +1,31 @@
 package com.bosen.pay.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.AlipayConfig;
 import com.alipay.api.DefaultAlipayClient;
-import com.alipay.api.domain.AlipayTradeAppPayModel;
-import com.alipay.api.domain.AlipayTradePagePayModel;
-import com.alipay.api.domain.AlipayTradePrecreateModel;
-import com.alipay.api.domain.AlipayTradeWapPayModel;
-import com.alipay.api.request.AlipayTradeAppPayRequest;
-import com.alipay.api.request.AlipayTradePagePayRequest;
-import com.alipay.api.request.AlipayTradePrecreateRequest;
-import com.alipay.api.request.AlipayTradeWapPayRequest;
-import com.alipay.api.response.AlipayTradeAppPayResponse;
-import com.alipay.api.response.AlipayTradePagePayResponse;
-import com.alipay.api.response.AlipayTradePrecreateResponse;
-import com.alipay.api.response.AlipayTradeWapPayResponse;
+import com.alipay.api.domain.*;
+import com.alipay.api.internal.util.AlipaySignature;
+import com.alipay.api.request.*;
+import com.alipay.api.response.*;
 import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.exception.BusinessException;
+import com.bosen.common.util.MapDataUtil;
+import com.bosen.pay.api.vo.request.alipay.AlipayRefundRequestVO;
 import com.bosen.pay.api.vo.request.alipay.AlipayRequestBase;
-import com.bosen.pay.api.vo.request.alipay.AlipayScanCodePayRequestVO;
+import com.bosen.pay.api.vo.request.alipay.AlipayRequestVO;
 import com.bosen.pay.component.PayParamsConfig;
 import com.bosen.pay.service.IAlipayService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * 支付宝支付-接口逻辑
@@ -34,6 +33,7 @@ import javax.annotation.Resource;
  * @version 2.0.0
  * @date 2023/6/19
  */
+@Slf4j
 @Service
 public class AlipayServiceImpl implements IAlipayService {
 
@@ -41,7 +41,7 @@ public class AlipayServiceImpl implements IAlipayService {
     private PayParamsConfig payParamsConfig;
 
     @Override
-    public ResponseData<String> scanCodeToPay(AlipayScanCodePayRequestVO payRequestVO) {
+    public ResponseData<String> scanCodeToPay(AlipayRequestVO payRequestVO) {
         checkUrl();
         AlipayConfig alipayConfig = this.alipayConfigSet(payRequestVO);
         AlipayClient alipayClient;
@@ -68,7 +68,7 @@ public class AlipayServiceImpl implements IAlipayService {
     }
 
     @Override
-    public ResponseData<String> scanCodeFaceToFaceToPay(AlipayScanCodePayRequestVO payRequestVO) {
+    public ResponseData<String> scanCodeFaceToFaceToPay(AlipayRequestVO payRequestVO) {
         checkUrl();
         AlipayConfig alipayConfig = this.alipayConfigSet(payRequestVO);
         AlipayClient alipayClient;
@@ -81,7 +81,6 @@ public class AlipayServiceImpl implements IAlipayService {
             model.setSubject(payRequestVO.getSubject());
             model.setBody(payRequestVO.getBody());
             request.setBizModel(model);
-            request.setReturnUrl(payRequestVO.getReturn_url());
             request.setNotifyUrl(payRequestVO.getNotify_url());
             AlipayTradePrecreateResponse response = alipayClient.execute(request);
             if (response.isSuccess()) {
@@ -95,7 +94,7 @@ public class AlipayServiceImpl implements IAlipayService {
     }
 
     @Override
-    public ResponseData<String> appToPay(AlipayScanCodePayRequestVO payRequestVO) {
+    public ResponseData<String> appToPay(AlipayRequestVO payRequestVO) {
         checkUrl();
         AlipayConfig alipayConfig = this.alipayConfigSet(payRequestVO);
         AlipayClient alipayClient;
@@ -108,7 +107,6 @@ public class AlipayServiceImpl implements IAlipayService {
             model.setSubject(payRequestVO.getSubject());
             model.setBody(payRequestVO.getBody());
             request.setBizModel(model);
-            request.setReturnUrl(payRequestVO.getReturn_url());
             request.setNotifyUrl(payRequestVO.getNotify_url());
             AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
             if (response.isSuccess()) {
@@ -122,7 +120,7 @@ public class AlipayServiceImpl implements IAlipayService {
     }
 
     @Override
-    public ResponseData<String> mobileWebToPay(AlipayScanCodePayRequestVO payRequestVO) {
+    public ResponseData<String> mobileWebToPay(AlipayRequestVO payRequestVO) {
         checkUrl();
         AlipayConfig alipayConfig = this.alipayConfigSet(payRequestVO);
         AlipayClient alipayClient;
@@ -146,6 +144,49 @@ public class AlipayServiceImpl implements IAlipayService {
         } catch (AlipayApiException e) {
             throw new BusinessException(ResponseCode.ALIPAY_REQUEST_ERROR);
         }
+    }
+
+    @Override
+    public ResponseData<Void> refund(AlipayRefundRequestVO refundRequestVO) {
+        checkUrl();
+        AlipayConfig alipayConfig = this.alipayConfigSet(refundRequestVO);
+        AlipayClient alipayClient;
+        try {
+            alipayClient = new DefaultAlipayClient(alipayConfig);
+            AlipayTradeRefundRequest request = new AlipayTradeRefundRequest();
+            AlipayTradeRefundModel model = new AlipayTradeRefundModel();
+            model.setOutTradeNo(refundRequestVO.getOut_trade_no());
+            model.setTradeNo(refundRequestVO.getTrade_no());
+            model.setRefundAmount(refundRequestVO.getRefund_amount().toString());
+            request.setBizModel(model);
+            request.setReturnUrl(refundRequestVO.getReturn_url());
+            request.setNotifyUrl(refundRequestVO.getNotify_url());
+            AlipayTradeRefundResponse response = alipayClient.execute(request);
+            if (response.isSuccess()) {
+                return Objects.equals(response.getFundChange(), "Y") ? ResponseData.success() : ResponseData.fail();
+            } else {
+                return ResponseData.fail(ResponseCode.ALIPAY_REQUEST_ERROR);
+            }
+        } catch (AlipayApiException e) {
+            throw new BusinessException(ResponseCode.ALIPAY_REQUEST_ERROR);
+        }
+    }
+
+    @Override
+    public String payCallBack(Map<String, Object> body, HttpServletRequest request) {
+        Map<String, String> parameterMap = MapDataUtil.getParameterMap(request);
+        log.info("回调通知参数：{}", JSON.toJSONString(parameterMap));
+        String backResult = "FAILURE";
+        try {
+            boolean verify_result = AlipaySignature.rsaCheckV1(parameterMap, "公钥", "UTF-8",
+                    "RSA2");
+            if (verify_result) {
+                backResult = "SUCCESS";
+            }
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+        return backResult;
     }
 
     private void checkUrl() {

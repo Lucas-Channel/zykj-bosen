@@ -1,7 +1,8 @@
 package com.bosen.pay.controller.feign;
 
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.pay.api.vo.request.alipay.AlipayScanCodePayRequestVO;
+import com.bosen.pay.api.vo.request.alipay.AlipayRefundRequestVO;
+import com.bosen.pay.api.vo.request.alipay.AlipayRequestVO;
 import com.bosen.pay.service.IAlipayService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ public class AlipayFeignController {
      * @return form表单
      */
     @PostMapping("/scanCodeToPay")
-    public ResponseData<String> scanCodeToPay(@RequestBody @Valid AlipayScanCodePayRequestVO payRequestVO) {
+    public ResponseData<String> scanCodeToPay(@RequestBody @Valid AlipayRequestVO payRequestVO) {
         return alipayService.scanCodeToPay(payRequestVO);
     }
 
@@ -38,7 +39,7 @@ public class AlipayFeignController {
      * @return 二维码链接内容
      */
     @PostMapping("/scanCodeFaceToFaceToPay")
-    public ResponseData<String> scanCodeFaceToFaceToPay(@RequestBody @Valid AlipayScanCodePayRequestVO payRequestVO) {
+    public ResponseData<String> scanCodeFaceToFaceToPay(@RequestBody @Valid AlipayRequestVO payRequestVO) {
         return alipayService.scanCodeFaceToFaceToPay(payRequestVO);
     }
 
@@ -48,7 +49,7 @@ public class AlipayFeignController {
      * @return form表单
      */
     @PostMapping("/appToPay")
-    public ResponseData<String> appToPay(@RequestBody @Valid AlipayScanCodePayRequestVO payRequestVO) {
+    public ResponseData<String> appToPay(@RequestBody @Valid AlipayRequestVO payRequestVO) {
         return alipayService.appToPay(payRequestVO);
     }
 
@@ -57,7 +58,16 @@ public class AlipayFeignController {
      * @return form表单
      */
     @PostMapping("/mobileWebToPay")
-    public ResponseData<String> mobileWebToPay(@RequestBody @Valid AlipayScanCodePayRequestVO payRequestVO) {
+    public ResponseData<String> mobileWebToPay(@RequestBody @Valid AlipayRequestVO payRequestVO) {
         return alipayService.mobileWebToPay(payRequestVO);
+    }
+
+    /**
+     * 支付宝-统一退款
+     * @return 结果
+     */
+    @PostMapping("/refund")
+    public ResponseData<Void> refund(@RequestBody @Valid AlipayRefundRequestVO refundRequestVO) {
+        return alipayService.refund(refundRequestVO);
     }
 }

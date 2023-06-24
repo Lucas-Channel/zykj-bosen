@@ -3,7 +3,7 @@ package com.bosen.pay.api.fallback;
 import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.pay.api.feign.IAliPayFeign;
-import com.bosen.pay.api.vo.request.alipay.AlipayScanCodePayRequestVO;
+import com.bosen.pay.api.vo.request.alipay.AlipayRequestVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -17,22 +17,22 @@ import org.springframework.stereotype.Component;
 public class AliPayFeignFallback implements IAliPayFeign {
 
     @Override
-    public ResponseData<String> scanCodeToPay(AlipayScanCodePayRequestVO payRequestVO) {
+    public ResponseData<String> scanCodeToPay(AlipayRequestVO payRequestVO) {
         return ResponseData.fail(ResponseCode.WECHAT_REQUEST_ERROR);
     }
 
     @Override
-    public ResponseData<String> scanCodeFaceToFaceToPay(AlipayScanCodePayRequestVO payRequestVO) {
+    public ResponseData<String> scanCodeFaceToFaceToPay(AlipayRequestVO payRequestVO) {
         return ResponseData.fail(ResponseCode.WECHAT_REQUEST_ERROR);
     }
 
     @Override
-    public ResponseData<String> appToPay(AlipayScanCodePayRequestVO payRequestVO) {
+    public ResponseData<String> appToPay(AlipayRequestVO payRequestVO) {
         return ResponseData.fail(ResponseCode.WECHAT_REQUEST_ERROR);
     }
 
     @Override
-    public ResponseData<String> mobileWebToPay(AlipayScanCodePayRequestVO payRequestVO) {
+    public ResponseData<String> mobileWebToPay(AlipayRequestVO payRequestVO) {
         return ResponseData.fail(ResponseCode.WECHAT_REQUEST_ERROR);
     }
 }
