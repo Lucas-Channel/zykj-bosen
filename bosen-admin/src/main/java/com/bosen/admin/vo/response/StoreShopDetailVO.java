@@ -20,7 +20,7 @@ public class StoreShopDetailVO implements Serializable {
     /**
      * 店铺名称
      */
-    private String name;
+    private String storeName;
 
     /**
      * 店铺logo
