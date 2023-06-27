@@ -27,19 +27,19 @@
     </select>
 
     <select id="pageList" resultType="com.bosen.admin.vo.response.StoreShopDetailVO" parameterType="map">
-        select bss.store_id, bss.shop_id, bs.name store_name,
+        select bss.id, bss.store_id, bss.shop_id, bs.name store_name,
         bs.logo_url, bs.remark, bss.credit_score,
         bsp.name shop_name, bss.status apply_status from bs_store_shop bss
         inner join bs_store bs on bss.store_id = bs.id and bss.del_flag=0
         inner join bs_shop bsp on bsp.id = bss.shop_id and bsp.del_flag=0
         where bs.del_flag=0
-        <if test="queryVO.name != null">
+        <if test="queryVO.name != null and queryVO.name != ''">
             and bs.name like concat('%',concat(#{queryVO.name,jdbcType=VARCHAR},'%'))
         </if>
-        <if test="queryVO.status != null">
+        <if test="queryVO.status != null and queryVO.status != ''">
             and bss.status = #{queryVO.status,jdbcType=INTEGER}
         </if>
-        <if test="queryVO.shopId != null">
+        <if test="queryVO.shopId != null and queryVO.shopId != ''">
             and bss.shop_id = #{queryVO.shopId,jdbcType=VARCHAR}
         </if>
     </select>

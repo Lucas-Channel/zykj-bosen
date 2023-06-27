@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 public class StoreShopDetailVO implements Serializable {
     private static final long serialVersionUID = 7979130641535147637L;
 
+    private String id;
+
     private String storeId;
 
     /**
