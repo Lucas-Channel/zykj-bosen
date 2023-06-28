@@ -91,6 +91,6 @@ public class AuthController {
             redisTokenStore.removeRefreshToken(oAuth2RefreshToken);
             return ResponseData.success();
         }
-        return ResponseData.fail();
+        return ResponseData.fail("退出登录失败");
     }
 }
