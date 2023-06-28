@@ -11,15 +11,16 @@ import com.bosen.common.exception.BusinessException;
 import com.bosen.common.util.Aes128Util;
 import com.nimbusds.jose.JWSObject;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
+import org.springframework.util.StringUtils;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.text.ParseException;
@@ -36,6 +37,9 @@ public class AuthController {
 
     @Resource
     private TokenEndpoint tokenEndpoint;
+
+    @Resource
+    private RedisTokenStore redisTokenStore;
 
     @Resource
     private ApplicationContext applicationContext;
@@ -73,20 +77,20 @@ public class AuthController {
         return ResponseData.success(oauth2TokenDto);
     }
 
-//    @DeleteMapping("/logout")
-//    public ResponseData<Void> logout() {
-//
-//        JSONObject payload = JwtUtils.getJwtPayload();
-//        String jti = payload.getStr(AuthConstant.JWT_JTI); // JWT唯一标识
-//        Long expireTime = payload.getLong(AuthConstant.JWT_EXP); // JWT过期时间戳(单位：秒)
-//        if (expireTime != null) {
-//            long currentTime = System.currentTimeMillis() / 1000;// 当前时间（单位：秒）
-//            if (expireTime > currentTime) { // token未过期，添加至缓存作为黑名单限制访问，缓存时间为token过期剩余时间
-//                redisTemplate.opsForValue().set(AuthConstant.TOKEN_BLACKLIST_PREFIX + jti, null, (expireTime - currentTime), TimeUnit.SECONDS);
-//            }
-//        } else { // token 永不过期则永久加入黑名单
-//            redisTemplate.opsForValue().set(AuthConstant.TOKEN_BLACKLIST_PREFIX + jti, null);
-//        }
-//        return ResponseData.success();
-//    }
+    @PostMapping("/logout")
+    public ResponseData<Void> logout(@RequestHeader HttpHeaders headers) {
+        // 说明，此处拿不到Authorization 因为在白名单过滤器移除了，且白名单过滤器处代码不能注释，因为全局存在token验证
+        String authorization = headers.getFirst(AuthConstant.LOGIN_OUT_TOKEN_KEY.toLowerCase());
+        String authorizationRefresh = headers.getFirst(AuthConstant.LOGIN_OUT_REFRESH_TOKEN_KEY.toLowerCase());
+        if (StringUtils.hasLength(authorization) && StringUtils.hasLength(authorizationRefresh)) {
+            String token = authorization.replace(AuthConstant.JWT_TOKEN_PREFIX, "").trim();
+            String refreshToken = authorizationRefresh.replace(AuthConstant.LOGIN_OUT_REFRESH_TOKEN_KEY, "").trim();
+            OAuth2AccessToken oAuth2AccessToken = redisTokenStore.readAccessToken(token);
+            OAuth2RefreshToken oAuth2RefreshToken = redisTokenStore.readRefreshToken(refreshToken);
+            redisTokenStore.removeAccessToken(oAuth2AccessToken);
+            redisTokenStore.removeRefreshToken(oAuth2RefreshToken);
+            return ResponseData.success();
+        }
+        return ResponseData.fail();
+    }
 }

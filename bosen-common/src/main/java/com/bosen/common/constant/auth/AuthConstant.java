@@ -86,4 +86,8 @@ public interface AuthConstant {
      * 黑名单token前缀
      */
     String TOKEN_BLACKLIST_PREFIX = "auth:token:blacklist:";
+
+    String LOGIN_OUT_TOKEN_KEY = "token";
+
+    String LOGIN_OUT_REFRESH_TOKEN_KEY = "refresh_token";
 }
