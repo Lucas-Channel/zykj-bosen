@@ -8,6 +8,7 @@ import com.bosen.common.constant.auth.AuthConstant;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.domain.UserDto;
 import com.bosen.common.exception.BusinessException;
+import com.bosen.common.util.Aes128Util;
 import com.nimbusds.jose.JWSObject;
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -47,7 +48,11 @@ public class AuthController {
         parameters.put("client_secret",loginVO.getClient_secret());
         parameters.putIfAbsent("refresh_token",loginVO.getRefresh_token());
         parameters.putIfAbsent("username",loginVO.getUsername());
-        parameters.putIfAbsent("password",loginVO.getPassword());
+        try {
+            parameters.putIfAbsent("password", Aes128Util.aesDecrypt(loginVO.getPassword()));
+        } catch (Exception e) {
+            throw new BusinessException("密码格式不对");
+        }
         UsernamePasswordAuthenticationToken clientUser = new UsernamePasswordAuthenticationToken(new User(loginVO.getClient_id(), loginVO.getClient_secret(), new ArrayList<>()), null, new ArrayList<>());
         OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(clientUser, parameters).getBody();
         assert oAuth2AccessToken != null;
