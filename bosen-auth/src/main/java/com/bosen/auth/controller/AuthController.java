@@ -55,7 +55,7 @@ public class AuthController {
         try {
             parameters.putIfAbsent("password", Aes128Util.aesDecrypt(loginVO.getPassword()));
         } catch (Exception e) {
-            throw new BusinessException("密码格式不对");
+            throw new BusinessException("密码错误");
         }
         UsernamePasswordAuthenticationToken clientUser = new UsernamePasswordAuthenticationToken(new User(loginVO.getClient_id(), loginVO.getClient_secret(), new ArrayList<>()), null, new ArrayList<>());
         OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(clientUser, parameters).getBody();
