@@ -28,9 +28,7 @@ public class DroolsConditionColController {
 
     /**
      * 分页查询所有数据
-     *
-     * @param page 分页对象
-     * @param bsDroolsCol 查询实体
+     * @param pageVO 分页对象
      * @return 所有数据
      */
     @GetMapping("/pageList")
@@ -66,8 +64,8 @@ public class DroolsConditionColController {
      * @param idList 主键结合
      * @return 删除结果
      */
-    @DeleteMapping("/deleteByIds")
-    public ResponseData<Void> deleteByIds(@RequestParam("idList") List<String> idList) {
+    @PostMapping("/deleteByIds")
+    public ResponseData<Void> deleteByIds(@RequestBody List<String> idList) {
         return ResponseData.judge(this.bsDroolsColService.removeByIds(idList));
     }
 }

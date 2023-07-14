@@ -75,6 +75,9 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
+    @Resource
+    private IBsSkuInventoryService bsSkuInventoryService;
+
     @Override
     public ResponseData<PageData<ProductDetailVO>> listPages(ProductQueryVO queryVO) {
         Page<ProductDetailVO> page = new Page<>(queryVO.getCurrent(), queryVO.getSize());
@@ -326,12 +329,13 @@ public class ProductServiceImpl extends ServiceImpl<ProductMapper, ProductDO> im
     }
 
     private void setStockToRedis(List<ProductSkuDO> skuList) {
-        Map<String, Map<String, BigDecimal>> map = new HashMap<>();
-        skuList.forEach(i -> {
-            HashMap<String, BigDecimal> hashMap = new HashMap<>();
-            hashMap.put("stockNum", i.getStockNum());
-            hashMap.put("lockedStockNum", i.getLockedStockNum());
-            map.put(i.getId(), hashMap);
+        // 查询sku的库存数据
+        List<BsSkuInventoryDO> list = bsSkuInventoryService.listBySkuId(skuList.stream().map(ProductSkuDO::getId).collect(Collectors.toList()));
+        Map<String, List<BsSkuInventoryDO>> map = new HashMap<>();
+        Map<String, List<BsSkuInventoryDO>> collect = list.stream().collect(Collectors.groupingBy(BsSkuInventoryDO::getSkuId));
+        collect.forEach((k, v) -> {
+            List<BsSkuInventoryDO> data = v.stream().sorted(Comparator.comparing(BsSkuInventoryDO::getAllotEffectiveEnd)).collect(Collectors.toList());
+            map.put(k, data);
         });
         redisTemplate.opsForHash().putAll(RedisKeyConstant.PRODUCT_SKU_STOCK_INFO_KEY, map);
     }

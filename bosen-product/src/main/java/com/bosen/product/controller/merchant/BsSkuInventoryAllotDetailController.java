@@ -1,30 +1,30 @@
-package com.bosen.drools.controller;
+package com.bosen.product.controller.merchant;
 
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.domain.PageVO;
-import com.bosen.drools.domain.DroolsActionColDO;
-import com.bosen.drools.service.IDroolsActionColService;
+import com.bosen.product.domain.BsSkuInventoryAllotDetailDO;
+import com.bosen.product.service.IBsSkuInventoryAllotDetailService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 规则结果列表(BsDroolsResultCol)表控制层
+ * 仓位库存调拨明细(BsSkuInventoryAllotDetail)表控制层
  *
  * @author Lucas
- * @since 2023-05-15 14:10:48
+ * @since 2023-07-14 10:08:18
  */
 @RestController
-@RequestMapping("/drools/result/col")
-public class DroolsActionColController {
+@RequestMapping("bsSkuInventoryAllotDetail")
+public class BsSkuInventoryAllotDetailController {
     /**
      * 服务对象
      */
     @Resource
-    private IDroolsActionColService bsDroolsResultColService;
+    private IBsSkuInventoryAllotDetailService bsSkuInventoryAllotDetailService;
 
     /**
      * 分页查询所有数据
@@ -33,7 +33,7 @@ public class DroolsActionColController {
      * @return 所有数据
      */
     @GetMapping("/pageList")
-    public ResponseData<PageData<DroolsActionColDO>> pageList(PageVO pageVO) {
+    public ResponseData<PageData<BsSkuInventoryAllotDetailDO>> pageList(PageVO pageVO) {
         return ResponseData.success();
     }
 
@@ -44,18 +44,18 @@ public class DroolsActionColController {
      * @return 单条数据
      */
     @GetMapping("/detail/{id}")
-    public ResponseData<DroolsActionColDO> selectOne(@PathVariable("id") String id) {
-        return ResponseData.success(this.bsDroolsResultColService.getById(id));
+    public ResponseData<BsSkuInventoryAllotDetailDO> selectOne(@PathVariable("id") String id) {
+        return ResponseData.success(this.bsSkuInventoryAllotDetailService.getById(id));
     }
 
     /**
      * 新增/修改数据
      *
-     * @param bsDroolsResultCol 实体对象
+     * @param bsSkuInventoryAllotDetailDO 实体对象
      * @return 新增结果
      */
     @PostMapping("upsert")
-    public ResponseData<Void> upsert(@RequestBody DroolsActionColDO bsDroolsResultCol) {
+    public ResponseData<Void> upsert(@RequestBody BsSkuInventoryAllotDetailDO bsSkuInventoryAllotDetailDO) {
         return ResponseData.success();
     }
 
@@ -67,7 +67,7 @@ public class DroolsActionColController {
      */
     @PostMapping("/deleteByIds")
     public ResponseData<Void> deleteByIds(@RequestBody List<String> idList) {
-        return ResponseData.judge(this.bsDroolsResultColService.removeByIds(idList));
+        return ResponseData.judge(this.bsSkuInventoryAllotDetailService.removeByIds(idList));
     }
 }
 

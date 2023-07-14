@@ -70,6 +70,7 @@
         <xxl-job-core.version>2.3.0</xxl-job-core.version>
         <logstash-logback.version>5.3</logstash-logback.version>
         <commons-collections.version>3.2.1</commons-collections.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
     </properties>
 
     <dependencies>
@@ -270,6 +271,11 @@
                 <groupId>com.bosen.product.api</groupId>
                 <artifactId>bosen-product-api</artifactId>
                 <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

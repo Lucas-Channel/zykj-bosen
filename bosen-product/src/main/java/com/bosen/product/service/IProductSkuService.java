@@ -13,7 +13,7 @@ import com.bosen.product.vo.response.ProductSkuDetailVO;
 import java.util.List;
 
 public interface IProductSkuService extends IService<ProductSkuDO> {
-    ResponseData<Void> addSkuStock(List<ProductSkuUpsertVO> skuUpsertVOList);
+    ResponseData<Void> addSku(List<ProductSkuUpsertVO> skuUpsertVOList);
 
     ResponseData<PageData<ProductSkuDetailVO>> pageList(ProductSkuQueryVO queryVO);
 
@@ -21,5 +21,5 @@ public interface IProductSkuService extends IService<ProductSkuDO> {
 
     ResponseData<Void> setMemberPrice(List<ProductSkuMemberPriceDO> prices, String skuId);
 
-    ResponseData<Void> updateStock(ProductSkuUpsertVO productSkuUpsertVO);
+    ResponseData<Void> updateSKu(ProductSkuUpsertVO productSkuUpsertVO);
 }

@@ -37,7 +37,7 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
 
     @Override
     @Transactional(rollbackFor = BusinessException.class)
-    public ResponseData<Void> addSkuStock(List<ProductSkuUpsertVO> skuUpsertVOList) {
+    public ResponseData<Void> addSku(List<ProductSkuUpsertVO> skuUpsertVOList) {
         List<ProductSkuDO> skuDOS = skuUpsertVOList.stream().map(i -> {
             ProductSkuDO skuDO = new ProductSkuDO();
             BeanUtils.copyProperties(i, skuDO);
@@ -76,7 +76,7 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
 
     @Override
     @Transactional(rollbackFor = BusinessException.class)
-    public ResponseData<Void> updateStock(ProductSkuUpsertVO productSkuUpsertVO) {
+    public ResponseData<Void> updateSKu(ProductSkuUpsertVO productSkuUpsertVO) {
         ProductSkuDO skuDO = this.getById(productSkuUpsertVO.getId());
         if (Objects.isNull(skuDO)) {
             throw new BusinessException(ResponseCode.SKU_NOT_EXIT_ERROR);
@@ -89,7 +89,12 @@ public class ProductSkuServiceImpl extends ServiceImpl<ProductSkuMapper, Product
         if (Objects.equals(productDO.getStatus(), ProductApproveStatusEnum.UP.getCode())) {
             throw new BusinessException(ResponseCode.SKU_HAS_RACKING_ERROR);
         }
-        boolean update = this.lambdaUpdate().set(ProductSkuDO::getStockNum, productSkuUpsertVO.getStockNum())
+        boolean update = this.lambdaUpdate()
+                .set(ProductSkuDO::getAlbum, productSkuUpsertVO.getAlbum())
+                .set(ProductSkuDO::getSkuImg, productSkuUpsertVO.getSkuImg())
+                .set(ProductSkuDO::getName, productSkuUpsertVO.getName())
+                .set(ProductSkuDO::getStockInventoryWarning, productSkuUpsertVO.getStockInventoryWarning())
+                .set(ProductSkuDO::getMinOrder, productSkuUpsertVO.getMinOrder())
                 .eq(ProductSkuDO::getId, productSkuUpsertVO.getId())
                 .eq(ProductSkuDO::getMerchantId, null)
                 .eq(ProductSkuDO::getMerchantRoleId, null)

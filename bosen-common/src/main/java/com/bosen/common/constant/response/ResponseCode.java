@@ -134,6 +134,10 @@ public enum ResponseCode {
     THIRD_URL_NOT_EXIT_ERROR(1247, "第三方访问域名地址未配置"),
 
     ALIPAY_REQUEST_ERROR(1248, "发起支付宝请求失败"),
+
+    ALLOT_CANNOT_EDIT_ERROR(1249, "当前调拨单无法修改"),
+
+    ALLOT_NOT_EXIT_ERROR(1250, "调拨单不存在"),
     ;
 
 

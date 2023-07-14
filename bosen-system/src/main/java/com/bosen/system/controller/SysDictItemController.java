@@ -50,8 +50,8 @@ public class SysDictItemController {
      * 删除数据
      * @return 删除结果
      */
-    @DeleteMapping("/deleteByIds")
-    public ResponseData<Void> deleteByIds(@RequestParam("idList") List<String> idList) {
+    @PostMapping("/deleteByIds")
+    public ResponseData<Void> deleteByIds(@RequestBody List<String> idList) {
         return ResponseData.judge(this.sysDictItemService.removeByIds(idList));
     }
 }

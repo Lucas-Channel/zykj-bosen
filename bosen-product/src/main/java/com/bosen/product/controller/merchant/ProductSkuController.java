@@ -28,18 +28,18 @@ public class ProductSkuController {
      * 更新商品库存
      * @return 结果
      */
-    @PostMapping("/updateStock")
-    public ResponseData<Void> updateStock(@RequestBody ProductSkuUpsertVO productSkuUpsertVO) {
-        return skuService.updateStock(productSkuUpsertVO);
+    @PostMapping("/updateSKu")
+    public ResponseData<Void> updateSKu(@RequestBody ProductSkuUpsertVO productSkuUpsertVO) {
+        return skuService.updateSKu(productSkuUpsertVO);
     }
 
     /**
      * 创建商品库存
      * @return 结果
      */
-    @PostMapping("/addSkuStock")
-    public ResponseData<Void> addSkuStock(@RequestBody List<ProductSkuUpsertVO> skuUpsertVOList) {
-        return skuService.addSkuStock(skuUpsertVOList);
+    @PostMapping("/addSku")
+    public ResponseData<Void> addSku(@RequestBody List<ProductSkuUpsertVO> skuUpsertVOList) {
+        return skuService.addSku(skuUpsertVOList);
     }
 
     /**
@@ -54,8 +54,7 @@ public class ProductSkuController {
 
     /**
      * 设置批发价格
-     * @param prices 价格范围
-     * @param skuId sku
+     * @param updateVO 参数
      * @return 结果
      */
     @PostMapping("/setWholesalePrice")
@@ -65,8 +64,7 @@ public class ProductSkuController {
 
     /**
      * 设置会员价格
-     * @param prices 价格范围
-     * @param skuId sku
+     * @param updateVO 参数
      * @return 结果
      */
     @PostMapping("/setMemberPrice")

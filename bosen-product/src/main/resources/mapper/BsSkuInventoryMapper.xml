@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bosen.product.mapper.BsSkuInventoryMapper">
+    <select id="pageList" parameterType="map" resultType="com.bosen.product.vo.response.SkuInventoryDetailVO">
+        select
+            sbi.id,
+            sbi.sku_id,
+            bps.name sku_name,
+            sbi.stock_num,
+            sbi.locked_stock_num,
+            sbi.lot_number,
+            sbi.freight_space_id,
+            bfs.name freight_space_name,
+            sbi.allot_effective_start,
+            sbi.allot_effective_end,
+            sbi.remark
+        from
+            bs_sku_inventory sbi
+        inner join bs_product_sku bps on
+                sbi.sku_id = bps.id
+            and bps.del_flag = 0
+        left join bs_freight_space bfs on
+                bfs.del_flag = 0
+            and bfs.id = sbi.freight_space_id
+        where
+            sbi.del_flag = 0
+        <if test='queryParams.skuName != null and queryParams.skuName.trim() neq ""'>
+            and bps.name like concat('%',#{queryParams.skuName},'%')
+        </if>
+        <if test='queryParams.lotNumber != null and queryParams.lotNumber.trim() neq ""'>
+            and sbi.lot_number like concat('%',#{queryParams.lotNumber},'%')
+        </if>
+        order by sbi.sku_id, sbi.create_time desc
+    </select>
+</mapper>
+

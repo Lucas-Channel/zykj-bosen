@@ -76,6 +76,21 @@ public class DateTimeUtil {
     }
 
     /**
+     * 格式化LocalDateTime, 返回格式为yyyy-MM-dd HH:mm:ss
+     * @param localDateTime 时间
+     */
+    public static String formatLocalDateTimeToString(LocalDateTime localDateTime, String format) {
+        if (localDateTime == null) {
+            return null;
+        }
+        if (format.isEmpty()) {
+            format = "yyyy-MM-dd HH:mm:ss";
+        }
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(format);
+        return localDateTime.format(dtf);
+    }
+
+    /**
      * 格式化LocalDateTime, 返回格式为yyyy-MM-dd HH:mm
      * @param dateTime 时间
      * @return 传入空值, 则返回空字符串
@@ -228,8 +243,8 @@ public class DateTimeUtil {
     /**
      * 获得目标时间戳中（时分秒）与当前时间（时分秒）的秒差
      * endTime=xxxx-xx-xx 16:00:00 ,假设当前时间：xxxx-xx-xx 15:00:00,返回1*60*60=3600秒
-     * @param endTime
-     * @return
+     * @param endTime 日期
+     * @return 结果
      */
     public static int offsetNowSecond(Long endTime) {
         Calendar instance = Calendar.getInstance();
@@ -241,9 +256,9 @@ public class DateTimeUtil {
 
     /**
      * 判断当前时间的时分秒，是否在指定时段的时分秒之间，
-     * @param startTime
-     * @param endTime
-     * @return
+     * @param startTime 开始日期
+     * @param endTime 结束日期
+     * @return 结果
      */
     public static boolean isBelongPeriodOfNow(Long startTime,Long endTime){
         int nowSec=DateTimeUtil.getNowSecOfHHmmss();

@@ -87,8 +87,6 @@ CREATE TABLE `bs_product_sku`  (
                                    `origin_price` decimal(11,2) NOT NULL COMMENT '原价',
                                    `sales_price` decimal(11,2) NOT NULL COMMENT '销售价',
                                    `vip_price` decimal(11,2) NULL DEFAULT NULL COMMENT 'vip商品价格',
-                                   `stock_num` decimal(11,2) NULL DEFAULT 0 COMMENT '库存数量',
-                                   `locked_stock_num` decimal(11,2) NULL DEFAULT 0 COMMENT '锁定库存数量',
                                    `sku_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品sku主图图片地址',
                                    `album` json NULL COMMENT '商品图册',
                                    `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
@@ -98,18 +96,14 @@ CREATE TABLE `bs_product_sku`  (
                                    `del_flag` int DEFAULT 0,
                                    `wholesale_price` json NULL COMMENT '批发价格',
                                    `member_price` json NULL COMMENT '指定会员销售价格',
-                                   `lot_number` varchar(50) NULL COMMENT '入库批次',
                                    `bar_code` varchar(100) NULL COMMENT '条形码/二维码',
                                    `sales_count` decimal(11,2) NULL COMMENT '销量',
                                    `auto_splice_spec_for_name` int NULL COMMENT '是否自动拼接规格值作为skuName',
                                    `stock_inventory_warning` decimal(11,2) NULL COMMENT '库存预警数量',
                                    `calculate_inventory` int NULL COMMENT '是否计算库存',
-                                   `validity_start_time` datetime NULL DEFAULT NULL COMMENT '有效期开始时间',
-                                   `validity_end_time` datetime NULL DEFAULT NULL COMMENT '有效期结束时间',
                                    `unit_score` decimal(11,2) DEFAULT NULL COMMENT '单位积分',
                                    `min_order` decimal(11,2) DEFAULT NULL COMMENT '最小起订',
                                    `weight` decimal(11,2) DEFAULT NULL COMMENT '重量',
-                                   `freight_space_id` varchar(32) NULL COMMENT '仓位id',
                                    `sell_out` int NULL COMMENT '是否售罄',
                                    `merchant_id` varchar(32) not null COMMENT '商家id',
                                    `merchant_role_id` varchar(32) not NULL COMMENT '商家角色id',
@@ -267,7 +261,7 @@ CREATE TABLE `bs_product_package_detail`  (
                                `creator_user` varchar(50) DEFAULT NULL,
                                `del_flag` int DEFAULT 0,
                                PRIMARY KEY (`id`) USING BTREE,
-                               INDEX `fk_product_package_detail`(`product_id`) USING BTREE,
+                               INDEX `fk_product_package_detail`(`product_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品包明细表';
 
 
@@ -357,3 +351,84 @@ CREATE TABLE `bs_product_store_shop`  (
                                      `del_flag` int DEFAULT 0,
                                      PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '商品上架关联商城和店铺中间表';
+
+DROP TABLE IF EXISTS `bs_sku_inventory`;
+CREATE TABLE `bs_sku_inventory` (
+                                    `id` varchar(32) NOT NULL,
+                                    `sku_id` varchar(32) not NULL COMMENT 'skuId',
+                                    `stock_num` decimal(11,2) NULL DEFAULT 0 COMMENT '库存数量',
+                                    `locked_stock_num` decimal(11,2) NULL DEFAULT 0 COMMENT '锁定库存数量',
+                                    `lot_number` varchar(50) NULL COMMENT '入库批次',
+                                    `freight_space_id` varchar(32) default NULL COMMENT '仓位id',
+                                    `allot_effective_start` datetime(0) default null comment '有效日期起',
+                                    `allot_effective_end` datetime(0) default null comment '有效日期止',
+                                    `remark` varchar(600) default NULL COMMENT '备注',
+                                    `creator_user` varchar(50) DEFAULT NULL,
+                                    `create_time` datetime(0) DEFAULT NULL,
+                                    `updater_user` varchar(50) DEFAULT NULL,
+                                    `update_time` datetime(0) DEFAULT NULL,
+                                    `del_flag` int DEFAULT 0,
+                                    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='商品SKU库存';
+
+DROP TABLE IF EXISTS `bs_sku_inventory_allot`;
+CREATE TABLE `bs_sku_inventory_allot` (
+                                          `id` varchar(32) NOT NULL,
+                                          `allot_no` varchar(60) not NULL COMMENT '调拨单号',
+                                          `allot_time` datetime(0) not null comment '调拨时间',
+                                          `allot_type` int DEFAULT NULL comment '调拨类型',
+                                          `status` int DEFAULT NULL comment '调拨单状态',
+                                          `allot_quantity` decimal(15, 2) not NULL COMMENT '调拨总量',
+                                          `allot_amount` decimal(15, 2) not NULL COMMENT '调拨费用',
+                                          `allot_remark` varchar(600) default NULL COMMENT '调拨说明',
+                                          `allot_file` varchar(300) not NULL COMMENT '附件地址，逗号拼接',
+                                          `merchant_id` varchar(64) not null COMMENT '商家id',
+                                          `merchant_role_id` varchar(64) not NULL COMMENT '商家角色id',
+                                          `merchant_name` varchar(70) not NULL COMMENT '商家名称',
+                                          `creator_user` varchar(50) DEFAULT NULL,
+                                          `create_time` datetime(0) DEFAULT NULL,
+                                          `updater_user` varchar(50) DEFAULT NULL,
+                                          `update_time` datetime(0) DEFAULT NULL,
+                                          `del_flag` int DEFAULT 0,
+                                          PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='仓位库存调拨';
+
+DROP TABLE IF EXISTS `bs_sku_inventory_allot_detail`;
+CREATE TABLE `bs_sku_inventory_allot_detail` (
+                                                 `id` varchar(32) NOT NULL,
+                                                 `allot_id` varchar(32) not NULL COMMENT '调拨单id',
+                                                 `out_freight_space_id` varchar(32) not null COMMENT '调出仓位id',
+                                                 `in_freight_space_id` varchar(32) not NULL COMMENT '调入仓位id',
+                                                 `sku_id` varchar(32) not null comment '商品skuId',
+                                                 `amount` decimal(15, 2) not null comment '费用价',
+                                                 `quantity` decimal(15, 2) not null comment '数量',
+                                                 `lot_number` varchar(50) NULL COMMENT '入库批次',
+                                                 `remark` varchar(600) default NULL COMMENT '说明',
+                                                 `creator_user` varchar(50) DEFAULT NULL,
+                                                 `create_time` datetime(0) DEFAULT NULL,
+                                                 `updater_user` varchar(50) DEFAULT NULL,
+                                                 `update_time` datetime(0) DEFAULT NULL,
+                                                 `del_flag` int DEFAULT 0,
+                                                 PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='仓位库存调拨明细';
+
+
+-- ----------------------------
+-- Table structure for bs_sku_inventory_allot_approve_record
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_sku_inventory_allot_approve_record`;
+CREATE TABLE `bs_sku_inventory_allot_approve_record`  (
+                                                          `id` varchar(32) NOT NULL COMMENT '主键',
+                                                          `allot_id` varchar(32) NOT NULL COMMENT '调拨单id',
+                                                          `status` int NULL DEFAULT NULL COMMENT '状态',
+                                                          `operation_user_id` varchar(32) NOT NULL COMMENT '操作用户id',
+                                                          `operation_user_role_id` varchar(32) NOT NULL COMMENT '操作用户角色id',
+                                                          `operation_user_name` varchar(32) NULL COMMENT '操作用户名称',
+                                                          `agree_advice` varchar(200) NULL DEFAULT NULL COMMENT '审核意见',
+                                                          `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                                          `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                                          `updater_user` varchar(50) DEFAULT NULL,
+                                                          `creator_user` varchar(50) DEFAULT NULL,
+                                                          `del_flag` int DEFAULT 0,
+                                                          PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COMMENT = '调拨单审核记录';

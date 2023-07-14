@@ -10,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -74,17 +73,6 @@ public class ProductSkuUpsertVO implements Serializable {
     private BigDecimal vipPrice;
 
     /**
-     * 库存数量
-     */
-    @NotNull(message = "库存不能为空")
-    private BigDecimal stockNum;
-
-    /**
-     * 锁定库存数量
-     */
-    private BigDecimal lockedStockNum = BigDecimal.ZERO;
-
-    /**
      * 商品主图-图片地址
      */
     private String skuImg;
@@ -93,11 +81,6 @@ public class ProductSkuUpsertVO implements Serializable {
      * 商品sku轮播图
      */
     private String[] album;
-
-    /**
-     * 入库批次
-     */
-    private String lotNumber;
 
     /**
      * 批发价格，可能存在返回性价格
@@ -140,16 +123,6 @@ public class ProductSkuUpsertVO implements Serializable {
     private Integer calculateInventory;
 
     /**
-     * 有效期开始时间
-     */
-    private LocalDateTime validityStartTime;
-
-    /**
-     * 有效期结束时间
-     */
-    private LocalDateTime validityEndTime;
-
-    /**
      * 单位积分
      */
     private BigDecimal unitScore;
@@ -165,12 +138,6 @@ public class ProductSkuUpsertVO implements Serializable {
      */
     @NotNull(message = "重量不能为空")
     private BigDecimal weight;
-
-    /**
-     * 仓位
-     */
-    @NotBlank(message = "仓位id不能为空")
-    private String freightSpaceId;
 
     /**
      * 是否售罄

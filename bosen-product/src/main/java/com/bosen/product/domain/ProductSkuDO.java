@@ -6,15 +6,16 @@ import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.bosen.common.domain.BaseEntityData;
 import com.bosen.product.constant.ProductApproveStatusEnum;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * 特别说明：sku的价格是统一零售价格，如果存在指定会员价格或者批量价格，取其他表
  * 商品sku
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName(value = "bs_product_sku", autoResultMap = true)
 public class ProductSkuDO extends BaseEntityData {
@@ -64,16 +65,6 @@ public class ProductSkuDO extends BaseEntityData {
     private BigDecimal vipPrice;
 
     /**
-     * 库存数量
-     */
-    private BigDecimal stockNum;
-
-    /**
-     * 锁定库存数量
-     */
-    private BigDecimal lockedStockNum;
-
-    /**
      * 商品主图-图片地址
      */
     private String skuImg;
@@ -83,11 +74,6 @@ public class ProductSkuDO extends BaseEntityData {
      */
     @TableField(typeHandler = JacksonTypeHandler.class)
     private String[] album;
-
-    /**
-     * 入库批次
-     */
-    private String lotNumber;
 
     /**
      * 批发价格，可能存在返回性价格
@@ -127,16 +113,6 @@ public class ProductSkuDO extends BaseEntityData {
     private Integer calculateInventory;
 
     /**
-     * 有效期开始时间
-     */
-    private LocalDateTime validityStartTime;
-
-    /**
-     * 有效期结束时间
-     */
-    private LocalDateTime validityEndTime;
-
-    /**
      * 单位积分
      */
     private BigDecimal unitScore;
@@ -150,11 +126,6 @@ public class ProductSkuDO extends BaseEntityData {
      * 重量
      */
     private BigDecimal weight;
-
-    /**
-     * 仓位id
-     */
-    private String freightSpaceId;
 
     /**
      * 是否售罄

@@ -179,3 +179,20 @@ CREATE TABLE `bs_gateway_white_urls`  (
                                      `del_flag` int DEFAULT 0,
                                      PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '白名单';
+
+DROP TABLE IF EXISTS `bs_user_quick_menu`;
+CREATE TABLE `bs_user_quick_menu` (
+                                      `id` varchar(32) NOT NULL,
+                                      `user_id` varchar(32) not null COMMENT '用户id',
+                                      `role_id` varchar(32) not NULL COMMENT '角色id',
+                                      `menu_name` varchar(60) not null comment '菜单名称',
+                                      `icon` varchar(60) not NULL COMMENT '图标',
+                                      `icon_color` varchar(60) not NULL COMMENT '图标颜色',
+                                      `front_router_url` varchar(60) not NULL COMMENT '前端路由地址',
+                                      `creator_user` varchar(50) DEFAULT NULL,
+                                      `create_time` datetime(0) DEFAULT NULL,
+                                      `updater_user` varchar(50) DEFAULT NULL,
+                                      `update_time` datetime(0) DEFAULT NULL,
+                                      `del_flag` int DEFAULT 0,
+                                      PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户快捷操作菜单表';
