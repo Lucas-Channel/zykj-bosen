@@ -26,6 +26,11 @@ spring:
             - Path=/bosen-auth/**
           filters:
             - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@pathKeyResolver}"
+                redis-rate-limiter.replenishRate: 1  #令牌桶每秒填充平均速率
+                redis-rate-limiter.burstCapacity: 10  #令牌桶总容量
         - id: bosen-admin
           uri: lb://bosen-admin
           predicates:
