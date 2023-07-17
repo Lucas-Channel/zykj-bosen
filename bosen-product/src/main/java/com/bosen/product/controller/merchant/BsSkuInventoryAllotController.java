@@ -77,7 +77,7 @@ public class BsSkuInventoryAllotController {
      * @return 结果
      */
     @PostMapping("/approve")
-    public ResponseData<Void> approveProduct(@RequestBody @Valid ApproveInfoVO approveInfoVO) {
+    public ResponseData<Void> approveSkuInventoryAllot(@RequestBody @Valid ApproveInfoVO approveInfoVO) {
         return null;
     }
 }

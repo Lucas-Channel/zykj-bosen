@@ -432,3 +432,26 @@ CREATE TABLE `bs_sku_inventory_allot_approve_record`  (
                                                           `del_flag` int DEFAULT 0,
                                                           PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COMMENT = '调拨单审核记录';
+
+
+-- ----------------------------
+-- Table structure for bs_sku_inventory_transaction
+-- ----------------------------
+DROP TABLE IF EXISTS `bs_sku_inventory_transaction`;
+CREATE TABLE `bs_sku_inventory_transaction`  (
+                                                 `id` varchar(32) NOT NULL COMMENT '主键',
+                                                 `sku_id` varchar(32) NOT NULL COMMENT 'skuId',
+                                                 `sku_name` varchar(100) NOT NULL COMMENT 'sku名称',
+                                                 `freight_space_id` varchar(32) NOT NULL COMMENT '仓位id',
+                                                 `lot_number` varchar(32) NOT NULL COMMENT '批次号',
+                                                 `transaction_source_key` varchar(32) NOT NULL COMMENT '事务处理来源键值,记录来源表主键值.',
+                                                 `transaction_type` int NOT NULL COMMENT '事务处理类型',
+                                                 `quantity` decimal(15, 2) not null comment '数量',
+                                                 `remark` varchar(500) DEFAULT NULL COMMENT '说明',
+                                                 `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                                 `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                                 `updater_user` varchar(50) DEFAULT NULL,
+                                                 `creator_user` varchar(50) DEFAULT NULL,
+                                                 `del_flag` int DEFAULT 0,
+                                                 PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COMMENT = 'sku库存事务流水';
