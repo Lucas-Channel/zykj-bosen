@@ -27,6 +27,7 @@
         <module>xxl-job-admin</module>
         <module>bosen-drools-engine</module>
         <module>bosen-api</module>
+        <module>bosen-workflow</module>
     </modules>
 
     <parent>
