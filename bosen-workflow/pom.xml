@@ -39,27 +39,19 @@
             <artifactId>feign-okhttp</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.activiti</groupId>
-            <artifactId>activiti-spring-boot-starter</artifactId>
-            <version>7.1.0.M6</version>
-            <exclusions>
-                <exclusion><!-- 排除activiti的mybatis，避免和外面的mybatis-plus冲突 -->
-                    <artifactId>mybatis</artifactId>
-                    <groupId>org.mybatis</groupId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter</artifactId>
+            <version>7.19.0</version>
         </dependency>
         <dependency>
-            <groupId>org.activiti.dependencies</groupId>
-            <artifactId>activiti-dependencies</artifactId>
-            <version>7.1.0.M6</version>
-            <type>pom</type>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter-rest</artifactId>
+            <version>7.19.0</version>
         </dependency>
-        <!-- 生成流程图 -->
         <dependency>
-            <groupId>org.activiti</groupId>
-            <artifactId>activiti-image-generator</artifactId>
-            <version>7.1.0.M6</version>
+            <groupId>org.camunda.bpm.springboot</groupId>
+            <artifactId>camunda-bpm-spring-boot-starter-webapp</artifactId>
+            <version>7.19.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

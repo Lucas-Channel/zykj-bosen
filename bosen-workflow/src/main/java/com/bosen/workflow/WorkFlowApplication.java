@@ -1,5 +1,6 @@
 package com.bosen.workflow;
 
+import org.camunda.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,9 +14,9 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {"com.bosen.**"})
 @MapperScan("com.bosen.workflow.mapper.**")
 @EnableFeignClients(basePackages = "com.bosen.**.api")
+@EnableProcessApplication("workflow-service")
 @EnableDiscoveryClient
-@SpringBootApplication(exclude = {org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class,
-        org.springframework.boot.actuate.autoconfigure.security.servlet.ManagementWebSecurityAutoConfiguration.class})
+@SpringBootApplication
 public class WorkFlowApplication {
     public static void main(String[] args) {
         SpringApplication.run(WorkFlowApplication.class, args);
