@@ -29,6 +29,7 @@ CREATE TABLE `bs_user_info` (
 DROP TABLE IF EXISTS `bs_role`;
 CREATE TABLE `bs_role` (
     `id` varchar(32) NOT NULL COMMENT 'ID',
+    `code` varchar(100) DEFAULT NULL COMMENT '角色编码',
     `name` varchar(200) DEFAULT NULL COMMENT '角色名称',
     `description` varchar(400) DEFAULT NULL COMMENT '角色描述补充信息',
     `status` int DEFAULT 1 COMMENT '0-未启用，1-启用',
@@ -51,6 +52,8 @@ CREATE TABLE `bs_user_role` (
     `id` varchar(32) NOT NULL COMMENT 'ID',
     `user_id` varchar(32) DEFAULT NULL COMMENT '用户ID,关联bs_user_account.id',
     `role_id` varchar(32) DEFAULT NULL COMMENT '角色ID,关联bs_role.id',
+    'client' varchar(16) DEFAULT NULL COMMENT '客户端',
+    'default_role' int DEFAULT 0 COMMENT '默认角色：0->否；1->是',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色关联表';
 

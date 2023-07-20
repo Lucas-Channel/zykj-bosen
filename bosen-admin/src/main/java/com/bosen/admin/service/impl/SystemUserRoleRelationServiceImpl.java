@@ -1,8 +1,8 @@
 package com.bosen.admin.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.bosen.admin.domain.SystemRole;
 import com.bosen.admin.domain.AdminUserRoleRelation;
+import com.bosen.admin.domain.BsRole;
 import com.bosen.admin.mapper.SystemUserRoleRelationMapper;
 import com.bosen.admin.service.ISystemUserRoleRelationService;
 import com.bosen.common.constant.response.ResponseCode;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Service
 public class SystemUserRoleRelationServiceImpl extends ServiceImpl<SystemUserRoleRelationMapper, AdminUserRoleRelation> implements ISystemUserRoleRelationService {
     @Override
-    public List<SystemRole> getUserRoleList(String adminUserId) {
+    public List<BsRole> getUserRoleList(String adminUserId) {
         return this.baseMapper.getUserRoleList(adminUserId);
     }
 

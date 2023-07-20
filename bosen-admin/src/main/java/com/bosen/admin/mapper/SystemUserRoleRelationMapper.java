@@ -1,8 +1,8 @@
 package com.bosen.admin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.bosen.admin.domain.SystemRole;
 import com.bosen.admin.domain.AdminUserRoleRelation;
+import com.bosen.admin.domain.BsRole;
 
 import java.util.List;
 
@@ -14,8 +14,8 @@ import java.util.List;
 public interface SystemUserRoleRelationMapper extends BaseMapper<AdminUserRoleRelation> {
     /**
      * 通过用户id查询角色列表
-     * @param adminUserId
+     * @param userId
      * @return
      */
-    List<SystemRole> getUserRoleList(String adminUserId);
+    List<BsRole> getUserRoleList(String userId);
 }

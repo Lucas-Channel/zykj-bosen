@@ -13,11 +13,11 @@ import java.io.Serializable;
 public class AssignRoleVO implements Serializable {
     private static final long serialVersionUID = 7762637938249134127L;
 
-    private Long roleId;
+    private String roleId;
 
     private String roleCode;
 
-    public AssignRoleVO(Long roleId, String roleCode) {
+    public AssignRoleVO(String roleId, String roleCode) {
         this.roleId = roleId;
         this.roleCode = roleCode;
     }

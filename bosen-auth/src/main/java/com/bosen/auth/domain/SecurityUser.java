@@ -40,7 +40,7 @@ public class SecurityUser implements UserDetails {
      */
     private String clientId;
 
-    private Long defaultRoleId;
+    private String defaultRoleId;
     /**
      * 权限数据
      */
