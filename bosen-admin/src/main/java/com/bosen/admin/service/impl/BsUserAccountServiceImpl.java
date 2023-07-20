@@ -3,8 +3,8 @@ package com.bosen.admin.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.crypto.digest.BCrypt;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.bosen.admin.domain.BsRole;
 import com.bosen.admin.domain.BsUserAccount;
-import com.bosen.admin.domain.SystemRole;
 import com.bosen.admin.mapper.BsUserAccountMapper;
 import com.bosen.admin.service.IBsUserAccountService;
 import com.bosen.admin.service.ISystemUserRoleRelationService;
@@ -52,12 +52,12 @@ public class BsUserAccountServiceImpl extends ServiceImpl<BsUserAccountMapper, B
         if (Objects.nonNull(adminUserDO)) {
             UserDto userDto = new UserDto();
             BeanUtils.copyProperties(adminUserDO, userDto);
-            List<SystemRole> userRoleList = userRoleRelationService.getUserRoleList(userDto.getId());
+            List<BsRole> userRoleList = userRoleRelationService.getUserRoleList(userDto.getId());
             if (!CollectionUtils.isEmpty(userRoleList)) {
                 if (Objects.equals(userRoleList.size(), 1)) {
                     userDto.setDefaultRoleId(userRoleList.get(0).getId());
                 } else {
-                    List<SystemRole> collect = userRoleList.stream().filter(i -> Objects.equals(YesOrNoConstant.YES, i.getDefaultRole())).collect(Collectors.toList());
+                    List<BsRole> collect = userRoleList.stream().filter(i -> Objects.equals(YesOrNoConstant.YES, i.getDefaultRole())).collect(Collectors.toList());
                     if (CollUtil.isNotEmpty(collect)) {
                         userDto.setDefaultRoleId(collect.get(0).getId());
                     } else {
