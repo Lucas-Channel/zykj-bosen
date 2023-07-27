@@ -21,6 +21,7 @@
         <module>bosen-search-api</module>
         <module>bosen-product-api</module>
         <module>bosen-admin-api</module>
+        <module>bosen-camunda-api</module>
     </modules>
 
     <dependencies>

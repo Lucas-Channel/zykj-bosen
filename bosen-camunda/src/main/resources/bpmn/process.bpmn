@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0fr9mxs" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.3.0">
+  <bpmn:process id="my-project-process" name="测试流程图" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_1fp17al</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1fp17al" sourceRef="StartEvent_1" targetRef="say-hello" />
+    <bpmn:endEvent id="EndEvent_0x6ir2l">
+      <bpmn:incoming>Flow_0004suh</bpmn:incoming>
+      <bpmn:incoming>Flow_1pzx7y4</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="say-hello" name="一级审批" camunda:candidateUsers="lucas,bosen">
+      <bpmn:incoming>SequenceFlow_1fp17al</bpmn:incoming>
+      <bpmn:outgoing>Flow_0vj4h9x</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Activity_0p6z9vr" name="二级审批" camunda:candidateUsers="bosen,lucas">
+      <bpmn:extensionElements />
+      <bpmn:incoming>Flow_</bpmn:incoming>
+      <bpmn:outgoing>Flow_0004suh</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0004suh" sourceRef="Activity_0p6z9vr" targetRef="EndEvent_0x6ir2l" />
+    <bpmn:exclusiveGateway id="Gateway_0syde0f">
+      <bpmn:incoming>Flow_0vj4h9x</bpmn:incoming>
+      <bpmn:outgoing>Flow_</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1pzx7y4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0vj4h9x" sourceRef="say-hello" targetRef="Gateway_0syde0f" />
+    <bpmn:sequenceFlow id="Flow_" name="审批通过" sourceRef="Gateway_0syde0f" targetRef="Activity_0p6z9vr">
+      <bpmn:extensionElements>
+        <camunda:properties>
+          <camunda:property name="desc" value="审批通过" />
+          <camunda:property name="status" value="1" />
+          <camunda:property name="agree" value="1" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${agree==1}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1pzx7y4" name="审批不通过" sourceRef="Gateway_0syde0f" targetRef="EndEvent_0x6ir2l">
+      <bpmn:extensionElements>
+        <camunda:properties>
+          <camunda:property name="status" value="0" />
+          <camunda:property name="desc" value="审批不通过" />
+          <camunda:property name="agree" value="0" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${agree==0}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="my-project-process">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0x6ir2l_di" bpmnElement="EndEvent_0x6ir2l">
+        <dc:Bounds x="783" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_08mft2c_di" bpmnElement="say-hello">
+        <dc:Bounds x="290" y="190" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02jwcjh_di" bpmnElement="Activity_0p6z9vr">
+        <dc:Bounds x="640" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0syde0f_di" bpmnElement="Gateway_0syde0f" isMarkerVisible="true">
+        <dc:Bounds x="495" y="205" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1fp17al_di" bpmnElement="SequenceFlow_1fp17al">
+        <di:waypoint x="188" y="230" />
+        <di:waypoint x="290" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0004suh_di" bpmnElement="Flow_0004suh">
+        <di:waypoint x="740" y="120" />
+        <di:waypoint x="801" y="120" />
+        <di:waypoint x="801" y="212" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vj4h9x_di" bpmnElement="Flow_0vj4h9x">
+        <di:waypoint x="390" y="230" />
+        <di:waypoint x="495" y="230" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_09jfhix_di" bpmnElement="Flow_">
+        <di:waypoint x="520" y="205" />
+        <di:waypoint x="520" y="120" />
+        <di:waypoint x="640" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="513" y="160" width="44" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1pzx7y4_di" bpmnElement="Flow_1pzx7y4">
+        <di:waypoint x="545" y="230" />
+        <di:waypoint x="783" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="637" y="212" width="55" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

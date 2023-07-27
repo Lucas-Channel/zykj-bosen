@@ -138,6 +138,8 @@ public enum ResponseCode {
     ALLOT_CANNOT_EDIT_ERROR(1249, "当前调拨单无法修改"),
 
     ALLOT_NOT_EXIT_ERROR(1250, "调拨单不存在"),
+
+    PROCESS_KEY_NOT_EXIT_ERROR(1251, "当前工作流实例未找到"),
     ;
 
 
