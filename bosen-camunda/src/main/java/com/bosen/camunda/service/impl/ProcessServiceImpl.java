@@ -137,10 +137,9 @@ public class ProcessServiceImpl implements IProcessService {
 
     @Override
     public ResponseData<List<ProcessTaskDetailVO>> listWaitClaimTask() {
-        TaskQuery taskQuery = taskService.createTaskQuery().active()
+        List<Task> list = taskService.createTaskQuery().active()
                 // todo 切换为当前登录人
-                .taskCandidateUser("lucas");
-        List<Task> list = taskQuery.list();
+                .taskCandidateUser("lucas").list();
         return ResponseData.success(list.stream().map(i -> {
             Map<String, Object> variables = runtimeService.getVariables(i.getExecutionId());
             String titleVar = variables.get(CamundaProcessInstanceTitleConstant.TITLE_KEY).toString();
