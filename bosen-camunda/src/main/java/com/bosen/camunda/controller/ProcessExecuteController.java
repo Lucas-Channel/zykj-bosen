@@ -2,6 +2,8 @@ package com.bosen.camunda.controller;
 
 import com.bosen.camunda.api.vo.request.ProcessStartTaskVO;
 import com.bosen.camunda.service.IProcessService;
+import com.bosen.camunda.vo.request.ClaimTaskReqVO;
+import com.bosen.camunda.vo.request.SuspendedProcessDefinitionVO;
 import com.bosen.common.constant.response.ResponseData;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +28,16 @@ public class ProcessExecuteController {
     private IProcessService processService;
 
     /**
+     * 挂起或激活流程定义对象
+     * @param suspendedProcessDefinitionVO 参数
+     * @return 结果
+     */
+    @PostMapping("/suspendedProcessDefinition")
+    public ResponseData<Void> suspendedProcessDefinition(@RequestBody @Valid SuspendedProcessDefinitionVO suspendedProcessDefinitionVO) {
+        return processService.suspendedProcessDefinition(suspendedProcessDefinitionVO);
+    }
+
+    /**
      * 启动流程
      * @param taskVO 参数
      * @return 结果
@@ -35,5 +47,23 @@ public class ProcessExecuteController {
         return processService.startProcessByProcessKeyAndBusinessKey(taskVO);
     }
 
+    /**
+     * 领取任务
+     * @param taskReqVO 任务参数
+     * @return 结果
+     */
+    @PostMapping("/claimTask")
+    public ResponseData<Void> claimTask(@RequestBody @Valid ClaimTaskReqVO taskReqVO) {
+        return processService.claimTask(taskReqVO);
+    }
 
+    /**
+     * 退还/转交任务
+     * @param taskReqVO 任务参数
+     * @return 结果
+     */
+    @PostMapping("/unClaimTaskAndTransfer")
+    public ResponseData<Void> unClaimTaskAndTransfer(@RequestBody @Valid ClaimTaskReqVO taskReqVO) {
+        return processService.unClaimTaskAndTransfer(taskReqVO);
+    }
 }

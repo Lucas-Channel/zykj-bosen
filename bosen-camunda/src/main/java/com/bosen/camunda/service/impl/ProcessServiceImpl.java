@@ -3,12 +3,15 @@ package com.bosen.camunda.service.impl;
 import com.bosen.camunda.api.constant.CamundaProcessInstanceTitleConstant;
 import com.bosen.camunda.api.vo.request.ProcessStartTaskVO;
 import com.bosen.camunda.service.IProcessService;
+import com.bosen.camunda.vo.request.ClaimTaskReqVO;
 import com.bosen.camunda.vo.request.ProcessDefinitionQueryVO;
+import com.bosen.camunda.vo.request.SuspendedProcessDefinitionVO;
 import com.bosen.camunda.vo.response.ProcessDefinitionDetailVO;
 import com.bosen.camunda.vo.response.ProcessTaskDetailVO;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.common.exception.BusinessException;
 import com.bosen.common.util.DateTimeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.RepositoryService;
@@ -27,6 +30,7 @@ import org.camunda.bpm.model.bpmn.instance.UserTask;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaProperties;
 import org.camunda.bpm.model.bpmn.instance.camunda.CamundaProperty;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -83,7 +87,7 @@ public class ProcessServiceImpl implements IProcessService {
 
     @Override
     public ResponseData<List<ProcessTaskDetailVO>> queryMyTasksToDo(String title, String initiatorName) {
-        TaskQuery taskQuery = taskService.createTaskQuery()
+        TaskQuery taskQuery = taskService.createTaskQuery().active()
                 // todo 切换为当前登录人
                 .taskAssignee("lucas");
         if (StringUtils.hasLength(title)) {
@@ -104,7 +108,7 @@ public class ProcessServiceImpl implements IProcessService {
     @Override
     public ResponseData<Map<String, Object>> startProcessByProcessKeyAndBusinessKey(ProcessStartTaskVO taskVO) {
         // step1 查询是否存在当前流程实例key
-        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey(taskVO.getProcessKey()).latestVersion().singleResult();
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionKey(taskVO.getProcessKey()).active().latestVersion().singleResult();
         if (Objects.isNull(processDefinition)) {
             return ResponseData.fail(ResponseCode.PROCESS_KEY_NOT_EXIT_ERROR);
         }
@@ -133,7 +137,7 @@ public class ProcessServiceImpl implements IProcessService {
 
     @Override
     public ResponseData<List<ProcessTaskDetailVO>> listWaitClaimTask() {
-        TaskQuery taskQuery = taskService.createTaskQuery()
+        TaskQuery taskQuery = taskService.createTaskQuery().active()
                 // todo 切换为当前登录人
                 .taskCandidateUser("lucas");
         List<Task> list = taskQuery.list();
@@ -143,5 +147,46 @@ public class ProcessServiceImpl implements IProcessService {
             String initiator = variables.get(CamundaProcessInstanceTitleConstant.INITIATOR_KEY).toString();
             return new ProcessTaskDetailVO(i.getId(), titleVar, initiator, DateFormat.getDateInstance().format(i.getCreateTime()));
         }).collect(Collectors.toList()));
+    }
+
+    @Override
+    @Transactional
+    public ResponseData<Void> claimTask(ClaimTaskReqVO taskReqVO) {
+        Task task = taskService.createTaskQuery().active().taskId(taskReqVO.getTaskId()).taskUnassigned().taskCandidateUser("lucas").singleResult();
+        if (Objects.isNull(task)) {
+            throw new BusinessException(ResponseCode.PROCESS_TASK_NOT_EXIT_ERROR);
+        }
+        taskService.claim(taskReqVO.getTaskId(), "lucas");
+        if (taskReqVO.getAuditFlag()) {
+            Map<String, Object> map = new HashMap<>();
+            map.put(CamundaProcessInstanceTitleConstant.TASK_JUMP_VAR_KEY, 1);
+            taskService.complete(taskReqVO.getTaskId(), map);
+        }
+        return ResponseData.success();
+    }
+
+    @Override
+    public ResponseData<Void> unClaimTaskAndTransfer(ClaimTaskReqVO taskReqVO) {
+        Task task = taskService.createTaskQuery().active().taskId(taskReqVO.getTaskId()).taskAssignee("lucas").singleResult();
+        if (Objects.isNull(task)) {
+            throw new BusinessException(ResponseCode.PROCESS_TASK_NOT_EXIT_ERROR);
+        }
+        taskService.setAssignee(task.getId(),StringUtils.hasLength(taskReqVO.getTransferUserId()) ? taskReqVO.getTransferUserId() : null);
+        return ResponseData.success();
+    }
+
+    @Override
+    public ResponseData<Void> suspendedProcessDefinition(SuspendedProcessDefinitionVO suspendedProcessDefinitionVO) {
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(suspendedProcessDefinitionVO.getProcessDefinitionId()).singleResult();
+        if (Objects.isNull(processDefinition)) {
+            return ResponseData.fail(ResponseCode.PROCESS_KEY_NOT_EXIT_ERROR);
+        }
+        if (suspendedProcessDefinitionVO.getSuspended()) {
+            repositoryService.suspendProcessDefinitionById(suspendedProcessDefinitionVO.getProcessDefinitionId(), suspendedProcessDefinitionVO.getIncludeProcessInstances(), new Date());
+        } else {
+            repositoryService.activateProcessDefinitionById(suspendedProcessDefinitionVO.getProcessDefinitionId(), suspendedProcessDefinitionVO.getIncludeProcessInstances(), new Date());
+        }
+
+        return ResponseData.success();
     }
 }
