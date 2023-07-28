@@ -8,6 +8,7 @@ import com.bosen.camunda.vo.response.ProcessDefinitionDetailVO;
 import com.bosen.camunda.vo.response.ProcessTaskDetailVO;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.common.vo.request.ApproveInfoVO;
 
 import java.util.List;
 import java.util.Map;
@@ -32,4 +33,6 @@ public interface IProcessService {
     ResponseData<Void> unClaimTaskAndTransfer(ClaimTaskReqVO taskReqVO);
 
     ResponseData<Void> suspendedProcessDefinition(SuspendedProcessDefinitionVO suspendedProcessDefinitionVO);
+
+    ResponseData<Map<String, Object>> audit(ApproveInfoVO approveInfoVO);
 }

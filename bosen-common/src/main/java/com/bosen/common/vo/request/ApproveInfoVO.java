@@ -33,4 +33,9 @@ public class ApproveInfoVO implements Serializable {
      */
     @NotBlank(message = "原单id不能为空")
     private String originalId;
+
+    /**
+     * 流程实例id
+     */
+    private String processInstanceId;
 }

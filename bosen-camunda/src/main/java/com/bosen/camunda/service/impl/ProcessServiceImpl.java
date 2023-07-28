@@ -13,6 +13,7 @@ import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.exception.BusinessException;
 import com.bosen.common.util.DateTimeUtil;
+import com.bosen.common.vo.request.ApproveInfoVO;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
@@ -117,20 +118,10 @@ public class ProcessServiceImpl implements IProcessService {
         ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(taskVO.getProcessKey(), taskVO.getBusinessKey(), variableMap);
         Map<String, Object> objectMap = new HashMap<>();
         if (taskVO.getSkipFirstStep()) {
-            Task task = taskService.createTaskQuery().processInstanceId(processInstance.getProcessInstanceId()).active().singleResult();
-            Map<String, Object> map = new HashMap<>();
-            map.put(CamundaProcessInstanceTitleConstant.TASK_JUMP_VAR_KEY, 1);
-            taskService.complete(task.getId(), map);
-            BpmnModelInstance model = repositoryService.getBpmnModelInstance(processDefinition.getId());
-            UserTask userTask = model.getModelElementById(task.getTaskDefinitionKey());
-            Collection<SequenceFlow> outgoing = userTask.getSucceedingNodes().singleResult().getOutgoing();
-            for (SequenceFlow flow : outgoing) {
-                Collection<CamundaProperty> properties = flow.getExtensionElements().getElementsQuery().filterByType(CamundaProperties.class).singleResult().getCamundaProperties();
-                if (properties.stream().noneMatch(i -> Objects.equals(i.getCamundaName(), CamundaProcessInstanceTitleConstant.TASK_JUMP_VAR_KEY) && Objects.equals(i.getCamundaValue(), CamundaProcessInstanceTitleConstant.TASK_PASS_VAR))) {
-                    continue;
-                }
-                properties.forEach(i -> objectMap.put(i.getCamundaName(), i.getCamundaValue()));
-            }
+            ApproveInfoVO approveInfoVO = new ApproveInfoVO();
+            approveInfoVO.setProcessInstanceId(processInstance.getProcessInstanceId());
+            approveInfoVO.setAgree(Integer.valueOf(CamundaProcessInstanceTitleConstant.TASK_PASS_VAR));
+            objectMap = this.executeTask(approveInfoVO);
         }
         return ResponseData.success(objectMap);
     }
@@ -187,5 +178,32 @@ public class ProcessServiceImpl implements IProcessService {
         }
 
         return ResponseData.success();
+    }
+
+    @Override
+    public ResponseData<Map<String, Object>> audit(ApproveInfoVO approveInfoVO) {
+        return ResponseData.success(this.executeTask(approveInfoVO));
+    }
+
+    private Map<String, Object> executeTask(ApproveInfoVO approveInfoVO) {
+        Task task = taskService.createTaskQuery().processInstanceId(approveInfoVO.getProcessInstanceId()).active().singleResult();
+        if (Objects.isNull(task)) {
+            throw new BusinessException(ResponseCode.PROCESS_TASK_NOT_EXIT_ERROR);
+        }
+        Map<String, Object> map = new HashMap<>();
+        map.put(CamundaProcessInstanceTitleConstant.TASK_JUMP_VAR_KEY, approveInfoVO.getAgree());
+        taskService.complete(task.getId(), map);
+        BpmnModelInstance model = repositoryService.getBpmnModelInstance(task.getProcessDefinitionId());
+        UserTask userTask = model.getModelElementById(task.getTaskDefinitionKey());
+        Collection<SequenceFlow> outgoing = userTask.getSucceedingNodes().singleResult().getOutgoing();
+        Map<String, Object> objectMap = new HashMap<>();
+        for (SequenceFlow flow : outgoing) {
+            Collection<CamundaProperty> properties = flow.getExtensionElements().getElementsQuery().filterByType(CamundaProperties.class).singleResult().getCamundaProperties();
+            if (properties.stream().noneMatch(i -> Objects.equals(i.getCamundaName(), CamundaProcessInstanceTitleConstant.TASK_JUMP_VAR_KEY) && Objects.equals(i.getCamundaValue(), approveInfoVO.getAgree().toString()))) {
+                continue;
+            }
+            properties.forEach(i -> objectMap.put(i.getCamundaName(), i.getCamundaValue()));
+        }
+        return objectMap;
     }
 }
