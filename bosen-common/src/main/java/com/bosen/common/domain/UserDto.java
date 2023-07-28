@@ -34,7 +34,7 @@ public class UserDto {
     /**
      * 登录默认选中角色id
      */
-    private Long defaultRoleId;
+    private String defaultRoleId;
     /**
      * 角色列表
      */

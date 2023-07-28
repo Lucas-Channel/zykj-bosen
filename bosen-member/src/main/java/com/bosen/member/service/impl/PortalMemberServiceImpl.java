@@ -57,7 +57,7 @@ public class PortalMemberServiceImpl extends ServiceImpl<PortalMemberMapper, Por
         if (Objects.nonNull(memberDO)) {
             UserDto userDto = new UserDto();
             BeanUtil.copyProperties(memberDO,userDto);
-            userDto.setRoles(CollUtil.toList(new AssignRoleVO(0L, "c端会员")));
+            userDto.setRoles(CollUtil.toList(new AssignRoleVO("0", "c端会员")));
             return userDto;
         }
         return null;

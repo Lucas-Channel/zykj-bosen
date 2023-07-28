@@ -1,8 +1,8 @@
 package com.bosen.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.bosen.admin.domain.SystemRole;
 import com.bosen.admin.domain.AdminUserRoleRelation;
+import com.bosen.admin.domain.BsRole;
 import com.bosen.common.constant.response.ResponseData;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface ISystemUserRoleRelationService extends IService<AdminUserRoleRe
      * @param adminUserId
      * @return
      */
-    List<SystemRole> getUserRoleList(String adminUserId);
+    List<BsRole> getUserRoleList(String adminUserId);
 
     ResponseData<Void> updateUserRole(String adminId, List<String> roleIds);
 }

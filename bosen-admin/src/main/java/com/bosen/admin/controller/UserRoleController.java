@@ -1,6 +1,6 @@
 package com.bosen.admin.controller;
 
-import com.bosen.admin.domain.SystemRole;
+import com.bosen.admin.domain.BsRole;
 import com.bosen.admin.service.ISystemUserRoleRelationService;
 import com.bosen.common.constant.response.ResponseData;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +35,8 @@ public class UserRoleController {
      */
     @GetMapping(value = "/role/{adminId}")
     @ResponseBody
-    public ResponseData<List<SystemRole>> getRoleList(@PathVariable String adminId) {
-        List<SystemRole> roleList = userRoleRelationService.getUserRoleList(adminId);
+    public ResponseData<List<BsRole>> getRoleList(@PathVariable String adminId) {
+        List<BsRole> roleList = userRoleRelationService.getUserRoleList(adminId);
         return ResponseData.success(roleList);
     }
 
