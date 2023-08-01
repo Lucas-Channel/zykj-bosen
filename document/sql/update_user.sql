@@ -49,12 +49,12 @@ CREATE TABLE `bs_resource` (
 
 DROP TABLE IF EXISTS `bs_user_role`;
 CREATE TABLE `bs_user_role` (
-    `id` varchar(32) NOT NULL COMMENT 'ID',
-    `user_id` varchar(32) DEFAULT NULL COMMENT '用户ID,关联bs_user_account.id',
-    `role_id` varchar(32) DEFAULT NULL COMMENT '角色ID,关联bs_role.id',
-    'client' varchar(16) DEFAULT NULL COMMENT '客户端',
-    'default_role' int DEFAULT 0 COMMENT '默认角色：0->否；1->是',
-    PRIMARY KEY (`id`)
+                                `id` varchar(32) NOT NULL COMMENT 'ID',
+                                `user_id` varchar(32) DEFAULT NULL COMMENT '用户ID,关联bs_user_account.id',
+                                `role_id` varchar(32) DEFAULT NULL COMMENT '角色ID,关联bs_role.id',
+                                `client` varchar(16) DEFAULT NULL COMMENT '客户端',
+                                `default_role` int DEFAULT 0 COMMENT '默认角色：0->否；1->是',
+                                PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色关联表';
 
 DROP TABLE IF EXISTS `bs_role_resource`;
