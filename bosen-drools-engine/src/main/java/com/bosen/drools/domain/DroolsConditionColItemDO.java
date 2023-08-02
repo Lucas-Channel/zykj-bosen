@@ -51,9 +51,9 @@ public class DroolsConditionColItemDO extends BaseEntityData implements Serializ
     private String droolsConditionColItemKey;
 
     /**
-     * 条件值
+     * 脚本
      */
-    private String droolsConditionColItemValue;
+    private String droolsConditionColItemScript;
 
     /**
      * 条件操作符，比如 >=, memberOf等等
@@ -79,6 +79,21 @@ public class DroolsConditionColItemDO extends BaseEntityData implements Serializ
      * 显示值的key
      */
     private String fieldSelectTf;
+
+    /**
+     * 是否多选
+     */
+    private Boolean multiFlag = false;
+
+    /**
+     * 拼接符号
+     */
+    private Boolean spliceSymbol;
+
+    /**
+     * 默认值
+     */
+    private String defaultVal;
 
     /**
      * 启用状态：1，启用，0禁用

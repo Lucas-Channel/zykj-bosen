@@ -35,6 +35,11 @@ public class DroolsConditionColDO extends BaseEntityData implements Serializable
     private String droolsConditionColDesc;
 
     /**
+     * 应用层面类型
+     */
+    private Integer type;
+
+    /**
      * 启用状态：1，启用，0禁用
      */
     private Integer status;

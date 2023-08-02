@@ -26,24 +26,74 @@ public class DroolsActionColItemDO extends BaseEntityData implements Serializabl
     private String droolsActionColId;
 
     /**
-     * 规则结果列编码
+     * 规则列明细编码
      */
-    private String droolsResultColCode;
+    private String droolsActionColItemCode;
 
     /**
-     * 规则结果列名称
+     * 规则列明细名称
      */
-    private String droolsResultColName;
-
-    /**
-     * 规则结果列代码
-     */
-    private String droolsResultColScript;
+    private String droolsActionColItemName;
 
     /**
      * 描述
      */
-    private String droolsResultColDesc;
+    private String droolsActionColItemDesc;
+
+    /**
+     * 条件对象名称，例如$SalesOrder,SalesOrder为点单entity
+     */
+    private String droolsActionColItemObjectName;
+
+    /**
+     * 条件具体字段，比如SalesOrder中的orderAmt
+     */
+    private String droolsActionColItemKey;
+
+    /**
+     * 脚本
+     */
+    private String droolsActionColItemScript;
+
+    /**
+     * 条件操作符，比如 >=, memberOf等等
+     */
+    private String droolsActionColItemOperator;
+
+    /**
+     * 条件明细列类型：input select date等等
+     */
+    private String fieldType;
+
+    /**
+     * 接口地址
+     */
+    private String fieldSelectUrl;
+
+    /**
+     * 传递的值的key
+     */
+    private String fieldSelectVf;
+
+    /**
+     * 显示值的key
+     */
+    private String fieldSelectTf;
+
+    /**
+     * 是否多选
+     */
+    private Boolean multiFlag = false;
+
+    /**
+     * 拼接符号
+     */
+    private Boolean spliceSymbol;
+
+    /**
+     * 默认值
+     */
+    private String defaultVal;
 
     /**
      * 启用状态：1，启用，0禁用
