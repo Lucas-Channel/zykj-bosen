@@ -1,4 +1,4 @@
-package com.bosen.camunda.vo.response;
+package com.bosen.camunda.api.vo.response;
 
 import lombok.Data;
 

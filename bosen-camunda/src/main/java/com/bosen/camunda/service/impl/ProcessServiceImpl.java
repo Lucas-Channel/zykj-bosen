@@ -3,11 +3,12 @@ package com.bosen.camunda.service.impl;
 import com.bosen.camunda.api.constant.CamundaProcessInstanceTitleConstant;
 import com.bosen.camunda.api.vo.request.ProcessStartTaskVO;
 import com.bosen.camunda.service.IProcessService;
-import com.bosen.camunda.vo.request.ClaimTaskReqVO;
-import com.bosen.camunda.vo.request.ProcessDefinitionQueryVO;
-import com.bosen.camunda.vo.request.SuspendedProcessDefinitionVO;
-import com.bosen.camunda.vo.response.ProcessDefinitionDetailVO;
-import com.bosen.camunda.vo.response.ProcessTaskDetailVO;
+import com.bosen.camunda.api.vo.request.ClaimTaskReqVO;
+import com.bosen.camunda.api.vo.request.ProcessDefinitionQueryVO;
+import com.bosen.camunda.api.vo.request.SuspendedProcessDefinitionVO;
+import com.bosen.camunda.api.vo.response.ProcessDefinitionDetailVO;
+import com.bosen.camunda.api.vo.response.ProcessInstanceHistoryProgressVO;
+import com.bosen.camunda.api.vo.response.ProcessTaskDetailVO;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
@@ -15,9 +16,11 @@ import com.bosen.common.exception.BusinessException;
 import com.bosen.common.util.DateTimeUtil;
 import com.bosen.common.vo.request.ApproveInfoVO;
 import lombok.extern.slf4j.Slf4j;
+import org.camunda.bpm.engine.HistoryService;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.history.HistoricActivityInstance;
 import org.camunda.bpm.engine.repository.ProcessDefinition;
 import org.camunda.bpm.engine.repository.ProcessDefinitionQuery;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
@@ -57,6 +60,9 @@ public class ProcessServiceImpl implements IProcessService {
 
     @Resource
     private RepositoryService repositoryService;
+
+    @Resource
+    private HistoryService historyService;
 
     @Override
     public PageData<ProcessDefinitionDetailVO> pageProcessDefinition(ProcessDefinitionQueryVO queryVO) {
@@ -123,6 +129,7 @@ public class ProcessServiceImpl implements IProcessService {
             approveInfoVO.setAgree(Integer.valueOf(CamundaProcessInstanceTitleConstant.TASK_PASS_VAR));
             objectMap = this.executeTask(approveInfoVO);
         }
+        objectMap.put("processInstanceId", processInstance.getProcessInstanceId());
         return ResponseData.success(objectMap);
     }
 
@@ -176,7 +183,6 @@ public class ProcessServiceImpl implements IProcessService {
         } else {
             repositoryService.activateProcessDefinitionById(suspendedProcessDefinitionVO.getProcessDefinitionId(), suspendedProcessDefinitionVO.getIncludeProcessInstances(), new Date());
         }
-
         return ResponseData.success();
     }
 
@@ -185,7 +191,19 @@ public class ProcessServiceImpl implements IProcessService {
         return ResponseData.success(this.executeTask(approveInfoVO));
     }
 
-    private Map<String, Object> executeTask(ApproveInfoVO approveInfoVO) {
+    @Override
+    public ResponseData<List<ProcessInstanceHistoryProgressVO>> listProcessInstanceProgress(String processInstanceId) {
+        List<HistoricActivityInstance> list = historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstanceId).activityType("userTask").orderByHistoricActivityInstanceEndTime().desc().list();
+        return ResponseData.success(list.stream().map(i -> {
+            ProcessInstanceHistoryProgressVO detail = new ProcessInstanceHistoryProgressVO();
+            detail.setActivityName(i.getActivityName());
+            detail.setAuditUser(i.getAssignee());
+            detail.setFinishFlag(Objects.nonNull(i.getEndTime()));
+            return detail;
+        }).collect(Collectors.toList()));
+    }
+
+    public Map<String, Object> executeTask(ApproveInfoVO approveInfoVO) {
         Task task = taskService.createTaskQuery().processInstanceId(approveInfoVO.getProcessInstanceId()).active().singleResult();
         if (Objects.isNull(task)) {
             throw new BusinessException(ResponseCode.PROCESS_TASK_NOT_EXIT_ERROR);

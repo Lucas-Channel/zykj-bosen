@@ -1,4 +1,4 @@
-package com.bosen.camunda.vo.request;
+package com.bosen.camunda.api.vo.request;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -102,6 +102,9 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Bean
     @SneakyThrows
     public KeyPair keyPair() {
+        // 总结：
+        // `KeyPairGenerator`用于动态生成密钥对并保存在内存中，适用于在运行时生成密钥对的场景。
+        // `KeyStoreKeyFactory`用于从密钥库中加载密钥对，适用于持久化保存和管理密钥对的场景。它通常与密钥库文件一起使用。
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         keyPairGenerator.initialize(1024);
         return keyPairGenerator.genKeyPair();

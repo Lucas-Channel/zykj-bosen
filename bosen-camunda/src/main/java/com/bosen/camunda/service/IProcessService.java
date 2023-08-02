@@ -1,11 +1,12 @@
 package com.bosen.camunda.service;
 
 import com.bosen.camunda.api.vo.request.ProcessStartTaskVO;
-import com.bosen.camunda.vo.request.ClaimTaskReqVO;
-import com.bosen.camunda.vo.request.ProcessDefinitionQueryVO;
-import com.bosen.camunda.vo.request.SuspendedProcessDefinitionVO;
-import com.bosen.camunda.vo.response.ProcessDefinitionDetailVO;
-import com.bosen.camunda.vo.response.ProcessTaskDetailVO;
+import com.bosen.camunda.api.vo.request.ClaimTaskReqVO;
+import com.bosen.camunda.api.vo.request.ProcessDefinitionQueryVO;
+import com.bosen.camunda.api.vo.request.SuspendedProcessDefinitionVO;
+import com.bosen.camunda.api.vo.response.ProcessDefinitionDetailVO;
+import com.bosen.camunda.api.vo.response.ProcessInstanceHistoryProgressVO;
+import com.bosen.camunda.api.vo.response.ProcessTaskDetailVO;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.vo.request.ApproveInfoVO;
@@ -35,4 +36,6 @@ public interface IProcessService {
     ResponseData<Void> suspendedProcessDefinition(SuspendedProcessDefinitionVO suspendedProcessDefinitionVO);
 
     ResponseData<Map<String, Object>> audit(ApproveInfoVO approveInfoVO);
+
+    ResponseData<List<ProcessInstanceHistoryProgressVO>> listProcessInstanceProgress(String processInstanceId);
 }

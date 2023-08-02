@@ -1,9 +1,10 @@
 package com.bosen.camunda.controller;
 
 import com.bosen.camunda.service.IProcessService;
-import com.bosen.camunda.vo.request.ProcessDefinitionQueryVO;
-import com.bosen.camunda.vo.response.ProcessDefinitionDetailVO;
-import com.bosen.camunda.vo.response.ProcessTaskDetailVO;
+import com.bosen.camunda.api.vo.request.ProcessDefinitionQueryVO;
+import com.bosen.camunda.api.vo.response.ProcessDefinitionDetailVO;
+import com.bosen.camunda.api.vo.response.ProcessInstanceHistoryProgressVO;
+import com.bosen.camunda.api.vo.response.ProcessTaskDetailVO;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,4 +54,13 @@ public class ProcessesQueryController {
         return processService.listWaitClaimTask();
     }
 
+    /**
+     * 获取当前流程实例的进程
+     * @param processInstanceId 流程实例id
+     * @return 结果
+     */
+    @GetMapping("/listProcessInstanceProgress")
+    public ResponseData<List<ProcessInstanceHistoryProgressVO>> listProcessInstanceProgress(String processInstanceId) {
+        return processService.listProcessInstanceProgress(processInstanceId);
+    }
 }

@@ -1,4 +1,4 @@
-package com.bosen.camunda.vo.request;
+package com.bosen.camunda.api.vo.request;
 
 import com.bosen.common.domain.PageVO;
 import lombok.Data;

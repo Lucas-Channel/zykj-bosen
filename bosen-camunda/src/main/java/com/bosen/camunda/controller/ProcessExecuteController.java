@@ -2,8 +2,8 @@ package com.bosen.camunda.controller;
 
 import com.bosen.camunda.api.vo.request.ProcessStartTaskVO;
 import com.bosen.camunda.service.IProcessService;
-import com.bosen.camunda.vo.request.ClaimTaskReqVO;
-import com.bosen.camunda.vo.request.SuspendedProcessDefinitionVO;
+import com.bosen.camunda.api.vo.request.ClaimTaskReqVO;
+import com.bosen.camunda.api.vo.request.SuspendedProcessDefinitionVO;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.common.vo.request.ApproveInfoVO;
 import org.springframework.web.bind.annotation.PostMapping;

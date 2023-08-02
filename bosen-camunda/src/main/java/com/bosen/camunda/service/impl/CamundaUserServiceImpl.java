@@ -1,7 +1,7 @@
 package com.bosen.camunda.service.impl;
 
 import com.bosen.camunda.service.ICamundaUserService;
-import com.bosen.camunda.vo.request.CamundaUserUpsertVO;
+import com.bosen.camunda.api.vo.request.CamundaUserUpsertVO;
 import com.bosen.common.constant.response.ResponseData;
 import org.camunda.bpm.engine.IdentityService;
 import org.camunda.bpm.engine.identity.User;

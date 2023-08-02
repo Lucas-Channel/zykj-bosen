@@ -1,6 +1,6 @@
 package com.bosen.camunda.service;
 
-import com.bosen.camunda.vo.request.CamundaUserUpsertVO;
+import com.bosen.camunda.api.vo.request.CamundaUserUpsertVO;
 import com.bosen.common.constant.response.ResponseData;
 
 /**

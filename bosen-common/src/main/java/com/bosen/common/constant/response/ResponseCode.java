@@ -142,6 +142,8 @@ public enum ResponseCode {
     PROCESS_KEY_NOT_EXIT_ERROR(1251, "当前工作流实例未找到或已挂起"),
 
     PROCESS_TASK_NOT_EXIT_ERROR(1252, "任务不存在或未激活"),
+
+    CAMUNDA_SERVICE_ERROR(1253, "工作流管理服务异常"),
     ;
 
 
