@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public ResponseData<Void> handleException(Exception e) {
         e.printStackTrace();
-        return ResponseData.fail(e.getMessage());
+        return ResponseData.fail(e.getCause().getMessage());
     }
 
 }

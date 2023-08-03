@@ -74,7 +74,7 @@ public class DistributedLockerUtil {
      * @param unit      时间单位
      */
     public boolean tryLock(String lockKey, long waitTime, long leaseTime, TimeUnit unit) throws InterruptedException{
-        return this.getLock(lockKey).tryLock(waitTime, leaseTime, unit);
+        return redissonClient.getFairLock(lockKey).tryLock(waitTime, leaseTime, unit);
     }
 
     /**
@@ -93,5 +93,23 @@ public class DistributedLockerUtil {
      */
     public boolean isHeldByCurrentThread(String lockKey) {
         return this.getLock(lockKey).isHeldByCurrentThread();
+    }
+
+    /**
+     * 写锁，先写后读，等待写锁释放，写写会阻塞
+     * @param lockKey key
+     * @return 结果
+     */
+    public boolean writeLock(String lockKey) {
+        return redissonClient.getReadWriteLock(lockKey).writeLock().tryLock();
+    }
+
+    /**
+     * 读锁，相当于无锁，只有和写配合使用才有效，先读后写，需要等待读释放
+     * @param lockKey key
+     * @return 结果
+     */
+    public boolean readLock(String lockKey) {
+        return redissonClient.getReadWriteLock(lockKey).readLock().tryLock();
     }
 }

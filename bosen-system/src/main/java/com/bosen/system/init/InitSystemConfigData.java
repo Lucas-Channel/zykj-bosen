@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 
 /**
  * system 服务初始化数据
+ *
  * @author Lucas
  * @version 2.0.0
  * @date 2023/6/1
@@ -43,18 +44,27 @@ public class InitSystemConfigData {
     private void initPayMethod() {
         long count = payMethodService.count();
         // 避免集群下多服务
-        if (!Objects.equals(PayMethodEnum.values().length, count) && distributedLockerUtil.tryLock(INIT_PAY_METHOD_KEY)) {
-            Map<String, String> map = payMethodService.list().stream().collect(Collectors.toMap(PayMethodDO::getPayMethodCode, PayMethodDO::getPayMethodName, (v1, v2) -> v1));
-            // 初始化数据
-            List<PayMethodDO> methodDOS = Arrays.stream(PayMethodEnum.values()).filter(p -> !map.containsKey(p.getCode())).map(i -> {
-                PayMethodDO payMethodDO = new PayMethodDO();
-                payMethodDO.setPayMethodCode(i.getCode());
-                payMethodDO.setPayMethodName(i.getMessage());
-                payMethodDO.setEnableFlag(YesOrNoConstant.YES);
-                payMethodDO.setFundModel(FundModelEnums.PLATFORM_EXCHANGE.getCode());
-                return payMethodDO;
-            }).collect(Collectors.toList());
-            payMethodService.saveBatch(methodDOS);
+        try {
+            if (!Objects.equals(PayMethodEnum.values().length, count) && distributedLockerUtil.tryLock(INIT_PAY_METHOD_KEY)) {
+                Map<String, String> map = payMethodService.list().stream().collect(Collectors.toMap(PayMethodDO::getPayMethodCode, PayMethodDO::getPayMethodName, (v1, v2) -> v1));
+                // 初始化数据
+                List<PayMethodDO> methodDOS = Arrays.stream(PayMethodEnum.values()).filter(p -> !map.containsKey(p.getCode())).map(i -> {
+                    PayMethodDO payMethodDO = new PayMethodDO();
+                    payMethodDO.setPayMethodCode(i.getCode());
+                    payMethodDO.setPayMethodName(i.getMessage());
+                    payMethodDO.setEnableFlag(YesOrNoConstant.YES);
+                    payMethodDO.setFundModel(FundModelEnums.PLATFORM_EXCHANGE.getCode());
+                    return payMethodDO;
+                }).collect(Collectors.toList());
+                payMethodService.saveBatch(methodDOS);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (distributedLockerUtil.isHeldByCurrentThread(INIT_PAY_METHOD_KEY)) {
+                distributedLockerUtil.unlock(INIT_PAY_METHOD_KEY);
+            }
+
         }
     }
 }
