@@ -33,6 +33,8 @@ zykj-bosen
 ├─bosen-after-sales  -- 售后服务
 ├─bosen-seckill  -- 秒杀服务
 ├─bosen-member  -- 会员服务
+├─bosen-camunda  -- 工作流服务
+├─bosen-template-adorn  -- 装修服务
 └─bosen-other  -- 其他服务
 ```
 
