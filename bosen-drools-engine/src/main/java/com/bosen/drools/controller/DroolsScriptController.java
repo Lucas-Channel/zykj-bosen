@@ -3,14 +3,17 @@ package com.bosen.drools.controller;
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.drools.domain.DroolsInfoDO;
+import com.bosen.drools.domain.DroolsScriptDO;
+import com.bosen.drools.engine.api.vo.request.GenRuleScriptReqVO;
 import com.bosen.drools.service.IDroolsInfoService;
+import com.bosen.drools.service.IRuleService;
 import com.bosen.drools.vo.request.DroolsQueryVO;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -21,12 +24,15 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/drools/")
-public class DroolsInfoController {
+public class DroolsScriptController {
     /**
      * 服务对象
      */
     @Resource
     private IDroolsInfoService bsDroolsInfoService;
+
+    @Resource
+    private IRuleService ruleService;
 
     /**
      * 分页查询所有数据
@@ -36,7 +42,7 @@ public class DroolsInfoController {
      */
     @GetMapping("/pageList")
     @Cacheable(cacheNames = "drools", key="'list:'+#queryVO.current+':'+#queryVO.size+':'+#queryVO.droolsCode+':'+#queryVO.droolsName", unless = "#result?.data == null")
-    public ResponseData<PageData<DroolsInfoDO>> pageList(DroolsQueryVO queryVO) {
+    public ResponseData<PageData<DroolsScriptDO>> pageList(DroolsQueryVO queryVO) {
         return bsDroolsInfoService.pageList(queryVO);
     }
 
@@ -47,7 +53,7 @@ public class DroolsInfoController {
      * @return 单条数据
      */
     @GetMapping("/detail/{id}")
-    public ResponseData<DroolsInfoDO> selectOne(@PathVariable("id") String id) {
+    public ResponseData<DroolsScriptDO> selectOne(@PathVariable("id") String id) {
         return ResponseData.success(this.bsDroolsInfoService.getById(id));
     }
 
@@ -58,7 +64,7 @@ public class DroolsInfoController {
      * @return 新增结果
      */
     @PostMapping("upsert")
-    public ResponseData<Void> upsert(@RequestBody DroolsInfoDO bsDroolsInfo) {
+    public ResponseData<Void> upsert(@RequestBody DroolsScriptDO bsDroolsInfo) {
         return ResponseData.judge(this.bsDroolsInfoService.saveOrUpdate(bsDroolsInfo));
     }
 
@@ -80,6 +86,11 @@ public class DroolsInfoController {
     @PostMapping("/importDecisionTables")
     public ResponseData<String> importDecisionTables(@RequestPart("file") MultipartFile file) {
         return bsDroolsInfoService.importDecisionTables(file);
+    }
+
+    @PostMapping("/genRuleScript")
+    public ResponseData<Void> genRuleScript(@RequestBody @Valid GenRuleScriptReqVO genRuleScriptReqVO) {
+        return ruleService.genRuleScript(genRuleScriptReqVO);
     }
 }
 

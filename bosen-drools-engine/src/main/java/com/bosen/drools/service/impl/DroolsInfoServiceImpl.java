@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.drools.domain.DroolsInfoDO;
+import com.bosen.drools.domain.DroolsScriptDO;
 import com.bosen.drools.mapper.DroolsInfoMapper;
 import com.bosen.drools.service.IDroolsInfoService;
 import com.bosen.drools.vo.request.DroolsQueryVO;
@@ -27,14 +27,14 @@ import java.io.IOException;
  */
 @Slf4j
 @Service
-public class DroolsInfoServiceImpl extends ServiceImpl<DroolsInfoMapper, DroolsInfoDO> implements IDroolsInfoService {
+public class DroolsInfoServiceImpl extends ServiceImpl<DroolsInfoMapper, DroolsScriptDO> implements IDroolsInfoService {
 
     @Override
-    public ResponseData<PageData<DroolsInfoDO>> pageList(DroolsQueryVO queryVO) {
-        Page<DroolsInfoDO> page = this.page(new Page<>(queryVO.getCurrent(), queryVO.getSize()), new LambdaQueryWrapper<DroolsInfoDO>()
-                .like(StringUtils.hasLength(queryVO.getDroolsName()), DroolsInfoDO::getDroolsName, queryVO.getDroolsName())
-                .like(StringUtils.hasLength(queryVO.getDroolsCode()), DroolsInfoDO::getDroolsCode, queryVO.getDroolsCode())
-                .orderByDesc(DroolsInfoDO::getCreateTime));
+    public ResponseData<PageData<DroolsScriptDO>> pageList(DroolsQueryVO queryVO) {
+        Page<DroolsScriptDO> page = this.page(new Page<>(queryVO.getCurrent(), queryVO.getSize()), new LambdaQueryWrapper<DroolsScriptDO>()
+                .like(StringUtils.hasLength(queryVO.getDroolsName()), DroolsScriptDO::getDroolsName, queryVO.getDroolsName())
+                .like(StringUtils.hasLength(queryVO.getDroolsCode()), DroolsScriptDO::getDroolsCode, queryVO.getDroolsCode())
+                .orderByDesc(DroolsScriptDO::getCreateTime));
         return ResponseData.success(new PageData<>(page.getTotal(), page.getRecords()));
     }
 

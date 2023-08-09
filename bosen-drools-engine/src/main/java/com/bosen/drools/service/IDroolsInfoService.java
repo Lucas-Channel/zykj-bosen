@@ -3,7 +3,7 @@ package com.bosen.drools.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
-import com.bosen.drools.domain.DroolsInfoDO;
+import com.bosen.drools.domain.DroolsScriptDO;
 import com.bosen.drools.vo.request.DroolsQueryVO;
 import com.bosen.drools.vo.request.DroolsUpsertVO;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,13 +14,13 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Lucas
  * @since 2023-05-12 16:08:48
  */
-public interface IDroolsInfoService extends IService<DroolsInfoDO> {
+public interface IDroolsInfoService extends IService<DroolsScriptDO> {
     /**
      * 分页查询
      * @param queryVO 参数
      * @return 分页结果
      */
-    ResponseData<PageData<DroolsInfoDO>> pageList(DroolsQueryVO queryVO);
+    ResponseData<PageData<DroolsScriptDO>> pageList(DroolsQueryVO queryVO);
 
     /**
      * 倒入决策表

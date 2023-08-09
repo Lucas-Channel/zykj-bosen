@@ -22,6 +22,8 @@
         <module>bosen-product-api</module>
         <module>bosen-admin-api</module>
         <module>bosen-camunda-api</module>
+        <module>bosen-drools-engine-api</module>
+        <module>bosen-marketing-api</module>
     </modules>
 
     <dependencies>

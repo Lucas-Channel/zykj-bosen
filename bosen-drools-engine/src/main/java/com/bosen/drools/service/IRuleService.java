@@ -1,5 +1,9 @@
 package com.bosen.drools.service;
 
+import com.bosen.common.constant.response.ResponseData;
+import com.bosen.drools.engine.api.vo.request.GenRuleScriptReqVO;
+import org.kie.api.runtime.KieContainer;
+
 /**
  * @author Lucas
  * @version 2.0.0
@@ -19,7 +23,14 @@ public interface IRuleService {
     /**
      * 生成rule字符串
      */
-    void genRuleScript();
+    ResponseData<Void> genRuleScript(GenRuleScriptReqVO genRuleScriptReqVO);
+
+    /**
+     * 构建容器
+     * @param ruleScript 脚本
+     * @return 容器
+     */
+    KieContainer buildContainer(String ruleScript);
 
 
 }

@@ -283,6 +283,16 @@
                 <artifactId>bosen-camunda-api</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>com.bosen.api</groupId>
+                <artifactId>bosen-drools-engine-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bosen.api</groupId>
+                <artifactId>bosen-marketing-api</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

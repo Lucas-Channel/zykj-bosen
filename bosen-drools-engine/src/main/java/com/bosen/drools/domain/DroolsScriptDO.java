@@ -16,9 +16,9 @@ import java.io.Serializable;
  * @since 2023-05-12 16:08:45
  */
 @Data
-@TableName("bs_drools_info")
+@TableName("bs_drools_script")
 @EqualsAndHashCode(callSuper = true)
-public class DroolsInfoDO extends BaseEntityData implements Serializable {
+public class DroolsScriptDO extends BaseEntityData implements Serializable {
 
     private static final long serialVersionUID = 5401741591009633180L;
 
@@ -52,5 +52,10 @@ public class DroolsInfoDO extends BaseEntityData implements Serializable {
      * @see DroolsTypeEnum
      */
     private Integer droolsType;
+
+    /**
+     * 数据源id
+     */
+    private String dataSourceId;
 }
 

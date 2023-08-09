@@ -82,11 +82,12 @@ CREATE TABLE `bs_drools_action_col_item`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '规则结果列明细表';
 
 -- ----------------------------
--- Table structure for bs_drools_info 用于存储drools代码
+-- Table structure for bs_drools_script 用于存储drools代码
 -- ----------------------------
-DROP TABLE IF EXISTS `bs_drools_info`;
-CREATE TABLE `bs_drools_info`  (
+DROP TABLE IF EXISTS `bs_drools_script`;
+CREATE TABLE `bs_drools_script`  (
                                      `id` varchar(32) NOT NULL COMMENT '主键',
+                                     `data_source_id` varchar(32) NOT NULL COMMENT '数据源id',
                                      `drools_code` varchar(64) NOT NULL COMMENT '规则编码',
                                      `drools_name` varchar(64) NOT NULL COMMENT '规则名称',
                                      `drools_script` text NOT NULL COMMENT '规则代码',
