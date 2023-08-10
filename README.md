@@ -1,4 +1,19 @@
-# 博森
+<div align="center">
+    <p style="font-size:25px;font-weight: 800;">博森</p>
+</div>
+<div align="center" style="text-align:center;margin-top:30px;margin-bottom:20px">
+    <img src="https://img.shields.io/badge/SpringBoot-2.7.9-brightgreen.svg"/>
+    <img src="https://img.shields.io/badge/SpringCloud & Alibaba -2021.0.1.0-green.svg"/>
+    <img src="https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg"/>
+    <img src="https://img.shields.io/badge/Gateway-3.1.3-blue.svg"/>
+    <img src="https://img.shields.io/badge/oauth2-5.7.7-critical.svg"/>
+    <img src="https://img.shields.io/badge/redis-2.7.4-brightgreen.svg"/>
+    <img src="https://img.shields.io/badge/Mysql-8.0.29-ff69b4.svg"/>
+    <img src="https://img.shields.io/badge/xxlJob-2.3.0-brightgreen.svg"/>
+    <img src="https://img.shields.io/badge/drools-7.73.0-critical.svg"/>
+    <img src="https://img.shields.io/badge/elasticsearch-8.5.3-blue.svg"/>
+    <img src="https://img.shields.io/badge/camunda-7.19.0-ff69b4.svg"/>
+</div>
 
 ## 前言
 博森商城是博森智云科技旗下的一款标准化产品，其几乎涵盖了诸多中小企业甚至大型企业的电商需求。
