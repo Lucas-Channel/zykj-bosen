@@ -41,24 +41,24 @@ public class DroolsConditionColItemDO extends BaseEntityData implements Serializ
     private String droolsConditionColItemDesc;
 
     /**
-     * 条件对象名称，例如$SalesOrder,SalesOrder为点单entity
-     */
-    private String droolsConditionColItemObjectName;
-
-    /**
      * 条件具体字段，比如SalesOrder中的orderAmt
      */
-    private String droolsConditionColItemKey;
+    private String droolsConditionColItemColName;
 
     /**
-     * 脚本
+     * 具体条件字段key
      */
-    private String droolsConditionColItemScript;
+    private String droolsConditionColItemColNameKey;
 
     /**
      * 条件操作符，比如 >=, memberOf等等
      */
     private String droolsConditionColItemOperator;
+
+    /**
+     * 条件操作符key
+     */
+    private String droolsConditionColItemOperatorKey;
 
     /**
      * 条件明细列类型：input select date等等
@@ -88,7 +88,7 @@ public class DroolsConditionColItemDO extends BaseEntityData implements Serializ
     /**
      * 拼接符号
      */
-    private Boolean spliceSymbol;
+    private String spliceSymbol;
 
     /**
      * 默认值

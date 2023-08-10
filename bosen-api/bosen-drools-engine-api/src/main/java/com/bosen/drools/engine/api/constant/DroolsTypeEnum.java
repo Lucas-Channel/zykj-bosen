@@ -1,4 +1,4 @@
-package com.bosen.drools.constant;
+package com.bosen.drools.engine.api.constant;
 
 import java.util.Arrays;
 import java.util.Map;

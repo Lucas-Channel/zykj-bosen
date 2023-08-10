@@ -3,7 +3,7 @@ package com.bosen.drools.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.bosen.common.domain.BaseEntityData;
-import com.bosen.drools.constant.DroolsTypeEnum;
+import com.bosen.drools.engine.api.constant.DroolsTypeEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

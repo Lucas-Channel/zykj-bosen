@@ -17,7 +17,7 @@ import java.util.List;
  * @author Lucas
  */
 @RestController
-@RequestMapping("/drools/col/item")
+@RequestMapping("/drools/condition/col/item")
 public class DroolsConditionColItemController {
     /**
      * 服务对象

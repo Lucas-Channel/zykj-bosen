@@ -7,7 +7,7 @@ import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.drools.domain.DroolsScriptDO;
 import com.bosen.drools.mapper.DroolsInfoMapper;
-import com.bosen.drools.service.IDroolsInfoService;
+import com.bosen.drools.service.IDroolsScriptService;
 import com.bosen.drools.vo.request.DroolsQueryVO;
 import com.bosen.drools.vo.request.DroolsUpsertVO;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ import java.io.IOException;
  */
 @Slf4j
 @Service
-public class DroolsInfoServiceImpl extends ServiceImpl<DroolsInfoMapper, DroolsScriptDO> implements IDroolsInfoService {
+public class DroolsScriptServiceImpl extends ServiceImpl<DroolsInfoMapper, DroolsScriptDO> implements IDroolsScriptService {
 
     @Override
     public ResponseData<PageData<DroolsScriptDO>> pageList(DroolsQueryVO queryVO) {

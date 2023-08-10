@@ -20,12 +20,12 @@ import java.io.Serializable;
 public class DroolsActionColDO extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = 2130171630226580676L;
     /**
-     * 规则结果列编码
+     * 规则条件列编码
      */
     private String droolsActionColCode;
 
     /**
-     * 规则结果列名称
+     * 规则条件列名称
      */
     private String droolsActionColName;
 
@@ -33,6 +33,17 @@ public class DroolsActionColDO extends BaseEntityData implements Serializable {
      * 描述
      */
     private String droolsActionColDesc;
+
+    /**
+     * 脚本模板
+     */
+    private String droolsActionTemplate;
+
+    /**
+     * 条件对象名称，例如$SalesOrder,SalesOrder为点单entity
+     */
+    private String droolsActionColObjectName;
+
 
     /**
      * 应用层面类型

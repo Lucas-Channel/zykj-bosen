@@ -2,6 +2,7 @@ package com.bosen.drools.engine.api.vo.request;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 /**
@@ -15,37 +16,54 @@ public class GenActionParamVO implements Serializable {
     private static final long serialVersionUID = 1885391726568441546L;
 
     /**
-     * 条件对象名称，例如$SalesOrder,SalesOrder为点单entity
+     * 结果列模板
      */
-    private String droolsActionColItemObjectName;
+    @NotEmpty
+    private String droolsActionTemplate;
 
     /**
-     * 条件具体字段，比如SalesOrder中的orderAmt
+     * 结果列id
      */
-    private String droolsActionColItemKey;
+    @NotEmpty
+    private String droolsActionColId;
 
     /**
-     * 脚本
+     * 结果具体字段，比如SalesOrder中的orderAmt
      */
-    private String droolsActionColItemScript;
+    @NotEmpty
+    private String droolsActionColItemColName;
 
     /**
-     * 条件操作符，比如 >=, memberOf等等
+     * 具体结果字段key
      */
-    private String droolsActionColItemOperator;
+    @NotEmpty
+    private String droolsActionColItemColNameKey;
 
     /**
      * 规则组
      */
+    @NotEmpty
     private String groupName;
 
     /**
-     * 规则结果值
+     * 规则限制值
      */
+    @NotEmpty
     private String actionVal;
+
+    @NotEmpty
+    private String actionValKey;
 
     /**
      * 优先级
      */
     private Integer priority = 0;
+
+
+    /**
+     * 结果对象名称，例如$SalesOrder,SalesOrder为点单entity
+     */
+    @NotEmpty
+    private String droolsActionColObjectName;
+
 }

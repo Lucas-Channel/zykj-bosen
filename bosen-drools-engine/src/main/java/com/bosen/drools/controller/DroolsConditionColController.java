@@ -18,7 +18,7 @@ import java.util.List;
  * @since 2023-05-15 14:10:48
  */
 @RestController
-@RequestMapping("/drools/col")
+@RequestMapping("/drools/condition/col")
 public class DroolsConditionColController {
     /**
      * 服务对象
@@ -43,7 +43,7 @@ public class DroolsConditionColController {
      * @return 单条数据
      */
     @GetMapping("/detail/{id}")
-    public ResponseData<DroolsConditionColDO> selectOne(@PathVariable("id") String id) {
+    public ResponseData<DroolsConditionColDO> selectById(@PathVariable("id") String id) {
         return ResponseData.success(this.bsDroolsColService.getById(id));
     }
 

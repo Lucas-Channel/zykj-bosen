@@ -44,7 +44,7 @@ public class DroolsActionColController {
      * @return 单条数据
      */
     @GetMapping("/detail/{id}")
-    public ResponseData<DroolsActionColDO> selectOne(@PathVariable("id") String id) {
+    public ResponseData<DroolsActionColDO> selectById(@PathVariable("id") String id) {
         return ResponseData.success(this.bsDroolsResultColService.getById(id));
     }
 

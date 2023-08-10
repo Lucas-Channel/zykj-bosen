@@ -5,7 +5,7 @@ import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.drools.domain.DroolsScriptDO;
 import com.bosen.drools.engine.api.vo.request.GenRuleScriptReqVO;
-import com.bosen.drools.service.IDroolsInfoService;
+import com.bosen.drools.service.IDroolsScriptService;
 import com.bosen.drools.service.IRuleService;
 import com.bosen.drools.vo.request.DroolsQueryVO;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,13 +23,13 @@ import java.util.List;
  * @since 2023-05-12 16:08:41
  */
 @RestController
-@RequestMapping("/drools/")
+@RequestMapping("/drools/script/")
 public class DroolsScriptController {
     /**
      * 服务对象
      */
     @Resource
-    private IDroolsInfoService bsDroolsInfoService;
+    private IDroolsScriptService bsDroolsInfoService;
 
     @Resource
     private IRuleService ruleService;
@@ -89,8 +89,13 @@ public class DroolsScriptController {
     }
 
     @PostMapping("/genRuleScript")
-    public ResponseData<Void> genRuleScript(@RequestBody @Valid GenRuleScriptReqVO genRuleScriptReqVO) {
+    public ResponseData<String> genRuleScript(@RequestBody @Valid GenRuleScriptReqVO genRuleScriptReqVO) {
         return ruleService.genRuleScript(genRuleScriptReqVO);
+    }
+
+    @GetMapping("/testScript")
+    public ResponseData<Void> testScript() {
+        return ruleService.checkOrderAndAssignmentCoupon();
     }
 }
 

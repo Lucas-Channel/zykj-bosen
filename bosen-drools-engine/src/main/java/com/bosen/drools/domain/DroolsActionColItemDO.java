@@ -21,7 +21,7 @@ public class DroolsActionColItemDO extends BaseEntityData implements Serializabl
     private static final long serialVersionUID = 6931518787186483281L;
 
     /**
-     * 规则结果列id
+     * 规则条件列id
      */
     private String droolsActionColId;
 
@@ -41,24 +41,14 @@ public class DroolsActionColItemDO extends BaseEntityData implements Serializabl
     private String droolsActionColItemDesc;
 
     /**
-     * 条件对象名称，例如$SalesOrder,SalesOrder为点单entity
-     */
-    private String droolsActionColItemObjectName;
-
-    /**
      * 条件具体字段，比如SalesOrder中的orderAmt
      */
-    private String droolsActionColItemKey;
+    private String droolsActionColItemColName;
 
     /**
-     * 脚本
+     * 具体条件字段key
      */
-    private String droolsActionColItemScript;
-
-    /**
-     * 条件操作符，比如 >=, memberOf等等
-     */
-    private String droolsActionColItemOperator;
+    private String droolsActionColItemColNameKey;
 
     /**
      * 条件明细列类型：input select date等等
@@ -88,7 +78,7 @@ public class DroolsActionColItemDO extends BaseEntityData implements Serializabl
     /**
      * 拼接符号
      */
-    private Boolean spliceSymbol;
+    private String spliceSymbol;
 
     /**
      * 默认值

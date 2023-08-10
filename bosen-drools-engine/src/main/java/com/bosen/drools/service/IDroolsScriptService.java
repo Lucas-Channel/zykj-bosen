@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Lucas
  * @since 2023-05-12 16:08:48
  */
-public interface IDroolsInfoService extends IService<DroolsScriptDO> {
+public interface IDroolsScriptService extends IService<DroolsScriptDO> {
     /**
      * 分页查询
      * @param queryVO 参数

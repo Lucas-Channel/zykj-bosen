@@ -35,6 +35,21 @@ public class DroolsConditionColDO extends BaseEntityData implements Serializable
     private String droolsConditionColDesc;
 
     /**
+     * 脚本模板
+     */
+    private String droolsConditionTemplate;
+
+    /**
+     * 条件对象名称，例如$SalesOrder,SalesOrder为点单entity
+     */
+    private String droolsConditionColObjectName;
+
+    /**
+     * 条件对象路径
+     */
+    private String droolsConditionColObjectNamePath;
+
+    /**
      * 应用层面类型
      */
     private Integer type;
