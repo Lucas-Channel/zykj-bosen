@@ -110,11 +110,11 @@ public class RuleServiceImpl implements IRuleService {
             StringBuilder ruleScriptStr = new StringBuilder("rule \"" + DroolsConstant.rule_prefix);
             StringBuilder ruleCondition = genRuleCondition(v);
             StringBuilder ruleAction = genRuleAction(actionGroup.get(k));
-            ruleScriptStr.append(k).append("_").append(genRuleScriptReqVO.getDataSourceId()).append("\"")
-                    .append(" \nno-loop true \nlock-on-active true \nactivation-group \"")
+            ruleScriptStr.append(k).append("_").append(genRuleScriptReqVO.getDataSourceId()).append("\"\t")
+                    .append(" \n\tno-loop true \n\tlock-on-active true \n\tactivation-group \"")
                     .append(genRuleScriptReqVO.getDataSourceId())
-                    .append("\"\nwhen ")
-                    .append(ruleCondition).append("\n then \n").append(ruleAction).append(" \n end ");
+                    .append("\"\nwhen \n\t")
+                    .append(ruleCondition).append("\nthen \n\t").append(ruleAction).append("\nend ");
             droolsScript.append(ruleScriptStr).append("\n");
         });
         DroolsScriptDO droolsScriptDO = new DroolsScriptDO();

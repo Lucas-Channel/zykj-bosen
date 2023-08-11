@@ -99,7 +99,6 @@ CREATE TABLE `bs_drools_action_col_item`  (
                                               `del_flag` int DEFAULT 0,
                                               PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '规则结果列明细表';
-
 -- ----------------------------
 -- Table structure for bs_drools_script 用于存储drools代码
 -- ----------------------------
@@ -110,7 +109,7 @@ CREATE TABLE `bs_drools_script`  (
                                      `drools_code` varchar(64) NOT NULL COMMENT '规则编码',
                                      `drools_name` varchar(64) NOT NULL COMMENT '规则名称',
                                      `drools_script` text NOT NULL COMMENT '规则代码',
-                                     `drools_desc` varchar(200) NOT NULL COMMENT '描述',
+                                     `drools_desc` varchar(200) DEFAULT NULL COMMENT '描述',
                                      `status` int NULL DEFAULT NULL COMMENT '启用状态：1，启用，0禁用',
                                      `drools_type` int NULL DEFAULT NULL COMMENT '规则类型',
                                      `create_time` datetime DEFAULT NULL,
