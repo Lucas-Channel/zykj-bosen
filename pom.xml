@@ -28,6 +28,7 @@
         <module>bosen-drools-engine</module>
         <module>bosen-api</module>
         <module>bosen-camunda</module>
+        <module>bosen-message</module>
     </modules>
 
     <parent>
