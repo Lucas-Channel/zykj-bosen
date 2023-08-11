@@ -3,7 +3,6 @@ package com.bosen.drools.config;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -14,10 +13,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnClass({ KieServices.class, KieContainer.class })
 public class DroolsAutoConfiguration {
-    @Bean
-    public KieContainer kieContainer() {
-        return KieServices.Factory.get().getKieClasspathContainer();
-    }
+//    @Bean
+//    public KieContainer kieContainer() {
+//        return KieServices.Factory.get().getKieClasspathContainer();
+//    }
 //
 //    @Bean
 //    public KieSession kieSession() {
