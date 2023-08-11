@@ -22,7 +22,7 @@ public interface IRuleService {
     /**
      * 生成rule字符串
      */
-    ResponseData<String> genRuleScript(GenRuleScriptReqVO genRuleScriptReqVO);
+    ResponseData<Void> genRuleScript(GenRuleScriptReqVO genRuleScriptReqVO);
 
 
 }

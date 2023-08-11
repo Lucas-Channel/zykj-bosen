@@ -148,6 +148,8 @@ public enum ResponseCode {
     END_DATE_LESS_THAN_NOW_ERROR(1254, "有效期止不能小于当前时间"),
 
     DELETE_SCRIPT_ERROR(1255, "删除规则脚本失败"),
+
+    SAVE_SCRIPT_ERROR(1256, "新增规则脚本失败"),
     ;
 
 

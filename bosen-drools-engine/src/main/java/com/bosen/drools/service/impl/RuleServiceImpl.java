@@ -25,6 +25,7 @@ import org.kie.api.builder.Results;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -78,7 +79,8 @@ public class RuleServiceImpl implements IRuleService {
     }
 
     @Override
-    public ResponseData<String> genRuleScript(GenRuleScriptReqVO genRuleScriptReqVO) {
+    @Transactional
+    public ResponseData<Void> genRuleScript(GenRuleScriptReqVO genRuleScriptReqVO) {
         if (Objects.nonNull(genRuleScriptReqVO.getEffectiveEndDate()) && LocalDateTime.parse(genRuleScriptReqVO.getEffectiveEndDate()).compareTo(LocalDateTime.now()) < 0) {
             throw new BusinessException(ResponseCode.END_DATE_LESS_THAN_NOW_ERROR);
         }
@@ -115,8 +117,18 @@ public class RuleServiceImpl implements IRuleService {
                     .append(ruleCondition).append("\n then \n").append(ruleAction).append(" \n end ");
             droolsScript.append(ruleScriptStr).append("\n");
         });
+        DroolsScriptDO droolsScriptDO = new DroolsScriptDO();
+        droolsScriptDO.setDroolsScript(droolsScript.toString());
+        droolsScriptDO.setDataSourceId(genRuleScriptReqVO.getDataSourceId());
+        droolsScriptDO.setDroolsType(genRuleScriptReqVO.getDroolsType());
+        droolsScriptDO.setDroolsCode(genRuleScriptReqVO.getCouponCode());
+        droolsScriptDO.setDroolsName(genRuleScriptReqVO.getDroolScriptName());
+        boolean save = droolsScriptService.save(droolsScriptDO);
+        if (!save) {
+            throw new BusinessException(ResponseCode.SAVE_SCRIPT_ERROR);
+        }
         redisService.set(genRuleScriptReqVO.getDataSourceId(), droolsScript.toString());
-        return ResponseData.success(droolsScript.toString());
+        return ResponseData.success();
     }
 
     private StringBuilder genRuleCondition(List<GenConditionParamVO> conditionParamVOS) {

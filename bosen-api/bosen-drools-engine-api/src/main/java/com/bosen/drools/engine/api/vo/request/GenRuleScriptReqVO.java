@@ -34,6 +34,8 @@ public class GenRuleScriptReqVO implements Serializable {
      */
     private String couponCode;
 
+    private String droolScriptName;
+
     @Valid
     @NotEmpty(message = "条件不能为空")
     private List<GenConditionParamVO> conditionParams;

@@ -89,7 +89,7 @@ public class DroolsScriptController {
     }
 
     @PostMapping("/genRuleScript")
-    public ResponseData<String> genRuleScript(@RequestBody @Valid GenRuleScriptReqVO genRuleScriptReqVO) {
+    public ResponseData<Void> genRuleScript(@RequestBody @Valid GenRuleScriptReqVO genRuleScriptReqVO) {
         return ruleService.genRuleScript(genRuleScriptReqVO);
     }
 
