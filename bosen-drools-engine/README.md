@@ -107,3 +107,78 @@ kieSession.fireUntilHalt();
 
 ## 优惠券和规则约束
 * 优惠券创建需要选择对应的规则，而每一个规则均来自于规则服务，其中数据关系为：规则列表，规则列结果表，
+
+## 生成脚本案例
+```aidl
+{
+    "effectiveStartDate": "2023-08-20 16:32:11",
+    "effectiveEndDate": null,
+    "couponCode": "adaas",
+    "conditionParams": [{
+        "droolsConditionTemplate": "$colOne $operation $conditionVal",
+        "droolsConditionColId":"1",
+        "droolsConditionColItemColName":"age",
+        "droolsConditionColItemColNameKey":"$colOne",
+        "droolsConditionColItemOperator":"<=",
+        "droolsConditionColItemOperatorKey":"$operation",
+        "groupName":"a",
+        "conditionVal":"10",
+        "conditionValKey":"$conditionVal",
+        "priority":1,
+        "droolsConditionColObjectName":"TestPerson",
+        "droolsConditionColObjectNamePath":"com.bosen.drools.vo.TestPerson"
+    },
+    {
+        "droolsConditionTemplate": "$colOne $operation $conditionVal",
+        "droolsConditionColId":"1",
+        "droolsConditionColItemColName":"age",
+        "droolsConditionColItemColNameKey":"$colOne",
+        "droolsConditionColItemOperator":">",
+        "droolsConditionColItemOperatorKey":"$operation",
+        "groupName":"b",
+        "conditionVal":"10",
+        "conditionValKey":"$conditionVal",
+        "priority":1,
+        "droolsConditionColObjectName":"TestPerson",
+        "droolsConditionColObjectNamePath":"com.bosen.drools.vo.TestPerson"
+    },
+    {
+        "droolsConditionTemplate": "$colOne $operation $conditionVal",
+        "droolsConditionColId":"1",
+        "droolsConditionColItemColName":"age",
+        "droolsConditionColItemColNameKey":"$colOne",
+        "droolsConditionColItemOperator":"<",
+        "droolsConditionColItemOperatorKey":"$operation",
+        "groupName":"b",
+        "conditionVal":"20",
+        "conditionValKey":"$conditionVal",
+        "priority":1,
+        "droolsConditionColObjectName":"TestPerson",
+        "droolsConditionColObjectNamePath":"com.bosen.drools.vo.TestPerson"
+    }],
+    "actionParams": [{
+        "droolsActionTemplate": "$colOne(\"$conditionVal\")",
+        "droolsActionColId":"2",
+        "droolsActionColItemColName":"setName",
+        "droolsActionColItemColNameKey":"$colOne",
+        "groupName":"a",
+        "actionVal":"小虎",
+        "actionValKey":"$conditionVal",
+        "priority":1,
+        "droolsActionColObjectName":"TestPerson"
+    },
+    {
+        "droolsActionTemplate": "$colOne(\"$conditionVal\")",
+        "droolsActionColId":"2",
+        "droolsActionColItemColName":"setName",
+        "droolsActionColItemColNameKey":"$colOne",
+        "groupName":"b",
+        "actionVal":"小虎2",
+        "actionValKey":"$conditionVal",
+        "priority":1,
+        "droolsActionColObjectName":"TestPerson"
+    }],
+    "droolsType": 1,
+    "dataSourceId": "12ewqe2eqweq2"
+}
+```
