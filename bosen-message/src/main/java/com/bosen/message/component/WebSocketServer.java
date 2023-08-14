@@ -48,6 +48,9 @@ public class WebSocketServer {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
+        if (Objects.equals(message, "unReadMsg")) {
+            // 发送未读消息统计数据
+        }
         log.info("服务端收到客户端[{}]的消息:{}", session.getId(), message);
     }
 
