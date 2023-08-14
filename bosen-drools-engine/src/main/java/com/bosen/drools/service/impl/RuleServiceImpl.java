@@ -106,6 +106,7 @@ public class RuleServiceImpl implements IRuleService {
         StringBuilder droolsScript = new StringBuilder();
         List<String> pathList = genRuleScriptReqVO.getConditionParams().stream().filter(Objects::nonNull).map(GenConditionParamVO::getDroolsConditionColObjectNamePath).distinct().collect(Collectors.toList());
         pathList.forEach(i -> droolsScript.append("import ").append(i).append(";\n"));
+        int priorityAll = conditionGroup.keySet().size();
         conditionGroup.forEach((k, v) -> {
             StringBuilder ruleScriptStr = new StringBuilder("rule \"" + DroolsConstant.rule_prefix);
             StringBuilder ruleCondition = genRuleCondition(v);
@@ -114,7 +115,7 @@ public class RuleServiceImpl implements IRuleService {
                     .append(" \n\tno-loop true \n\tlock-on-active true \n\tactivation-group \"")
                     .append(genRuleScriptReqVO.getDataSourceId())
                     .append(" \n\tsalience ")
-                    .append(conditionGroup.keySet().size() - v.get(0).getPriority())
+                    .append(priorityAll - v.get(0).getPriority())
                     .append("\"\nwhen \n\t")
                     .append(ruleCondition).append("\nthen \n\t").append(ruleAction).append("\nend ");
             droolsScript.append(ruleScriptStr).append("\n");
