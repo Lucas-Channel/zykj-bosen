@@ -113,6 +113,8 @@ public class RuleServiceImpl implements IRuleService {
             ruleScriptStr.append(k).append("_").append(genRuleScriptReqVO.getDataSourceId()).append("\"\t")
                     .append(" \n\tno-loop true \n\tlock-on-active true \n\tactivation-group \"")
                     .append(genRuleScriptReqVO.getDataSourceId())
+                    .append(" \n\tsalience ")
+                    .append(conditionGroup.keySet().size() - v.get(0).getPriority())
                     .append("\"\nwhen \n\t")
                     .append(ruleCondition).append("\nthen \n\t").append(ruleAction).append("\nend ");
             droolsScript.append(ruleScriptStr).append("\n");
