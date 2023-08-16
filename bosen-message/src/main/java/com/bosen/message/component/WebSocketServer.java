@@ -1,6 +1,12 @@
 package com.bosen.message.component;
 
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.common.util.JacksonUtils;
+import com.bosen.common.util.SpringBeanUtils;
+import com.bosen.message.api.vo.request.SendWsMessageBatchVO;
+import com.bosen.message.api.vo.request.SendWsMessageVO;
+import com.bosen.message.api.vo.response.WsMessageResponseVO;
+import com.bosen.message.service.IBsUserMessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -12,13 +18,15 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 1、由于spring bean 是在项目启动注入的，在注入到spring容器后是静态的，无法在修改，
+ * 而websocket是在运行时进行双向通信，一定程度上ws的注入方式和spring是不一样的，他的创建是可能发生在运行时，所以需要通过上下文获取bean
  * @author Lucas
  * @version 2.0.0
  * @date 2023/8/11
  */
 @Slf4j
 @Component
-@ServerEndpoint("/message/ws/{userId}")
+@ServerEndpoint("/message/ws/{userId}/{roleId}")
 public class WebSocketServer {
 
     private static final ConcurrentHashMap<String, Session> sessionMap = new ConcurrentHashMap<>();
@@ -27,17 +35,25 @@ public class WebSocketServer {
      * 连接开启调用的方法
      */
     @OnOpen
-    public void onOpen(Session session, @PathParam("userId") String userId) {
-        sessionMap.put(userId, session);
+    public void onOpen(Session session, @PathParam("userId") String userId, @PathParam("roleId") String roleId) {
+        sessionMap.put(userId + "_" + roleId, session);
         log.info("有新连接加入：{}", session.getId());
+        // 推送未读消息总数量
+        IBsUserMessageService userMessageService = SpringBeanUtils.getBean(IBsUserMessageService.class);
+        ResponseData<Integer> unreadCount = userMessageService.getUnreadCount(userId, roleId);
+        WsMessageResponseVO response = new WsMessageResponseVO();
+        response.setUnReadMsgCount(unreadCount.getData());
+        response.setTitle("未读统计");
+        response.setContent("您有" + response.getUnReadMsgCount() + "条未读消息，请及时处理！");
+        this.sendMessage(response, userId, roleId);
     }
 
     /**
      * 连接关闭调用的方法
      */
     @OnClose
-    public void onClose(Session session, @PathParam("userId") String userId) {
-        sessionMap.remove(userId);
+    public void onClose(Session session, @PathParam("userId") String userId, @PathParam("roleId") String roleId) {
+        sessionMap.remove(userId + "_" + roleId);
         log.info("有一连接关闭：{}", session.getId());
     }
 
@@ -48,9 +64,6 @@ public class WebSocketServer {
      */
     @OnMessage
     public void onMessage(String message, Session session) {
-        if (Objects.equals(message, "unReadMsg")) {
-            // 发送未读消息统计数据
-        }
         log.info("服务端收到客户端[{}]的消息:{}", session.getId(), message);
     }
 
@@ -63,28 +76,55 @@ public class WebSocketServer {
     /**
      * 服务端发送消息给客户端
      */
-    private void sendMessage(String message, Session toSession) {
-        try {
-            log.info("服务端给客户端[{}]发送消息{}", toSession.getId(), message);
-            toSession.getBasicRemote().sendText(message);
-        } catch (Exception e) {
-            log.error("服务端发送消息给客户端失败：{}", e.getMessage());
+    public ResponseData<Void> sendMessage(SendWsMessageVO wsMessageVO) {
+       log.info("发消息给客户端");
+        IBsUserMessageService userMessageService = SpringBeanUtils.getBean(IBsUserMessageService.class);
+        Session session = sessionMap.get(wsMessageVO.getReceiveUserId() + "_" + wsMessageVO.getReceiveUserRoleId());
+        if (Objects.nonNull(session)) {
+            try {
+                WsMessageResponseVO response = new WsMessageResponseVO();
+                response.setTitle(wsMessageVO.getTitle());
+                response.setContent(wsMessageVO.getContent());
+                ResponseData<Integer> unreadCount = userMessageService.getUnreadCount(wsMessageVO.getReceiveUserId(), wsMessageVO.getReceiveUserRoleId());
+                response.setUnReadMsgCount(unreadCount.getData());
+                session.getBasicRemote().sendText(JacksonUtils.toJson(wsMessageVO));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        return ResponseData.success();
     }
 
     /**
      * 服务端发送消息给客户端
      */
-    public ResponseData<Void> sendMessage(String msg, String userId) {
-       log.info("发消息给客户端");
-        Session session = sessionMap.get(userId);
+    public ResponseData<Void> sendMessage(WsMessageResponseVO msg, String userId, String roleId) {
+        log.info("发消息给客户端");
+        Session session = sessionMap.get(userId + "_" + roleId);
         if (Objects.nonNull(session)) {
             try {
-                session.getBasicRemote().sendText(msg);
+                session.getBasicRemote().sendText(JacksonUtils.toJson(msg));
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        return ResponseData.success();
+    }
+
+    /**
+     * 服务端发送消息给客户端
+     */
+    public ResponseData<Void> sendMessageBatch(SendWsMessageBatchVO wsMessageVO) {
+        log.info("发消息给客户端");
+        WsMessageResponseVO response = new WsMessageResponseVO();
+        response.setTitle(wsMessageVO.getTitle());
+        response.setContent(wsMessageVO.getContent());
+        IBsUserMessageService userMessageService = SpringBeanUtils.getBean(IBsUserMessageService.class);
+        wsMessageVO.getReceiveUser().forEach(i -> {
+            ResponseData<Integer> unreadCount = userMessageService.getUnreadCount(i.getReceiveUserId(), i.getReceiveUserRoleId());
+            response.setUnReadMsgCount(unreadCount.getData());
+            this.sendMessage(response, i.getReceiveUserId(), i.getReceiveUserRoleId());
+        });
         return ResponseData.success();
     }
 }

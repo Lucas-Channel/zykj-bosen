@@ -150,6 +150,8 @@ public enum ResponseCode {
     DELETE_SCRIPT_ERROR(1255, "删除规则脚本失败"),
 
     SAVE_SCRIPT_ERROR(1256, "新增规则脚本失败"),
+
+    MESSAGE_SERVER_ERROR(1257, "消息服务异常"),
     ;
 
 

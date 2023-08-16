@@ -1,10 +1,7 @@
 package com.bosen.message.vo.response;
 
 
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -15,10 +12,8 @@ import java.time.LocalDateTime;
  * @author Lucas
  * @since 2023-08-14 15:26:30
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
-@TableName("bs_user_message")
-public class BsUserMessageDetailVO extends BaseEntityData implements Serializable {
+public class BsUserMessageDetailVO implements Serializable {
 
     private static final long serialVersionUID = 3487076317514673093L;
     /**

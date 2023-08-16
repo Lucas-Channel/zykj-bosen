@@ -69,7 +69,7 @@ public class RuleServiceImpl implements IRuleService {
         kieSession.insert(testPerson);
         kieSession.fireAllRules();
         kieSession.dispose();
-        log.info("执行规则后结果：【{}】", JacksonUtils.toJson(testPerson, new ObjectMapper()));
+        log.info("执行规则后结果：【{}】", JacksonUtils.toJson(testPerson));
         return ResponseData.success();
     }
 

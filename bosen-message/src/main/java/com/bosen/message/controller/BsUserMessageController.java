@@ -5,7 +5,7 @@ import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.message.service.IBsUserMessageService;
 import com.bosen.message.vo.request.UserMessageQueryVO;
-import com.bosen.message.vo.request.UserMessageUpsertVO;
+import com.bosen.message.api.vo.request.UserMessageUpsertVO;
 import com.bosen.message.vo.response.BsUserMessageDetailVO;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ import java.util.List;
  * @since 2023-08-14 15:26:30
  */
 @RestController
-@RequestMapping("bsUserMessage")
+@RequestMapping("/user/message")
 public class BsUserMessageController {
     /**
      * 服务对象
@@ -60,5 +60,26 @@ public class BsUserMessageController {
     public ResponseData<Void> deleteByIds(@RequestBody List<String> idList) {
         return ResponseData.judge(this.bsUserMessageService.removeByIds(idList));
     }
+
+    /**
+     * 已读
+     * @param id 消息id
+     * @return 结果
+     */
+    @PostMapping("/read/{id}")
+    public ResponseData<Void> ReadMsg(@RequestBody @PathVariable("id") String id) {
+        return bsUserMessageService.ReadMsg(id);
+    }
+
+    /**
+     * 全部已读
+     * @return 结果
+     */
+    @PostMapping("/allReadMsg")
+    public ResponseData<Void> allReadMsg() {
+        return bsUserMessageService.allReadMsg();
+    }
+
+
 }
 

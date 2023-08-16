@@ -1,4 +1,4 @@
-package com.bosen.message.vo.request;
+package com.bosen.message.api.vo.request;
 
 
 import lombok.Data;

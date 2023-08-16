@@ -24,6 +24,7 @@
         <module>bosen-camunda-api</module>
         <module>bosen-drools-engine-api</module>
         <module>bosen-marketing-api</module>
+        <module>bosen-message-api</module>
     </modules>
 
     <dependencies>

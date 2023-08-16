@@ -20,7 +20,7 @@ import java.util.List;
  * @since 2023-08-14 11:52:23
  */
 @RestController
-@RequestMapping("bsSystemMessage")
+@RequestMapping("/system/message")
 public class BsSystemMessageController {
     /**
      * 服务对象
