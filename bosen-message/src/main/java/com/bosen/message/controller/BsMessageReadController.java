@@ -15,7 +15,7 @@ import java.util.List;
  * @since 2023-08-18 11:14:56
  */
 @RestController
-@RequestMapping("bsMessageRead")
+@RequestMapping("/message/read")
 public class BsMessageReadController {
     /**
      * 服务对象
@@ -29,8 +29,8 @@ public class BsMessageReadController {
      * @param messageId 消息id
      * @return 结果
      */
-    @PostMapping("/read/{messageId}")
-    public ResponseData<Void> ReadMsg(@RequestBody @PathVariable("messageId") String messageId) {
+    @PostMapping("/read")
+    public ResponseData<Void> ReadMsg(@RequestBody String messageId) {
         return bsMessageReadService.ReadMsg(messageId);
     }
 
