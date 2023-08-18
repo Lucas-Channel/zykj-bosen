@@ -29,7 +29,7 @@ public class BsMessageReadController {
      * @param messageId 消息id
      * @return 结果
      */
-    @PostMapping("/read")
+    @PostMapping
     public ResponseData<Void> ReadMsg(@RequestBody String messageId) {
         return bsMessageReadService.ReadMsg(messageId);
     }
