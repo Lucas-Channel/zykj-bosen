@@ -1,24 +1,30 @@
-package com.bosen.message.api.vo.request;
+package com.bosen.message.domain;
 
 
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.bosen.common.domain.BaseEntityData;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 用户消息(BsUserMessage)表实体类
+ * 消息(BsMessage)表实体类
  *
  * @author Lucas
- * @since 2023-08-14 15:26:30
+ * @since 2023-08-18 11:14:55
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class UserMessageUpsertVO implements Serializable {
+@TableName("bs_message")
+public class BsMessage extends BaseEntityData implements Serializable {
 
-
-    private static final long serialVersionUID = 3673604011579227316L;
-
-    private String id;
+    private static final long serialVersionUID = 7225337345620019509L;
+    /**
+     * 消息群体类型
+     **/
+    private Integer messageTargetGroupType;
 
     /**
      * 接收人id
@@ -66,18 +72,14 @@ public class UserMessageUpsertVO implements Serializable {
     private LocalDateTime effectiveEndDate;
 
     /**
-     * 状态
-     **/
-    private Integer status;
-
-    /**
      * 消息类型：1、系统消息，2、其他消息
      **/
     private Integer type;
 
     /**
-     * 业务消息类型：1、交易消息，2、订单消息， 3、售后，4、物流，5、库存，6、会员，7、其他
+     * 业务消息类型：1、交易消息，2、订单消息， 3、售后，4、物流，5、库存，6、会员，7、其他， 8、系统
      **/
     private Integer businessType;
+
 }
 

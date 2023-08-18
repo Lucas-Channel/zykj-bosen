@@ -36,6 +36,8 @@ public enum BusinessTypeConstant {
     MEMBER(6, "会员"),
 
     OTHER(7, "其他"),
+
+    SYSTEM(8, "系统"),
     ;
 
     private final Integer code;

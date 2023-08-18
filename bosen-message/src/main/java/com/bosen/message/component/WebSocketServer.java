@@ -6,7 +6,7 @@ import com.bosen.common.util.SpringBeanUtils;
 import com.bosen.message.api.vo.request.SendWsMessageBatchVO;
 import com.bosen.message.api.vo.request.SendWsMessageVO;
 import com.bosen.message.api.vo.response.WsMessageResponseVO;
-import com.bosen.message.service.IBsUserMessageService;
+import com.bosen.message.service.IBsMessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -39,8 +39,8 @@ public class WebSocketServer {
         sessionMap.put(userId + "_" + roleId, session);
         log.info("有新连接加入：{}", session.getId());
         // 推送未读消息总数量
-        IBsUserMessageService userMessageService = SpringBeanUtils.getBean(IBsUserMessageService.class);
-        ResponseData<Integer> unreadCount = userMessageService.getUnreadCount(userId, roleId);
+        IBsMessageService messageService = SpringBeanUtils.getBean(IBsMessageService.class);
+        ResponseData<Integer> unreadCount = messageService.getUnreadCount(userId, roleId);
         WsMessageResponseVO response = new WsMessageResponseVO();
         response.setUnReadMsgCount(unreadCount.getData());
         response.setTitle("未读统计");
@@ -78,14 +78,14 @@ public class WebSocketServer {
      */
     public ResponseData<Void> sendMessage(SendWsMessageVO wsMessageVO) {
        log.info("发消息给客户端");
-        IBsUserMessageService userMessageService = SpringBeanUtils.getBean(IBsUserMessageService.class);
+        IBsMessageService messageService = SpringBeanUtils.getBean(IBsMessageService.class);
         Session session = sessionMap.get(wsMessageVO.getReceiveUserId() + "_" + wsMessageVO.getReceiveUserRoleId());
         if (Objects.nonNull(session)) {
             try {
                 WsMessageResponseVO response = new WsMessageResponseVO();
                 response.setTitle(wsMessageVO.getTitle());
                 response.setContent(wsMessageVO.getContent());
-                ResponseData<Integer> unreadCount = userMessageService.getUnreadCount(wsMessageVO.getReceiveUserId(), wsMessageVO.getReceiveUserRoleId());
+                ResponseData<Integer> unreadCount = messageService.getUnreadCount(wsMessageVO.getReceiveUserId(), wsMessageVO.getReceiveUserRoleId());
                 response.setUnReadMsgCount(unreadCount.getData());
                 session.getBasicRemote().sendText(JacksonUtils.toJson(wsMessageVO));
             } catch (IOException e) {
@@ -119,9 +119,9 @@ public class WebSocketServer {
         WsMessageResponseVO response = new WsMessageResponseVO();
         response.setTitle(wsMessageVO.getTitle());
         response.setContent(wsMessageVO.getContent());
-        IBsUserMessageService userMessageService = SpringBeanUtils.getBean(IBsUserMessageService.class);
+        IBsMessageService messageService = SpringBeanUtils.getBean(IBsMessageService.class);
         wsMessageVO.getReceiveUser().forEach(i -> {
-            ResponseData<Integer> unreadCount = userMessageService.getUnreadCount(i.getReceiveUserId(), i.getReceiveUserRoleId());
+            ResponseData<Integer> unreadCount = messageService.getUnreadCount(i.getReceiveUserId(), i.getReceiveUserRoleId());
             response.setUnReadMsgCount(unreadCount.getData());
             this.sendMessage(response, i.getReceiveUserId(), i.getReceiveUserRoleId());
         });

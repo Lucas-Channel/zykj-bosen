@@ -2,9 +2,9 @@ package com.bosen.message.api.feign;
 
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.message.api.fallback.MessageFeignFallBack;
+import com.bosen.message.api.vo.request.MessageUpsertVO;
 import com.bosen.message.api.vo.request.SendWsMessageBatchVO;
 import com.bosen.message.api.vo.request.SendWsMessageVO;
-import com.bosen.message.api.vo.request.UserMessageUpsertVO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,6 +31,6 @@ public interface IMessageFeign {
      * @param messageUpsertVO 实体对象
      * @return 新增结果
      */
-    @PostMapping("/user/message/upsert")
-    ResponseData<Void> upsert(@RequestBody @Valid UserMessageUpsertVO messageUpsertVO);
+    @PostMapping("/common/message/upsert")
+    ResponseData<Void> upsert(@RequestBody @Valid MessageUpsertVO messageUpsertVO);
 }

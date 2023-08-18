@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bosen.message.mapper.BsMessageMapper">
+
+    <select id="pageList" resultType="com.bosen.message.vo.response.BsMessageDetailVO">
+        select title,
+               content,
+               business_type,
+               `type`,
+               visit_url,
+               effective_start_date,
+               effective_end_date,
+               message_target_group_type,
+               create_time,
+               status,
+               status_name
+        from (
+             select bm.title,
+                    bm.content,
+                    bm.business_type,
+                    bm.type,
+                    bm.visit_url,
+                    bm.effective_start_date,
+                    bm.effective_end_date,
+                    bm.message_target_group_type,
+                    bm.create_time,
+                    if(bmr.id is null,
+                       0,
+                       1)    status,
+                    if(bmr.id is null,
+                       '未读',
+                       '已读') status_name
+             from bs_message bm
+                      left join bs_message_read bmr on (bmr.message_id = bm.id and bmr.del_flag = 0 and bmr.receive_user_id = #{queryParams.receiveUserId} and bmr.receive_user_role_id = #{queryParams.receiveUserRoleId})
+             where bm.del_flag = 0
+               and message_target_group_type = 1
+             union
+             select bm.title,
+                    bm.content,
+                    bm.business_type,
+                    bm.type,
+                    bm.visit_url,
+                    bm.effective_start_date,
+                    bm.effective_end_date,
+                    bm.message_target_group_type,
+                    bm.create_time,
+                    if(bmr.id is null,
+                       0,
+                       1)    status,
+                    if(bmr.id is null,
+                       '未读',
+                       '已读') status_name
+             from bs_message bm
+                      left join bs_message_read bmr on (bmr.message_id = bm.id and bmr.del_flag = 0 and bmr.receive_user_id = #{queryParams.receiveUserId} and bmr.receive_user_role_id = #{queryParams.receiveUserRoleId})
+             where bm.del_flag = 0
+               and message_target_group_type = 2
+               and bm.receive_user_id = #{queryParams.receiveUserId}
+               and bm.receive_user_role_id = #{queryParams.receiveUserRoleId}
+             union
+             select bm.title,
+                    bm.content,
+                    bm.business_type,
+                    bm.type,
+                    bm.visit_url,
+                    bm.effective_start_date,
+                    bm.effective_end_date,
+                    bm.message_target_group_type,
+                    bm.create_time,
+                    if(bmr.id is null,
+                       0,
+                       1)    status,
+                    if(bmr.id is null,
+                       '未读',
+                       '已读') status_name
+             from bs_message bm
+                      left join bs_message_read bmr on (bmr.message_id = bm.id and bmr.del_flag = 0 and bmr.receive_user_id = #{queryParams.receiveUserId} and bmr.receive_user_role_id = #{queryParams.receiveUserRoleId})
+             where bm.del_flag = 0
+               and message_target_group_type = 3
+               and bm.receive_user_role_id = #{queryParams.receiveUserRoleId}
+        ) vie
+        <where>
+            <if test="queryParams.title !='' and queryParams.title != null">
+                and vie.title like concat('%',#{queryParams.title},'%')
+            </if>
+            <if test="queryParams.messageTargetGroupType != null">
+                and vie.message_target_group_type = #{queryParams.messageTargetGroupType}
+            </if>
+        </where>
+        order by vie.create_time desc
+    </select>
+
+    <select id="unReadList" resultType="integer">
+        select count(1)
+        from (
+             select bm.title,
+                    bm.content,
+                    bm.business_type,
+                    bm.type,
+                    bm.visit_url,
+                    bm.effective_start_date,
+                    bm.effective_end_date,
+                    bm.message_target_group_type,
+                    bm.create_time
+             from bs_message bm
+                      left join bs_message_read bmr on (bmr.message_id = bm.id and bmr.del_flag = 0 and bmr.receive_user_id = #{queryParams.receiveUserId} and bmr.receive_user_role_id = #{queryParams.receiveUserRoleId})
+             where bm.del_flag = 0
+               and message_target_group_type = 1
+               and bmr.id is null
+             union
+             select bm.title,
+                    bm.content,
+                    bm.business_type,
+                    bm.type,
+                    bm.visit_url,
+                    bm.effective_start_date,
+                    bm.effective_end_date,
+                    bm.message_target_group_type,
+                    bm.create_time
+             from bs_message bm
+                      left join bs_message_read bmr on (bmr.message_id = bm.id and bmr.del_flag = 0 and bmr.receive_user_id = #{queryParams.receiveUserId} and bmr.receive_user_role_id = #{queryParams.receiveUserRoleId})
+             where bm.del_flag = 0
+               and bmr.id is null
+               and message_target_group_type = 2
+               and bm.receive_user_id = #{queryParams.receiveUserId}
+               and bm.receive_user_role_id = #{queryParams.receiveUserRoleId}
+             union
+             select bm.title,
+                    bm.content,
+                    bm.business_type,
+                    bm.type,
+                    bm.visit_url,
+                    bm.effective_start_date,
+                    bm.effective_end_date,
+                    bm.message_target_group_type,
+                    bm.create_time
+             from bs_message bm
+                      left join bs_message_read bmr on (bmr.message_id = bm.id and bmr.del_flag = 0 and bmr.receive_user_id = #{queryParams.receiveUserId} and bmr.receive_user_role_id = #{queryParams.receiveUserRoleId})
+             where bm.del_flag = 0
+               and bmr.id is null
+               and message_target_group_type = 3
+               and bm.receive_user_role_id = #{queryParams.receiveUserRoleId}
+        ) vie
+    </select>
+
+</mapper>
+

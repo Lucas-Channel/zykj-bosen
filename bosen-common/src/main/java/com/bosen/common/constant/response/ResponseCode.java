@@ -152,6 +152,8 @@ public enum ResponseCode {
     SAVE_SCRIPT_ERROR(1256, "新增规则脚本失败"),
 
     MESSAGE_SERVER_ERROR(1257, "消息服务异常"),
+
+    DATA_NOT_EXIT_ERROR(1258, "数据不存在"),
     ;
 
 

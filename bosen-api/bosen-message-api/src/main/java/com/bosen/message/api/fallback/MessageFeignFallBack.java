@@ -3,9 +3,9 @@ package com.bosen.message.api.fallback;
 import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.message.api.feign.IMessageFeign;
+import com.bosen.message.api.vo.request.MessageUpsertVO;
 import com.bosen.message.api.vo.request.SendWsMessageBatchVO;
 import com.bosen.message.api.vo.request.SendWsMessageVO;
-import com.bosen.message.api.vo.request.UserMessageUpsertVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ public class MessageFeignFallBack implements IMessageFeign {
     }
 
     @Override
-    public ResponseData<Void> upsert(UserMessageUpsertVO messageUpsertVO) {
+    public ResponseData<Void> upsert(MessageUpsertVO messageUpsertVO) {
         return ResponseData.fail(ResponseCode.MESSAGE_SERVER_ERROR);
     }
 }
