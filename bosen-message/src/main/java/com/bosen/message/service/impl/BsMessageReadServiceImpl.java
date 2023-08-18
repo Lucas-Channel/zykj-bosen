@@ -27,10 +27,11 @@ public class BsMessageReadServiceImpl extends ServiceImpl<BsMessageReadMapper, B
     }
 
     private BsMessageRead setBaseMsg(String messageId) {
+        // todo 登入信息替换
         BsMessageRead messageRead = new BsMessageRead();
         messageRead.setMessageId(messageId);
-        messageRead.setReceiveUserId("当前登录用户");
-        messageRead.setReceiveUserRoleId("当前登录用户角色");
+        messageRead.setReceiveUserId("1");
+        messageRead.setReceiveUserRoleId("1");
         return messageRead;
     }
 
