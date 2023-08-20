@@ -13,4 +13,60 @@ spring:
           - data-id: common.yaml
             refresh: true
         prefix: ${spring.application.name}
+#    stream:
+#      rabbit:
+#        bindings:
+#          ackMessage-in-0:
+#            consumer:
+#              acknowledge-mode: manual  # manual手动确认 ，auto 自动确认
+#          delayMessage-in-0:
+#            consumer:
+#              delayedExchange: true # 开启延时
+#              exchange-type: direct
+#          delayMessage-out-0:
+#            producer:
+#              delayedExchange: true  # 开启延时
+#              exchange-type: direct
+#      bindings:
+#        delayMessage-in-0:
+#          destination: delayMessage.exchange.cloud  # mq对应交换机
+#          content-type: application/json
+#          consumer:
+#            acknowledge-mode: auto # manual手动确认 ，auto 自动确认
+#            autoStartup: true
+#            concurrency: 10
+#          group: delay-group    # 消息组
+#          binder: rabbit
+#        delayMessage-out-0:
+#          destination: delayMessage.exchange.cloud
+#          content-type: application/json
+#          group: delay-group
+#          binder: rabbit
+#        ackMessage-in-0:
+#          destination: ackMessage.exchange.cloud
+#          content-type: application/json
+#          consumer:
+#            acknowledge-mode: manual # manual手动确认 ，auto 自动确认
+#          group: ackMessage-group
+#          binder: rabbit
+#        ackMessage-out-0:
+#          destination: ackMessage.exchange.cloud
+#          content-type: application/json
+#          group: ackMessage-group
+#          binder: rabbit
+#        normal-in-0:
+#          destination: normal.exchange.cloud
+#          content-type: application/json
+#          consumer:
+#            acknowledge-mode: auto # manual手动确认 ，auto 自动确认
+#          group: normal-group
+#          binder: rabbit
+#        normal-out-0:
+#          destination: normal.exchange.cloud
+#          content-type: application/json
+#          group: normal-group
+#          binder: rabbit
+#    function:
+#      # 定义消费者
+#      definition: ackMessage;normal;delayMessage
 #        extension-configs: 扩展配置
