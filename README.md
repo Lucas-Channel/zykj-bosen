@@ -13,6 +13,7 @@
     <img src="https://img.shields.io/badge/drools-7.73.0-critical.svg"/>
     <img src="https://img.shields.io/badge/elasticsearch-8.5.3-blue.svg"/>
     <img src="https://img.shields.io/badge/camunda-7.19.0-ff69b4.svg"/>
+    <img src="https://img.shields.io/badge/SpringCloudStream-3.2.4-brightgreen.svg"/>
 </div>
 
 ## 前言
