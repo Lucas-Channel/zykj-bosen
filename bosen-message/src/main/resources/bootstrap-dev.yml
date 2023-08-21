@@ -14,6 +14,18 @@ spring:
             refresh: true
         prefix: ${spring.application.name}
 #    stream:
+#      default-binder: rabbit
+#      binders:
+#        rabbit:
+#          type: rabbit
+#          environment:
+#            spring:
+#              rabbit:
+#                host: 127.0.0.1
+#                port: 5672
+#                username: bosen
+#                password: bosen@888
+#                virtual-host: /
 #      rabbit:
 #        bindings:
 #          ackMessage-in-0:
