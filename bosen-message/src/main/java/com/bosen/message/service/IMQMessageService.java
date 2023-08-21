@@ -2,6 +2,7 @@ package com.bosen.message.service;
 
 
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.message.api.vo.request.SendMQMessageVO;
 
 /**
  * @author Lucas
@@ -9,7 +10,7 @@ import com.bosen.common.constant.response.ResponseData;
  * @date 2023/8/18
  */
 public interface IMQMessageService {
-    ResponseData<Void> sendMsg(Object msg, String bindingName);
+    ResponseData<Void> sendMsg(SendMQMessageVO mqMessageVO);
 
-    ResponseData<Void> sendDelayMsg(Object msg, String bindingName, Integer seconds);
+    ResponseData<Void> sendDelayMsg(SendMQMessageVO mqMessageVO);
 }

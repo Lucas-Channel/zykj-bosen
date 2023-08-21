@@ -4,6 +4,7 @@ import com.bosen.common.constant.response.ResponseCode;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.message.api.feign.IMessageFeign;
 import com.bosen.message.api.vo.request.MessageUpsertVO;
+import com.bosen.message.api.vo.request.SendMQMessageVO;
 import com.bosen.message.api.vo.request.SendWsMessageBatchVO;
 import com.bosen.message.api.vo.request.SendWsMessageVO;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,16 @@ public class MessageFeignFallBack implements IMessageFeign {
 
     @Override
     public ResponseData<Void> upsert(MessageUpsertVO messageUpsertVO) {
+        return ResponseData.fail(ResponseCode.MESSAGE_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseData<Void> sendMessage(SendMQMessageVO mqMessageVO) {
+        return ResponseData.fail(ResponseCode.MESSAGE_SERVER_ERROR);
+    }
+
+    @Override
+    public ResponseData<Void> sendDelayedMessage(SendMQMessageVO mqMessageVO) {
         return ResponseData.fail(ResponseCode.MESSAGE_SERVER_ERROR);
     }
 }

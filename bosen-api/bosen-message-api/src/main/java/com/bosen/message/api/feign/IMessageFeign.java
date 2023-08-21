@@ -3,6 +3,7 @@ package com.bosen.message.api.feign;
 import com.bosen.common.constant.response.ResponseData;
 import com.bosen.message.api.fallback.MessageFeignFallBack;
 import com.bosen.message.api.vo.request.MessageUpsertVO;
+import com.bosen.message.api.vo.request.SendMQMessageVO;
 import com.bosen.message.api.vo.request.SendWsMessageBatchVO;
 import com.bosen.message.api.vo.request.SendWsMessageVO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -33,4 +34,21 @@ public interface IMessageFeign {
      */
     @PostMapping("/common/message/upsert")
     ResponseData<Void> upsert(@RequestBody @Valid MessageUpsertVO messageUpsertVO);
+
+    /**
+     * 发送普通消息Rabbitmq
+     * bindingName 绑定队列名称
+     * @param mqMessageVO 消息内容
+     */
+    @PostMapping("/mq/sendMessage")
+    ResponseData<Void> sendMessage(@RequestBody @Valid SendMQMessageVO mqMessageVO);
+
+    /**
+     * 发送延迟消息
+     *
+     * @param mqMessageVO  消息实体
+     * @return 结果
+     */
+    @PostMapping("/mq/sendDelayedMessage")
+    ResponseData<Void> sendDelayedMessage(@RequestBody @Valid SendMQMessageVO mqMessageVO);
 }
