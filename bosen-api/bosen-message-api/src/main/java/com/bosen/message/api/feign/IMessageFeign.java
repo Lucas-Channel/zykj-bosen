@@ -41,7 +41,7 @@ public interface IMessageFeign {
      * @param mqMessageVO 消息内容
      */
     @PostMapping("/mq/sendMessage")
-    ResponseData<Void> sendMessage(@RequestBody @Valid SendMQMessageVO mqMessageVO);
+    ResponseData<Void> sendMQMessage(@RequestBody @Valid SendMQMessageVO mqMessageVO);
 
     /**
      * 发送延迟消息
@@ -50,5 +50,5 @@ public interface IMessageFeign {
      * @return 结果
      */
     @PostMapping("/mq/sendDelayedMessage")
-    ResponseData<Void> sendDelayedMessage(@RequestBody @Valid SendMQMessageVO mqMessageVO);
+    ResponseData<Void> sendMQDelayedMessage(@RequestBody @Valid SendMQMessageVO mqMessageVO);
 }

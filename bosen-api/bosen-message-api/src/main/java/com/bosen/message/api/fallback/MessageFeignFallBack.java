@@ -35,12 +35,12 @@ public class MessageFeignFallBack implements IMessageFeign {
     }
 
     @Override
-    public ResponseData<Void> sendMessage(SendMQMessageVO mqMessageVO) {
+    public ResponseData<Void> sendMQMessage(SendMQMessageVO mqMessageVO) {
         return ResponseData.fail(ResponseCode.MESSAGE_SERVER_ERROR);
     }
 
     @Override
-    public ResponseData<Void> sendDelayedMessage(SendMQMessageVO mqMessageVO) {
+    public ResponseData<Void> sendMQDelayedMessage(SendMQMessageVO mqMessageVO) {
         return ResponseData.fail(ResponseCode.MESSAGE_SERVER_ERROR);
     }
 }
