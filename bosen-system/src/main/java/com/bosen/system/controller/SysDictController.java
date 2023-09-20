@@ -3,6 +3,7 @@ package com.bosen.system.controller;
 
 import com.bosen.common.constant.response.PageData;
 import com.bosen.common.constant.response.ResponseData;
+import com.bosen.redisson.annotation.DistributeLock;
 import com.bosen.system.domain.SysDictDO;
 import com.bosen.system.service.ISysDictService;
 import com.bosen.system.vo.request.DictQueryVO;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 字典管理(BsSysDict)表控制层
@@ -45,9 +47,11 @@ public class SysDictController {
      * @param id 主键
      * @return 单条数据
      */
+    @DistributeLock(lockKey = "#id")
     @GetMapping("/detail/{id}")
     public ResponseData<DictDetailVO> selectOne(@PathVariable("id") String id) {
         SysDictDO sysDictDO = this.sysDictService.getById(id);
+        if (Objects.isNull(sysDictDO)) return ResponseData.success();
         DictDetailVO data = new DictDetailVO();
         BeanUtils.copyProperties(sysDictDO, data);
         return ResponseData.success(data);
