@@ -1,7 +1,7 @@
 package com.bosen.admin.controller;
 
-import com.bosen.admin.domain.SystemMenuPermissionRelation;
-import com.bosen.admin.service.ISystemMenuPermissionRelationService;
+import com.bosen.admin.domain.SystemMenuPermissionDO;
+import com.bosen.admin.service.ISystemMenuPermissionService;
 import com.bosen.admin.vo.response.SystemMenuPermissionDetail;
 import com.bosen.admin.vo.resquest.MenuPermissionQueryVO;
 import com.bosen.admin.vo.resquest.MenuPermissionUpsertVO;
@@ -26,7 +26,7 @@ import java.util.Collections;
 public class SystemMenuPermissionController {
 
     @Resource
-    private ISystemMenuPermissionRelationService menuPermissionRelationService;
+    private ISystemMenuPermissionService menuPermissionRelationService;
 
     /**
      * 分页
@@ -46,7 +46,7 @@ public class SystemMenuPermissionController {
     @GetMapping("/detail/{permissionId}")
     public ResponseData<SystemMenuPermissionDetail> getPermissionDetail(@PathVariable Long permissionId) {
         Asserts.notNull(permissionId, "权限id不能为空");
-        SystemMenuPermissionRelation permission = this.menuPermissionRelationService.lambdaQuery().eq(SystemMenuPermissionRelation::getId, permissionId).one();
+        SystemMenuPermissionDO permission = this.menuPermissionRelationService.lambdaQuery().eq(SystemMenuPermissionDO::getId, permissionId).one();
         SystemMenuPermissionDetail detail = new SystemMenuPermissionDetail();
         BeanUtils.copyProperties(permission, detail);
         return ResponseData.success(detail);

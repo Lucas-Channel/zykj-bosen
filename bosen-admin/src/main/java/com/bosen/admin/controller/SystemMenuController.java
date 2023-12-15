@@ -1,6 +1,6 @@
 package com.bosen.admin.controller;
 
-import com.bosen.admin.domain.SystemMenu;
+import com.bosen.admin.domain.SystemMenuDO;
 import com.bosen.admin.service.ISystemMenuService;
 import com.bosen.admin.vo.response.MenuDetailVO;
 import com.bosen.admin.vo.response.MenuTreeNode;
@@ -26,7 +26,7 @@ import java.util.List;
 public class SystemMenuController {
 
     @Resource
-    private ISystemMenuService menuService;
+    private ISystemMenuService systemDynamicMenuService;
 
     /**
      * 新增修改菜单
@@ -34,7 +34,7 @@ public class SystemMenuController {
      */
     @PostMapping("/upsertMenu")
     public ResponseData<Void> upsertMenu(@RequestBody @Valid MenuUpsertVO menuUpsertVO) {
-        return menuService.upsertMenu(menuUpsertVO);
+        return systemDynamicMenuService.upsertMenu(menuUpsertVO);
     }
 
     /**
@@ -43,8 +43,8 @@ public class SystemMenuController {
      * @return 结果
      */
     @GetMapping("/detail/{id}")
-    public ResponseData<MenuDetailVO> getItem(@PathVariable Long id) {
-        SystemMenu menu = menuService.getById(id);
+    public ResponseData<MenuDetailVO> getItem(@PathVariable String id) {
+        SystemMenuDO menu = systemDynamicMenuService.getById(id);
         MenuDetailVO menuDetailVO = new MenuDetailVO();
         BeanUtils.copyProperties(menu, menuDetailVO);
         return ResponseData.success(menuDetailVO);
@@ -56,8 +56,8 @@ public class SystemMenuController {
      * @return 参数
      */
     @DeleteMapping("/delete/{id}")
-    public ResponseData<Void> delete(@PathVariable Long id) {
-        return ResponseData.judge(menuService.removeById(id));
+    public ResponseData<Void> delete(@PathVariable String id) {
+        return ResponseData.judge(systemDynamicMenuService.removeById(id));
     }
 
     /**
@@ -67,7 +67,7 @@ public class SystemMenuController {
      */
     @GetMapping("/listPage")
     public ResponseData<PageData<MenuDetailVO>> listPage(MenuQueryVO menuQueryVO) {
-        return menuService.listPage(menuQueryVO);
+        return systemDynamicMenuService.listPage(menuQueryVO);
     }
 
     /**
@@ -77,7 +77,7 @@ public class SystemMenuController {
     @RequestMapping(value = "/treeList", method = RequestMethod.GET)
     @ResponseBody
     public ResponseData<List<MenuTreeNode>> treeList() {
-        return menuService.treeList();
+        return systemDynamicMenuService.treeList();
     }
 
 }

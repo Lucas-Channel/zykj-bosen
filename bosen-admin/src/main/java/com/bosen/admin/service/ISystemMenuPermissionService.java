@@ -1,7 +1,7 @@
 package com.bosen.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.bosen.admin.domain.SystemMenuPermissionRelation;
+import com.bosen.admin.domain.SystemMenuPermissionDO;
 import com.bosen.admin.vo.response.SystemMenuPermissionDetail;
 import com.bosen.admin.vo.resquest.MenuPermissionQueryVO;
 import com.bosen.admin.vo.resquest.MenuPermissionUpsertVO;
@@ -13,7 +13,7 @@ import com.bosen.common.constant.response.ResponseData;
  * @version 2.0.0
  * @date 2023/2/25
  */
-public interface ISystemMenuPermissionRelationService extends IService<SystemMenuPermissionRelation> {
+public interface ISystemMenuPermissionService extends IService<SystemMenuPermissionDO> {
     /**
      * 分页
      * @param query

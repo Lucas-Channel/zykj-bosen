@@ -9,8 +9,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-@TableName("bs_menu_permission")
-public class SystemMenuPermissionRelation implements Serializable {
+@TableName("bs_sys_menu_permission")
+public class SystemMenuPermissionDO implements Serializable {
     private static final long serialVersionUID = 609109419510902349L;
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

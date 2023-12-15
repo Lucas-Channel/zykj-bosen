@@ -1,7 +1,7 @@
 package com.bosen.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.bosen.admin.domain.SystemMenu;
+import com.bosen.admin.domain.SystemMenuDO;
 import com.bosen.admin.vo.response.MenuDetailVO;
 import com.bosen.admin.vo.response.MenuTreeNode;
 import com.bosen.admin.vo.resquest.MenuQueryVO;
@@ -16,12 +16,11 @@ import java.util.List;
  * @version 2.0.0
  * @date 2023/2/25
  */
-public interface ISystemMenuService extends IService<SystemMenu> {
+public interface ISystemMenuService extends IService<SystemMenuDO> {
 
     /**
      * 新增/修改菜单
-     * @param menuUpsertVO
-     * @return
+     * @return 结果
      */
     ResponseData<Void> upsertMenu(MenuUpsertVO menuUpsertVO);
 

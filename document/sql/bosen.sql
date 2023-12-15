@@ -184,16 +184,19 @@ DROP TABLE IF EXISTS `bs_sys_menu`;
 CREATE TABLE `bs_sys_menu` (
                                `id` varchar(32) NOT NULL,
                                `parent_id` varchar(32) DEFAULT NULL COMMENT '父级ID',
-                               `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+                               `name` varchar(100) DEFAULT NULL COMMENT '菜单编码',
                                `title` varchar(100) DEFAULT NULL COMMENT '菜单名称',
-                               `level` int(4) DEFAULT NULL COMMENT '菜单级数',
-                               `sort` int(4) DEFAULT NULL COMMENT '菜单排序',
-                               `name` varchar(100) DEFAULT NULL COMMENT '前端名称',
                                `icon` varchar(200) DEFAULT NULL COMMENT '前端图标',
-                               `hidden` int(1) DEFAULT NULL COMMENT '前端隐藏',
-                               `type` int(1) DEFAULT NULL COMMENT '菜单类型：0：目录， 1：菜单',
-                               `route_url` varchar(200) DEFAULT NULL COMMENT '路由地址',
+                               `component` varchar(10) DEFAULT NULL COMMENT '菜单类型：目录basic，显示页self',
+                               `path` varchar(200) DEFAULT NULL COMMENT '路由地址',
+                               `sort_number` int(4) DEFAULT NULL COMMENT '菜单排序',
                                `belong_platform` int DEFAULT NULL COMMENT '所属平台：1、平台后台，2、商家后台',
+                               `level_number` int(4) DEFAULT NULL COMMENT '菜单级数',
+                               `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                               `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                               `updater_user` varchar(50) DEFAULT NULL,
+                               `creator_user` varchar(50) DEFAULT NULL,
+                               `del_flag` int DEFAULT 0,
                                PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台菜单表';
 
@@ -226,12 +229,25 @@ INSERT INTO `bs_sys_menu` VALUES ('24', '21', '2020-02-07 16:30:53', '菜单列�
 INSERT INTO `bs_sys_menu` VALUES ('25', '21', '2020-02-07 16:31:13', '资源列表', '1', '0', 'resource', 'ums-resource', '0', null, null, 1);
 
 
+DROP TABLE IF EXISTS `bs_sys_menu_language`;
+CREATE TABLE `bs_sys_menu_language` (
+                               `id` varchar(32) NOT NULL,
+                               `menu_id` varchar(32) DEFAULT NULL COMMENT '菜单id',
+                               `description` varchar(100) DEFAULT NULL COMMENT '菜单编码',
+                               `language_code` varchar(100) DEFAULT NULL COMMENT '菜单名称',
+                               `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                               `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                               `updater_user` varchar(50) DEFAULT NULL,
+                               `creator_user` varchar(50) DEFAULT NULL,
+                               `del_flag` int DEFAULT 0,
+                               PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台菜单多语言表';
 
 -- ----------------------------
--- Table structure for bs_menu_permission
+-- Table structure for bs_sys_menu_permission
 -- ----------------------------
-DROP TABLE IF EXISTS `bs_menu_permission`;
-CREATE TABLE `bs_menu_permission` (
+DROP TABLE IF EXISTS `bs_sys_menu_permission`;
+CREATE TABLE `bs_sys_menu_permission` (
                                       `id` varchar(32) NOT NULL,
                                       `menu_id` varchar(32) DEFAULT NULL COMMENT '菜单id',
                                       `name` varchar(100) DEFAULT NULL COMMENT '权限名称',
@@ -244,11 +260,25 @@ CREATE TABLE `bs_menu_permission` (
                                       PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台用户菜单按钮权限表';
 
+DROP TABLE IF EXISTS `bs_sys_menu_permission_language`;
+CREATE TABLE `bs_sys_menu_permission_language` (
+                               `id` varchar(32) NOT NULL,
+                               `permission_id` varchar(32) DEFAULT NULL COMMENT '菜单id',
+                               `description` varchar(100) DEFAULT NULL COMMENT '菜单编码',
+                               `language_code` varchar(100) DEFAULT NULL COMMENT '菜单名称',
+                               `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                               `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                               `updater_user` varchar(50) DEFAULT NULL,
+                               `creator_user` varchar(50) DEFAULT NULL,
+                               `del_flag` int DEFAULT 0,
+                               PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台菜单权限多语言表';
+
 -- ----------------------------
--- Records of bs_menu_permission
+-- Records of bs_sys_menu_permission
 -- ----------------------------
-INSERT INTO `bs_menu_permission` VALUES (1, '1', '添加商品', 'pms:product:add', null, '1', '2018-09-29 16:15:14', '0');
-INSERT INTO `bs_menu_permission` VALUES (2, '1', '商品列表', 'pms:product:read', null, '1', '2018-09-29 16:17:01', '0');
+INSERT INTO `bs_sys_menu_permission` VALUES ('1', '1', '添加商品', 'pms:product:add', null, '1', '2018-09-29 16:15:14', '0');
+INSERT INTO `bs_sys_menu_permission` VALUES ('2', '1', '商品列表', 'pms:product:read', null, '1', '2018-09-29 16:17:01', '0');
 
 
 

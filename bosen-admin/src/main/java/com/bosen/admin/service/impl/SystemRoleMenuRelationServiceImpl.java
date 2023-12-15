@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.bosen.admin.domain.SystemRoleMenuRelation;
 import com.bosen.admin.mapper.SystemRoleMenuRelationMapper;
 import com.bosen.admin.service.ISystemRoleMenuRelationService;
+import com.bosen.admin.vo.response.LoginMenuDetailVO;
 import com.bosen.admin.vo.response.RoleMenuDetailVO;
 import com.bosen.admin.vo.resquest.RoleMenuUpsertVO;
 import com.bosen.common.constant.response.ResponseCode;
@@ -50,6 +51,11 @@ public class SystemRoleMenuRelationServiceImpl extends ServiceImpl<SystemRoleMen
             return roleMenuRelation;
         }).collect(Collectors.toList());
         return ResponseData.judge(this.saveBatch(roleMenuRelations));
+    }
+
+    @Override
+    public ResponseData<List<LoginMenuDetailVO>> listMenuAfterLogin() {
+        return null;
     }
 
     private RoleMenuDetailVO covertRoleMenuNode(RoleMenuDetailVO menu, List<RoleMenuDetailVO> menuList) {

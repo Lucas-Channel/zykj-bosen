@@ -3,9 +3,9 @@ package com.bosen.admin.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.bosen.admin.domain.SystemMenuPermissionRelation;
+import com.bosen.admin.domain.SystemMenuPermissionDO;
 import com.bosen.admin.mapper.SystemMenuPermissionRelationMapper;
-import com.bosen.admin.service.ISystemMenuPermissionRelationService;
+import com.bosen.admin.service.ISystemMenuPermissionService;
 import com.bosen.admin.vo.response.SystemMenuPermissionDetail;
 import com.bosen.admin.vo.resquest.MenuPermissionQueryVO;
 import com.bosen.admin.vo.resquest.MenuPermissionUpsertVO;
@@ -27,13 +27,13 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Service
-public class SystemMenuPermissionRelationServiceImpl extends ServiceImpl<SystemMenuPermissionRelationMapper, SystemMenuPermissionRelation> implements ISystemMenuPermissionRelationService {
+public class SystemMenuPermissionServiceImpl extends ServiceImpl<SystemMenuPermissionRelationMapper, SystemMenuPermissionDO> implements ISystemMenuPermissionService {
     @Override
     public ResponseData<PageData<SystemMenuPermissionDetail>> listPermissionsWithPage(MenuPermissionQueryVO query) {
-        Page<SystemMenuPermissionRelation> page = this.page(new Page<>(query.getCurrent(), query.getSize()), new LambdaQueryWrapper<SystemMenuPermissionRelation>()
-                .like(StringUtils.hasLength(query.getName()), SystemMenuPermissionRelation::getName, query.getName())
-                .eq(Objects.nonNull(query.getMenuId()), SystemMenuPermissionRelation::getMenuId, query.getMenuId())
-                .orderByDesc(SystemMenuPermissionRelation::getCreateTime));
+        Page<SystemMenuPermissionDO> page = this.page(new Page<>(query.getCurrent(), query.getSize()), new LambdaQueryWrapper<SystemMenuPermissionDO>()
+                .like(StringUtils.hasLength(query.getName()), SystemMenuPermissionDO::getName, query.getName())
+                .eq(Objects.nonNull(query.getMenuId()), SystemMenuPermissionDO::getMenuId, query.getMenuId())
+                .orderByDesc(SystemMenuPermissionDO::getCreateTime));
         return ResponseData.success(new PageData<>(page.getTotal(), page.getRecords().stream().map(i -> {
             SystemMenuPermissionDetail menuPermissionDetail = new SystemMenuPermissionDetail();
             BeanUtils.copyProperties(i, menuPermissionDetail);
@@ -43,11 +43,11 @@ public class SystemMenuPermissionRelationServiceImpl extends ServiceImpl<SystemM
 
     @Override
     public ResponseData<Void> upsertPermission(MenuPermissionUpsertVO permission) {
-        if (Objects.isNull(permission.getId())) {
-            permission.setCreateTime(LocalDateTime.now());
-        }
-        SystemMenuPermissionRelation menuPermissionRelation = new SystemMenuPermissionRelation();
+        SystemMenuPermissionDO menuPermissionRelation = new SystemMenuPermissionDO();
         BeanUtils.copyProperties(permission, menuPermissionRelation);
+        if (Objects.isNull(permission.getId())) {
+            menuPermissionRelation.setCreateTime(LocalDateTime.now());
+        }
         return ResponseData.judge(this.saveOrUpdate(menuPermissionRelation));
     }
 }

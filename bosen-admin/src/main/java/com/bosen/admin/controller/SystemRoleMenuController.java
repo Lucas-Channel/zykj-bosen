@@ -1,6 +1,7 @@
 package com.bosen.admin.controller;
 
 import com.bosen.admin.service.ISystemRoleMenuRelationService;
+import com.bosen.admin.vo.response.LoginMenuDetailVO;
 import com.bosen.admin.vo.response.RoleMenuDetailVO;
 import com.bosen.admin.vo.resquest.RoleMenuUpsertVO;
 import com.bosen.common.constant.response.ResponseData;
@@ -40,4 +41,12 @@ public class SystemRoleMenuController {
         return roleMenuRelationService.updateRoleMenu(roleMenuUpsertVO);
     }
 
+    /**
+     * 用户登录后获取菜单权限
+     * @return 列表菜单权限
+     */
+    @GetMapping("/listMenuAfterLogin")
+    public ResponseData<List<LoginMenuDetailVO>> listMenuAfterLogin() {
+        return roleMenuRelationService.listMenuAfterLogin();
+    }
 }

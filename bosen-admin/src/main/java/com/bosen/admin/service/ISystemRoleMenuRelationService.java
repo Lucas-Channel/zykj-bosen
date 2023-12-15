@@ -2,6 +2,7 @@ package com.bosen.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.bosen.admin.domain.SystemRoleMenuRelation;
+import com.bosen.admin.vo.response.LoginMenuDetailVO;
 import com.bosen.admin.vo.response.RoleMenuDetailVO;
 import com.bosen.admin.vo.resquest.RoleMenuUpsertVO;
 import com.bosen.common.constant.response.ResponseData;
@@ -18,4 +19,6 @@ public interface ISystemRoleMenuRelationService extends IService<SystemRoleMenuR
     ResponseData<List<RoleMenuDetailVO>> getRoleMenuList(Long roleId);
 
     ResponseData<Void> updateRoleMenu(RoleMenuUpsertVO roleMenuUpsertVO);
+
+    ResponseData<List<LoginMenuDetailVO>> listMenuAfterLogin();
 }

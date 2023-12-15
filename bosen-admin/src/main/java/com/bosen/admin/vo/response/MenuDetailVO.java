@@ -1,65 +1,62 @@
 package com.bosen.admin.vo.response;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Data
 public class MenuDetailVO implements Serializable {
     private static final long serialVersionUID = 289039746307803817L;
-    private Long id;
+
+    private String id;
 
     /**
-     * 父级ID
+     * 编码名称
      */
-    private Long parentId = 0L;
-
-    /**
-     * 创建时间
-     */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createTime;
+    @NotEmpty(message = "菜单编码不能为空")
+    private String name;
 
     /**
      * 菜单名称
      */
+    @NotEmpty(message = "菜单名称不能为空")
     private String title;
 
     /**
-     * 菜单级数
+     * 菜单图标
      */
-    private Integer level;
-
-    /**
-     * 菜单排序
-     */
-    private Integer sort;
-
-    /**
-     * 前端名称
-     */
-    private String name;
-
-    /**
-     * 图标
-     */
+    @NotEmpty(message = "菜单图标不能为空")
     private String icon;
 
     /**
-     * 前端隐藏
+     * 目录basic，显示页self
      */
-    private Integer hidden;
+    @NotEmpty(message = "菜单类型不能为空")
+    private String component;
 
     /**
-     * 类型：0：目录， 1：菜单
+     * 菜单路由
      */
-    private Integer type;
+    @NotEmpty(message = "路由地址不能为空")
+    private String path;
 
     /**
-     * 路由地址，如果类型是菜单，该值必填
+     * 父类菜单id
      */
-    private String routeUrl;
+    private String parentId;
+
+    /**
+     * 序号
+     */
+    @NotNull(message = "序号不能为空")
+    private Integer sortNumber;
+
+    /**
+     * 所属平台：1、平台后台，2、商家后台
+     */
+    @NotNull(message = "所属平台不能为空")
+    private Integer belongPlatform;
 
 }

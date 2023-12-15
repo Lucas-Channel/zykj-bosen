@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 /**
  * @author Lucas
@@ -16,13 +15,13 @@ public class MenuPermissionUpsertVO implements Serializable {
 
     private static final long serialVersionUID = -122335714919139102L;
 
-    private Long id;
+    private String id;
 
     /**
      * 菜单id
      */
     @NotNull(message = "菜单id不能为空")
-    private Long menuId;
+    private String menuId;
 
     /**
      * 名称
@@ -44,11 +43,6 @@ public class MenuPermissionUpsertVO implements Serializable {
      * 启用状态；0->禁用；1->启用
      */
     private Integer status = 1;
-
-    /**
-     * 创建时间
-     */
-    private LocalDateTime createTime;
 
     /**
      * 排序
