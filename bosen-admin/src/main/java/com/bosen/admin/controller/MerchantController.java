@@ -57,7 +57,7 @@ public class MerchantController {
     @GetMapping(value = "/listPage")
     public ResponseData<PageData<MerchantDO>> listPage(PageVO pageVO) {
         Page<MerchantDO> list = merchantService.page(new Page<>(pageVO.getCurrent(), pageVO.getSize()), new LambdaQueryWrapper<MerchantDO>().orderByDesc(MerchantDO::getCreateTime));
-        return ResponseData.success(new PageData(list.getTotal(), list.getRecords()));
+        return ResponseData.success(new PageData<>(list.getTotal(), list.getRecords()));
     }
 
     /**

@@ -58,7 +58,7 @@ public class AdminUserController {
     @GetMapping(value = "/listPage")
     public ResponseData<PageData<BsUserAccount>> listPage(PageVO pageVO) {
         Page<BsUserAccount> list = adminService.page(new Page<>(pageVO.getCurrent(), pageVO.getSize()), new LambdaQueryWrapper<BsUserAccount>().orderByDesc(BsUserAccount::getCreateTime));
-        return ResponseData.success(new PageData(list.getTotal(), list.getRecords()));
+        return ResponseData.success(new PageData<>(list.getTotal(), list.getRecords()));
     }
 
     /**
