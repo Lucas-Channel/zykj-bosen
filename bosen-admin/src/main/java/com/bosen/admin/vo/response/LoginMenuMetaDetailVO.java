@@ -14,5 +14,5 @@ public class LoginMenuMetaDetailVO implements Serializable {
 
     private String icon;
 
-    private String order;
+    private Integer order;
 }

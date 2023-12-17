@@ -28,7 +28,7 @@ public class SystemRoleMenuController {
      * @return 结果
      */
     @GetMapping("/getRoleMenuList")
-    public ResponseData<List<RoleMenuDetailVO>> getRoleMenuList(Long roleId) {
+    public ResponseData<List<RoleMenuDetailVO>> getRoleMenuList(String roleId) {
         return roleMenuRelationService.getRoleMenuList(roleId);
     }
 
@@ -46,7 +46,7 @@ public class SystemRoleMenuController {
      * @return 列表菜单权限
      */
     @GetMapping("/listMenuAfterLogin")
-    public ResponseData<List<LoginMenuDetailVO>> listMenuAfterLogin() {
-        return roleMenuRelationService.listMenuAfterLogin();
+    public ResponseData<List<LoginMenuDetailVO>> listMenuAfterLogin(String roleId) {
+        return roleMenuRelationService.listMenuAfterLogin(roleId);
     }
 }

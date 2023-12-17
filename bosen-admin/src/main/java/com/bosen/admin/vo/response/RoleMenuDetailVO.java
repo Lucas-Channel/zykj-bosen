@@ -11,12 +11,12 @@ public class RoleMenuDetailVO implements Serializable {
     /**
      * 菜单id
      */
-    private Long menuId;
+    private String menuId;
 
     /**
      * 父级ID
      */
-    private Long parentId;
+    private String parentId;
 
     /**
      * 菜单名称

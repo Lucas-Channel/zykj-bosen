@@ -176,7 +176,6 @@ CREATE TABLE `bs_portal_member_statistics_info` (
      PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='会员统计信息';
 
-
 -- ----------------------------
 -- Table structure for bs_sys_menu
 -- ----------------------------
@@ -203,44 +202,36 @@ CREATE TABLE `bs_sys_menu` (
 -- ----------------------------
 -- Records of bs_sys_menu
 -- ----------------------------
-INSERT INTO `bs_sys_menu` VALUES ('1', '0', '2020-02-02 14:50:36', '商品', '0', '0', 'pms', 'product', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('2', '1', '2020-02-02 14:51:50', '商品列表', '1', '0', 'product', 'product-list', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('3', '1', '2020-02-02 14:52:44', '添加商品', '1', '0', 'addProduct', 'product-add', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('4', '1', '2020-02-02 14:53:51', '商品分类', '1', '0', 'productCate', 'product-cate', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('5', '1', '2020-02-02 14:54:51', '商品类型', '1', '0', 'productAttr', 'product-attr', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('6', '1', '2020-02-02 14:56:29', '品牌管理', '1', '0', 'brand', 'product-brand', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('7', '0', '2020-02-02 16:54:07', '订单', '0', '0', 'oms', 'order', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('8', '7', '2020-02-02 16:55:18', '订单列表', '1', '0', 'order', 'product-list', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('9', '7', '2020-02-02 16:56:46', '订单设置', '1', '0', 'orderSetting', 'order-setting', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('10', '7', '2020-02-02 16:57:39', '退货申请处理', '1', '0', 'returnApply', 'order-return', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('11', '7', '2020-02-02 16:59:40', '退货原因设置', '1', '0', 'returnReason', 'order-return-reason', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('12', '0', '2020-02-04 16:18:00', '营销', '0', '0', 'sms', 'sms', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('13', '12', '2020-02-04 16:19:22', '秒杀活动列表', '1', '0', 'flash', 'sms-flash', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('14', '12', '2020-02-04 16:20:16', '优惠券列表', '1', '0', 'coupon', 'sms-coupon', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('16', '12', '2020-02-07 16:22:38', '品牌推荐', '1', '0', 'homeBrand', 'product-brand', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('17', '12', '2020-02-07 16:23:14', '新品推荐', '1', '0', 'homeNew', 'sms-new', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('18', '12', '2020-02-07 16:26:38', '人气推荐', '1', '0', 'homeHot', 'sms-hot', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('19', '12', '2020-02-07 16:28:16', '专题推荐', '1', '0', 'homeSubject', 'sms-subject', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('20', '12', '2020-02-07 16:28:42', '广告列表', '1', '0', 'homeAdvertise', 'sms-ad', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('21', '0', '2020-02-07 16:29:13', '权限', '0', '0', 'ums', 'ums', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('22', '21', '2020-02-07 16:29:51', '用户列表', '1', '0', 'admin', 'ums-admin', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('23', '21', '2020-02-07 16:30:13', '角色列表', '1', '0', 'role', 'ums-role', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('24', '21', '2020-02-07 16:30:53', '菜单列表', '1', '0', 'menu', 'ums-menu', '0', null, null, 1);
-INSERT INTO `bs_sys_menu` VALUES ('25', '21', '2020-02-07 16:31:13', '资源列表', '1', '0', 'resource', 'ums-resource', '0', null, null, 1);
+INSERT INTO `bs_sys_menu` VALUES ('1', '0', 'product', '商品', '图标', 'basic', '/product', 1, 1, 1, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('2', '1', 'product_list', '商品列表', '图标', 'self', '/product/list', 1, 1, 2, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('3', '1', 'product_add', '添加商品', '图标', 'self', '/product/add', 2, 1, 3, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('4', '1', 'product_cate', '商品分类', '图标', 'self', '/product/cate', 3, 1, 4, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('5', '1', 'product_attr', '商品类型', '图标', 'self', '/product/attr', 4, 1, 5, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('6', '1', 'product_brand', '品牌管理', '图标', 'self', '/product/brand', 5, 1, 6, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('7', '0', 'order', '订单', '图标', 'basic', '/order', 2, 1, 7, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('8', '7', 'order_list', '订单列表', '图标', 'self', '/order/list', 1, 1, 8, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('12', '0', 'marketing', '营销', '图标', 'basic', '/marketing', 3, 1, 9, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('13', '12', 'marketing_kill_list', '秒杀活动列表', '图标', 'self', '/marketing/kill/list', 1, 1, 10, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('14', '12', 'marketing_coupon', '优惠券列表', '图标', 'self', '/marketing/coupon', 2, 1, 11, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('21', '0', 'sys', '权限', '图标', 'basic', '/sys', 4, 1, 12, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('22', '21', 'sys_user', '用户列表', '图标', 'self', '/sys/user',1, 1, 13, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('23', '21', 'sys_role', '角色列表', '图标', 'self', '/sys/role', 2, 1, 14, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('24', '21', 'sys_menu', '菜单列表', '图标', 'self', '/sys/menu', 3, 1, 15, null, null, null, null, 0);
+INSERT INTO `bs_sys_menu` VALUES ('25', '21', 'sys_resource', '资源列表', '图标', 'self', '/sys/resource', 4, 1, 16, null, null, null, null, 0);
 
 
 DROP TABLE IF EXISTS `bs_sys_menu_language`;
 CREATE TABLE `bs_sys_menu_language` (
-                               `id` varchar(32) NOT NULL,
-                               `menu_id` varchar(32) DEFAULT NULL COMMENT '菜单id',
-                               `description` varchar(100) DEFAULT NULL COMMENT '菜单编码',
-                               `language_code` varchar(100) DEFAULT NULL COMMENT '菜单名称',
-                               `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                               `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                               `updater_user` varchar(50) DEFAULT NULL,
-                               `creator_user` varchar(50) DEFAULT NULL,
-                               `del_flag` int DEFAULT 0,
-                               PRIMARY KEY (`id`)
+                                        `id` varchar(32) NOT NULL,
+                                        `menu_id` varchar(32) DEFAULT NULL COMMENT '菜单id',
+                                        `description` varchar(100) DEFAULT NULL COMMENT '菜单编码',
+                                        `language_code` varchar(100) DEFAULT NULL COMMENT '菜单名称',
+                                        `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                        `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                        `updater_user` varchar(50) DEFAULT NULL,
+                                        `creator_user` varchar(50) DEFAULT NULL,
+                                        `del_flag` int DEFAULT 0,
+                                        PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台菜单多语言表';
 
 -- ----------------------------
@@ -248,38 +239,41 @@ CREATE TABLE `bs_sys_menu_language` (
 -- ----------------------------
 DROP TABLE IF EXISTS `bs_sys_menu_permission`;
 CREATE TABLE `bs_sys_menu_permission` (
-                                      `id` varchar(32) NOT NULL,
-                                      `menu_id` varchar(32) DEFAULT NULL COMMENT '菜单id',
-                                      `name` varchar(100) DEFAULT NULL COMMENT '权限名称',
-                                      `value` varchar(200) DEFAULT NULL COMMENT '权限值',
-                                      `icon` varchar(500) DEFAULT NULL COMMENT '图标',
-                                      `status` int(1) DEFAULT NULL COMMENT '启用状态；0->禁用；1->启用',
-                                      `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-                                      `sort` int(11) DEFAULT NULL COMMENT '排序',
-                                      `interface_url` varchar(100) DEFAULT NULL COMMENT '按钮权限接口访问地址',
-                                      PRIMARY KEY (`id`)
+                                          `id` varchar(32) NOT NULL,
+                                          `menu_id` varchar(32) DEFAULT NULL COMMENT '菜单id',
+                                          `name` varchar(100) DEFAULT NULL COMMENT '权限名称',
+                                          `value` varchar(200) DEFAULT NULL COMMENT '权限值',
+                                          `icon` varchar(500) DEFAULT NULL COMMENT '图标',
+                                          `status` int(1) DEFAULT NULL COMMENT '启用状态；0->禁用；1->启用',
+                                          `sort` int(11) DEFAULT NULL COMMENT '排序',
+                                          `interface_url` varchar(100) DEFAULT NULL COMMENT '按钮权限接口访问地址',
+                                          `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                          `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                          `updater_user` varchar(50) DEFAULT NULL,
+                                          `creator_user` varchar(50) DEFAULT NULL,
+                                          `del_flag` int DEFAULT 0,
+                                          PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台用户菜单按钮权限表';
 
 DROP TABLE IF EXISTS `bs_sys_menu_permission_language`;
 CREATE TABLE `bs_sys_menu_permission_language` (
-                               `id` varchar(32) NOT NULL,
-                               `permission_id` varchar(32) DEFAULT NULL COMMENT '菜单id',
-                               `description` varchar(100) DEFAULT NULL COMMENT '菜单编码',
-                               `language_code` varchar(100) DEFAULT NULL COMMENT '菜单名称',
-                               `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
-                               `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
-                               `updater_user` varchar(50) DEFAULT NULL,
-                               `creator_user` varchar(50) DEFAULT NULL,
-                               `del_flag` int DEFAULT 0,
-                               PRIMARY KEY (`id`)
+                                                   `id` varchar(32) NOT NULL,
+                                                   `permission_id` varchar(32) DEFAULT NULL COMMENT '菜单id',
+                                                   `description` varchar(100) DEFAULT NULL COMMENT '菜单编码',
+                                                   `language_code` varchar(100) DEFAULT NULL COMMENT '菜单名称',
+                                                   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                                   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                                   `updater_user` varchar(50) DEFAULT NULL,
+                                                   `creator_user` varchar(50) DEFAULT NULL,
+                                                   `del_flag` int DEFAULT 0,
+                                                   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台菜单权限多语言表';
 
 -- ----------------------------
 -- Records of bs_sys_menu_permission
 -- ----------------------------
-INSERT INTO `bs_sys_menu_permission` VALUES ('1', '1', '添加商品', 'pms:product:add', null, '1', '2018-09-29 16:15:14', '0');
-INSERT INTO `bs_sys_menu_permission` VALUES ('2', '1', '商品列表', 'pms:product:read', null, '1', '2018-09-29 16:17:01', '0');
-
+INSERT INTO `bs_sys_menu_permission` VALUES ('1', '1', '添加商品', 'pms:product:add', null, '1', 1, null,  null, null, null, null, 0);
+INSERT INTO `bs_sys_menu_permission` VALUES ('2', '1', '商品列表', 'pms:product:read', null, '1', 2, null,  null, null, null, null, 0);
 
 
 -- ----------------------------
@@ -311,14 +305,19 @@ CREATE TABLE `bs_role_menu_relation` (
                                          `id` varchar(32) NOT NULL,
                                          `role_id` varchar(32) DEFAULT NULL COMMENT '角色ID',
                                          `menu_id` varchar(32) DEFAULT NULL COMMENT '菜单ID',
+                                         `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                         `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                         `updater_user` varchar(50) DEFAULT NULL,
+                                         `creator_user` varchar(50) DEFAULT NULL,
+                                         `del_flag` int DEFAULT 0,
                                          PRIMARY KEY (`id`)
-) ENGINE=InnoDB6 DEFAULT CHARSET=utf8 COMMENT='后台角色菜单关系表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='后台角色菜单关系表';
 
 -- ----------------------------
 -- Records of ums_role_menu_relation
 -- ----------------------------
-INSERT INTO `bs_role_menu_relation` VALUES (1, '3', '1');
-INSERT INTO `bs_role_menu_relation` VALUES (2, '3', '2');
+INSERT INTO `bs_role_menu_relation` VALUES (1, '3', '1', null,  null, null, null, 0);
+INSERT INTO `bs_role_menu_relation` VALUES (2, '3', '2', null,  null, null, null, 0);
 
 -- ----------------------------
 -- Table structure for bs_role_permission_relation

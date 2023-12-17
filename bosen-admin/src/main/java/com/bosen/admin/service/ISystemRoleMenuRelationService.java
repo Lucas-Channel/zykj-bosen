@@ -16,9 +16,9 @@ import java.util.List;
  */
 public interface ISystemRoleMenuRelationService extends IService<SystemRoleMenuRelation> {
 
-    ResponseData<List<RoleMenuDetailVO>> getRoleMenuList(Long roleId);
+    ResponseData<List<RoleMenuDetailVO>> getRoleMenuList(String roleId);
 
     ResponseData<Void> updateRoleMenu(RoleMenuUpsertVO roleMenuUpsertVO);
 
-    ResponseData<List<LoginMenuDetailVO>> listMenuAfterLogin();
+    ResponseData<List<LoginMenuDetailVO>> listMenuAfterLogin(String roleId);
 }

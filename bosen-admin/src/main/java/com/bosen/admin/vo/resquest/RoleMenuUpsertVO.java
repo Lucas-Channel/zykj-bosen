@@ -19,8 +19,8 @@ public class RoleMenuUpsertVO implements Serializable {
     private static final long serialVersionUID = 4920370178044962801L;
 
     @NotEmpty(message = "菜单id不能为空")
-    private List<Long> menuIds;
+    private List<String> menuIds;
 
     @NotNull(message = "角色id不能为空")
-    private Long roleId;
+    private String roleId;
 }

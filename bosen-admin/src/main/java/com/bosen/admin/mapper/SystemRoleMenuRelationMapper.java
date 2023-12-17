@@ -12,5 +12,5 @@ import java.util.List;
  * @date 2023/2/25
  */
 public interface SystemRoleMenuRelationMapper extends BaseMapper<SystemRoleMenuRelation> {
-    List<RoleMenuDetailVO> getRoleMenuList(Long roleId);
+    List<RoleMenuDetailVO> getRoleMenuList(String roleId);
 }

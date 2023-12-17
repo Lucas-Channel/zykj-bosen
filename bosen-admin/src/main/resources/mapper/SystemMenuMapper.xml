@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bosen.admin.mapper.SystemMenuMapper">
+
+    <select id="listMenuByMenuIds" resultType="com.bosen.admin.bo.ViewFrontMenuDetailBO">
+        SELECT
+            bsm.id,
+            bsm.parent_id,
+            bsm.name,
+            bsm.title,
+            bsml.description i18n_title,
+            bsm.icon,
+            bsm.sort_number,
+            bsm.component,
+            bsm.path
+        FROM
+            bs_sys_menu bsm
+        LEFT JOIN bs_sys_menu_language bsml ON
+                bsm.id = bsml.menu_id
+            AND bsml.language_code = #{languageCode}
+        and bsm.id in
+        <foreach collection="ids" item="item" open="(" close=")" separator="," >
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>
