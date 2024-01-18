@@ -51,7 +51,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
     public ResponseData<List<MenuTreeNode>> treeList() {
         List<SystemMenuDO> menuList = this.list();
         List<MenuTreeNode> result = menuList.stream()
-                .filter(menu -> menu.getParentId().equals(0L))
+                .filter(menu -> Objects.equals(menu.getParentId(), "0"))
                 .map(menu -> covertMenuNode(menu, menuList)).collect(Collectors.toList());
         return ResponseData.success(result);
     }
@@ -63,7 +63,7 @@ public class SystemMenuServiceImpl extends ServiceImpl<SystemMenuMapper, SystemM
         MenuTreeNode node = new MenuTreeNode();
         BeanUtils.copyProperties(menu, node);
         List<MenuTreeNode> children = menuList.stream()
-                .filter(subMenu -> subMenu.getParentId().equals(menu.getId()))
+                .filter(subMenu -> Objects.equals(menu.getId(), subMenu.getParentId()))
                 .map(subMenu -> covertMenuNode(subMenu, menuList)).collect(Collectors.toList());
         node.setChildren(children);
         return node;
