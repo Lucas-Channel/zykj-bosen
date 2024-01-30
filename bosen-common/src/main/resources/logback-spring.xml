@@ -11,6 +11,9 @@
     <springProperty name="LOG_STASH_HOST" scope="context" source="logstash.host" defaultValue="localhost"/>
     <!--日志文件保存路径-->
     <property name="LOG_FILE_PATH" value="./logs"/>
+    <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %green([%thread]) %logger{50} --- %msg%n"/>
+
+
 <!--    <property name="LOG_FILE_PATH" value="/data/logs"/>-->
 
     <!-- 控制台输出 -->
@@ -19,7 +22,7 @@
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
             <!--%green,%red是日志显示的颜色，要用小括号-->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %green([%thread]) %logger{50} --- %msg%n</pattern>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
