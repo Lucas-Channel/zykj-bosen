@@ -70,7 +70,7 @@ public class AuthController {
             throw new BusinessException(e.getMessage());
         }
         try {
-            UsernamePasswordAuthenticationToken clientUser = new UsernamePasswordAuthenticationToken(loginVO.getClient_id(), loginVO.getClient_secret(), new ArrayList<>());
+            UsernamePasswordAuthenticationToken clientUser = new UsernamePasswordAuthenticationToken(loginVO.getClient_id(), parameters.get("client_secret"), new ArrayList<>());
             OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(clientUser, parameters).getBody();
             assert oAuth2AccessToken != null;
             Oauth2TokenDto oauth2TokenDto = Oauth2TokenDto.builder()

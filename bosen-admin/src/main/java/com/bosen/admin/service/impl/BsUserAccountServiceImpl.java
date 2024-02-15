@@ -57,7 +57,7 @@ public class BsUserAccountServiceImpl extends ServiceImpl<BsUserAccountMapper, B
                 if (Objects.equals(userRoleList.size(), 1)) {
                     userDto.setDefaultRoleId(userRoleList.get(0).getId());
                 } else {
-                    List<BsRole> collect = userRoleList.stream().filter(i -> Objects.equals(YesOrNoConstant.YES, i.getDefaultRole())).collect(Collectors.toList());
+                    List<BsRole> collect = userRoleList.stream().filter(i -> Objects.equals(YesOrNoConstant.YES.longValue(), i.getDefaultRole())).collect(Collectors.toList());
                     if (CollUtil.isNotEmpty(collect)) {
                         userDto.setDefaultRoleId(collect.get(0).getId());
                     } else {
