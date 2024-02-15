@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 /**
  * 用户管理业务类
@@ -45,6 +46,9 @@ public class UserServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }*/
         UserDto userDto = adminFeignService.loadUserByUsername(username);
+        if (Objects.isNull(userDto)) {
+            throw new DisabledException(MessageConstant.USERNAME_PASSWORD_ERROR);
+        }
         userDto.setClientId(clientId);
         SecurityUser securityUser = new SecurityUser(userDto);
         if (!securityUser.isEnabled()) {

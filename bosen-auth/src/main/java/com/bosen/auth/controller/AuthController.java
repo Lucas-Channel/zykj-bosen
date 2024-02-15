@@ -11,9 +11,10 @@ import com.bosen.common.exception.BusinessException;
 import com.bosen.common.util.Aes128Util;
 import com.nimbusds.jose.JWSObject;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
@@ -44,37 +45,52 @@ public class AuthController {
     @Resource
     private ApplicationContext applicationContext;
 
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
+
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ResponseData<Oauth2TokenDto> postAccessToken(@RequestBody LoginVO loginVO) throws HttpRequestMethodNotSupportedException {
         Map<String, String> parameters = new HashMap<>();
         parameters.put("grant_type",loginVO.getGrant_type());
         parameters.put("client_id",loginVO.getClient_id());
-        parameters.put("client_secret",loginVO.getClient_secret());
         parameters.putIfAbsent("refresh_token",loginVO.getRefresh_token());
         parameters.putIfAbsent("username",loginVO.getUsername());
         try {
             parameters.putIfAbsent("password", Aes128Util.aesDecrypt(loginVO.getPassword()));
+            // 增加客户端校验
+            Map<Object, Object> entries = redisTemplate.opsForHash().entries(AuthConstant.CLIENT_KEY);
+            if (!entries.containsKey(loginVO.getClient_id())) {
+                throw new BusinessException("客户端不存在");
+            }
+            if (!new BCryptPasswordEncoder().matches(Aes128Util.aesDecrypt(loginVO.getClient_secret()), (String) redisTemplate.opsForHash().entries(AuthConstant.CLIENT_KEY).get(loginVO.getClient_id()))) {
+                throw new BusinessException("客户端认证失败,请检查密钥是否准确");
+            }
+            parameters.put("client_secret",Aes128Util.aesDecrypt(loginVO.getClient_secret()));
         } catch (Exception e) {
-            throw new BusinessException("密码错误");
+            throw new BusinessException(e.getMessage());
         }
-        UsernamePasswordAuthenticationToken clientUser = new UsernamePasswordAuthenticationToken(new User(loginVO.getClient_id(), loginVO.getClient_secret(), new ArrayList<>()), null, new ArrayList<>());
-        OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(clientUser, parameters).getBody();
-        assert oAuth2AccessToken != null;
-        Oauth2TokenDto oauth2TokenDto = Oauth2TokenDto.builder()
-                .token(oAuth2AccessToken.getValue())
-                .refreshToken(oAuth2AccessToken.getRefreshToken().getValue())
-                .expiresIn(oAuth2AccessToken.getExpiresIn())
-                .tokenHead(AuthConstant.JWT_TOKEN_PREFIX).build();
-        JWSObject jwsObject;
         try {
-            jwsObject = JWSObject.parse(oauth2TokenDto.getToken());
-        } catch (ParseException e) {
-            throw new BusinessException("转换token失败");
+            UsernamePasswordAuthenticationToken clientUser = new UsernamePasswordAuthenticationToken(loginVO.getClient_id(), loginVO.getClient_secret(), new ArrayList<>());
+            OAuth2AccessToken oAuth2AccessToken = tokenEndpoint.postAccessToken(clientUser, parameters).getBody();
+            assert oAuth2AccessToken != null;
+            Oauth2TokenDto oauth2TokenDto = Oauth2TokenDto.builder()
+                    .token(oAuth2AccessToken.getValue())
+                    .refreshToken(oAuth2AccessToken.getRefreshToken().getValue())
+                    .expiresIn(oAuth2AccessToken.getExpiresIn())
+                    .tokenHead(AuthConstant.JWT_TOKEN_PREFIX).build();
+            JWSObject jwsObject;
+            try {
+                jwsObject = JWSObject.parse(oauth2TokenDto.getToken());
+            } catch (ParseException e) {
+                throw new BusinessException("转换token失败");
+            }
+            String userStr = jwsObject.getPayload().toString();
+            UserDto userDto = JSONUtil.toBean(userStr, UserDto.class);
+            applicationContext.publishEvent(new CacheLoginUserInfoEvent(this, userDto.getId(), loginVO.getClient_id()));
+            return ResponseData.success(oauth2TokenDto);
+        } catch (Exception e) {
+            throw new BusinessException(e.getMessage());
         }
-        String userStr = jwsObject.getPayload().toString();
-        UserDto userDto = JSONUtil.toBean(userStr, UserDto.class);
-        applicationContext.publishEvent(new CacheLoginUserInfoEvent(this, userDto.getId(), loginVO.getClient_id()));
-        return ResponseData.success(oauth2TokenDto);
     }
 
     @PostMapping("/logout")

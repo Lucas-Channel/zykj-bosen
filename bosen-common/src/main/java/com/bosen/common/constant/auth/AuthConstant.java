@@ -90,4 +90,6 @@ public interface AuthConstant {
     String LOGIN_OUT_TOKEN_KEY = "token";
 
     String LOGIN_OUT_REFRESH_TOKEN_KEY = "refresh_token";
+
+    String CLIENT_KEY = "client";
 }
