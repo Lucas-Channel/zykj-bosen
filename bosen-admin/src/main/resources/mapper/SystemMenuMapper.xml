@@ -18,7 +18,7 @@
         LEFT JOIN bs_sys_menu_language bsml ON
                 bsm.id = bsml.menu_id
             AND bsml.language_code = #{languageCode}
-        and bsm.id in
+        where bsm.id in
         <foreach collection="ids" item="item" open="(" close=")" separator="," >
             #{item}
         </foreach>
