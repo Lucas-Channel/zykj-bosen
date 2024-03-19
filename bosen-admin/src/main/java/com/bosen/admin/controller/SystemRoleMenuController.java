@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 
 /**
@@ -46,7 +48,7 @@ public class SystemRoleMenuController {
      * @return 列表菜单权限
      */
     @GetMapping("/listMenuAfterLogin")
-    public ResponseData<List<LoginMenuDetailVO>> listMenuAfterLogin(String roleId) {
+    public ResponseData<Map<String, Object>> listMenuAfterLogin(String roleId) {
         return roleMenuRelationService.listMenuAfterLogin(roleId);
     }
 }

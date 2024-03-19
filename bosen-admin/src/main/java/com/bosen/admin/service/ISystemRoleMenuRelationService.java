@@ -8,6 +8,8 @@ import com.bosen.admin.vo.resquest.RoleMenuUpsertVO;
 import com.bosen.common.constant.response.ResponseData;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Lucas
@@ -20,5 +22,5 @@ public interface ISystemRoleMenuRelationService extends IService<SystemRoleMenuR
 
     ResponseData<Void> updateRoleMenu(RoleMenuUpsertVO roleMenuUpsertVO);
 
-    ResponseData<List<LoginMenuDetailVO>> listMenuAfterLogin(String roleId);
+    ResponseData<Map<String, Object>> listMenuAfterLogin(String roleId);
 }

@@ -20,7 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -63,7 +65,8 @@ public class SystemRoleMenuRelationServiceImpl extends ServiceImpl<SystemRoleMen
     }
 
     @Override
-    public ResponseData<List<LoginMenuDetailVO>> listMenuAfterLogin(String roleId) {
+    public ResponseData<Map<String, Object>> listMenuAfterLogin(String roleId) {
+        Map<String, Object> map = new HashMap<>();
         // todo 获取当前用户角色
         // 获取角色下的菜单
         List<SystemRoleMenuRelation> list = this.lambdaQuery().eq(SystemRoleMenuRelation::getRoleId, roleId).list();
@@ -72,8 +75,10 @@ public class SystemRoleMenuRelationServiceImpl extends ServiceImpl<SystemRoleMen
         }
         // todo 获取请求头的多语言编码
         List<ViewFrontMenuDetailBO> menuDetailBOS = systemMenuMapper.listMenuByMenuIds(list.stream().map(SystemRoleMenuRelation::getMenuId).distinct().collect(Collectors.toList()), "zh");
-        return ResponseData.success(menuDetailBOS.stream().filter(i -> Objects.equals("0", i.getParentId()))
+        map.put("routes", menuDetailBOS.stream().filter(i -> Objects.equals("0", i.getParentId()))
                 .map(i -> covertRoleMenuNodeForLogin(i, menuDetailBOS)).collect(Collectors.toList()));
+        map.put("home", "dashboard_workbench");
+        return ResponseData.success(map);
     }
 
     private RoleMenuDetailVO covertRoleMenuNode(RoleMenuDetailVO menu, List<RoleMenuDetailVO> menuList) {

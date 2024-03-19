@@ -53,4 +53,8 @@ public class ViewFrontMenuDetailBO implements Serializable {
      * 序号
      */
     private Integer sortNumber;
+
+    private Boolean keepAlive;
+
+    private String singleLayout;
 }
