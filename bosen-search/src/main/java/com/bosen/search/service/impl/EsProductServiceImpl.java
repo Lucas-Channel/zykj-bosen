@@ -168,7 +168,6 @@ public class EsProductServiceImpl implements IEsProductService {
 
     /**
      * 封装排序规则
-     * @param queryVO 参数
      * @return 结果
      */
     private FieldSortBuilder getSortBuilder() {
