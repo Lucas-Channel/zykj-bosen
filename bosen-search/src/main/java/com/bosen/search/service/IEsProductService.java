@@ -6,6 +6,8 @@ import com.bosen.elasticsearch.domain.ESProductAttributeAndValueModelDO;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.elasticsearch.domain.EsProductSalesAreaDO;
 import com.bosen.elasticsearch.vo.request.DownProductRequestVO;
+import com.bosen.search.vo.request.HomePageQueryVO;
+import com.bosen.search.vo.request.HotWordsRequestVO;
 import com.bosen.search.vo.request.ProductQueryVO;
 import com.bosen.search.vo.request.UpdateSkuSalesCountVO;
 
@@ -60,4 +62,24 @@ public interface IEsProductService {
      * @return 结果
      */
     ResponseData<Void> downProduct(DownProductRequestVO downProductRequestVO);
+
+    /**
+     * 首页推荐商品
+     * @param pageQueryVO 参数
+     * @return 集合
+     */
+    ResponseData<PageData<ESProductSkuModelDO>> listHomePageProduct(HomePageQueryVO pageQueryVO);
+
+    /**
+     * 用户搜索，热点词保存
+     * @param hotWordsRequestVO 参数
+     * @return 结果
+     */
+    ResponseData<Void> saveHotWords(HotWordsRequestVO hotWordsRequestVO);
+
+    /**
+     * 大家度在搜
+     * @return 热点词
+     */
+    ResponseData<List<String>> listHotWords(String searchKey);
 }

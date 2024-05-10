@@ -6,6 +6,8 @@ import com.bosen.elasticsearch.domain.ESProductAttributeAndValueModelDO;
 import com.bosen.elasticsearch.domain.ESProductSkuModelDO;
 import com.bosen.elasticsearch.domain.EsProductSalesAreaDO;
 import com.bosen.search.service.IEsProductService;
+import com.bosen.search.vo.request.HomePageQueryVO;
+import com.bosen.search.vo.request.HotWordsRequestVO;
 import com.bosen.search.vo.request.ProductQueryVO;
 import com.bosen.search.vo.request.UpdateSkuSalesCountVO;
 import org.springframework.web.bind.annotation.*;
@@ -66,5 +68,34 @@ public class EsProductController {
     @GetMapping("/getSpuHasRackingAttribute/{spuId}")
     public ResponseData<Map<String, Map<String, List<ESProductAttributeAndValueModelDO>>>> getSpuHasRackingAttribute(@PathVariable("spuId") String spuId, String shopId, String storeId) {
         return esProductService.getSpuHasRackingAttribute(spuId, shopId, storeId);
+    }
+
+    /**
+     * 首页推荐商品
+     * @param pageQueryVO 参数
+     * @return 集合
+     */
+    @GetMapping("/listHomePageProduct")
+    public ResponseData<PageData<ESProductSkuModelDO>> listHomePageProduct(HomePageQueryVO pageQueryVO) {
+       return esProductService.listHomePageProduct(pageQueryVO);
+    }
+
+    /**
+     * 用户搜索，热点词保存
+     * @param hotWordsRequestVO 参数
+     * @return 结果
+     */
+    @PostMapping("/saveHotWords")
+    public ResponseData<Void> saveHotWords(@RequestBody HotWordsRequestVO hotWordsRequestVO) {
+        return esProductService.saveHotWords(hotWordsRequestVO);
+    }
+
+    /**
+     * 大家度在搜
+     * @return 热点词
+     */
+    @GetMapping("/listHotWords")
+    public ResponseData<List<String>> listHotWords(String searchKey) {
+        return esProductService.listHotWords(searchKey);
     }
 }

@@ -14,6 +14,8 @@ import com.bosen.elasticsearch.vo.request.DownProductRequestVO;
 import com.bosen.search.constant.SortTypeEnum;
 import com.bosen.search.mapper.EsProductMapper;
 import com.bosen.search.service.IEsProductService;
+import com.bosen.search.vo.request.HomePageQueryVO;
+import com.bosen.search.vo.request.HotWordsRequestVO;
 import com.bosen.search.vo.request.ProductQueryVO;
 import com.bosen.search.vo.request.UpdateSkuSalesCountVO;
 import lombok.extern.slf4j.Slf4j;
@@ -21,15 +23,19 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.elasticsearch.search.sort.*;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -132,6 +138,70 @@ public class EsProductServiceImpl implements IEsProductService {
             }
         }
         return ResponseData.success();
+    }
+
+    @Override
+    public ResponseData<PageData<ESProductSkuModelDO>> listHomePageProduct(HomePageQueryVO pageQueryVO) {
+        List<String> hotWords = new ArrayList<>();
+        Set<ZSetOperations.TypedTuple<Object>> typedTupleSet = redisTemplate.opsForZSet().reverseRangeByScoreWithScores(RedisKeyConstant.USER_HOT_WORDS_KEY + ":用户id", 1, Integer.MAX_VALUE, 0, 3);
+        if (!CollectionUtils.isEmpty(typedTupleSet)) {
+           hotWords = typedTupleSet.stream().map(ZSetOperations.TypedTuple::getValue).map(String::valueOf).collect(Collectors.toList());
+        }
+        BoolQueryBuilder boolQueryBuilder = getBoolQueryBuilder(hotWords);
+        FieldSortBuilder sortBuilder = getSortBuilder();
+        ProductQueryVO queryVO = new ProductQueryVO();
+        queryVO.setSize(pageQueryVO.getSize());
+        queryVO.setCurrent(pageQueryVO.getCurrent());
+        PageData<ESProductSkuModelDO> esProductList = getEsProductList(boolQueryBuilder, sortBuilder, queryVO);
+        return ResponseData.success(esProductList);
+    }
+
+    private BoolQueryBuilder getBoolQueryBuilder(List<String> userHotWords) {
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        if (CollUtil.isNotEmpty(userHotWords)) {
+            userHotWords.forEach(i -> {
+                queryBuilder.should(QueryBuilders.multiMatchQuery(i, "skuName", "storeName"));
+            });
+        }
+        return queryBuilder;
+    }
+
+    /**
+     * 封装排序规则
+     * @param queryVO 参数
+     * @return 结果
+     */
+    private FieldSortBuilder getSortBuilder() {
+        return SortBuilders.fieldSort("salesCount").order(SortOrder.DESC);
+    }
+
+    @Override
+    public ResponseData<Void> saveHotWords(HotWordsRequestVO hotWordsRequestVO) {
+        // 每次搜索点击，热搜词热度+1
+        redisTemplate.opsForZSet().incrementScore(RedisKeyConstant.PRODUCT_HOT_WORDS_KEY, hotWordsRequestVO.getHotWords(), 1);
+        // 保存用户热搜词
+        redisTemplate.opsForZSet().incrementScore(RedisKeyConstant.USER_HOT_WORDS_KEY + ":用户id", hotWordsRequestVO.getHotWords(), 1);
+        return ResponseData.success();
+    }
+
+    @Override
+    public ResponseData<List<String>> listHotWords(String searchKey) {
+        // 获取前十的热搜词
+        List<String> hotWords = new ArrayList<>();
+        if (StringUtils.hasLength(searchKey)) {
+            // 如果搜索key不为空，推荐相关的热词前十
+            Set<ZSetOperations.TypedTuple<Object>> typedTupleSet = redisTemplate.opsForZSet().reverseRangeByScoreWithScores(RedisKeyConstant.PRODUCT_HOT_WORDS_KEY, 1, Integer.MAX_VALUE);
+            if (!CollectionUtils.isEmpty(typedTupleSet)) {
+                hotWords = typedTupleSet.stream().map(ZSetOperations.TypedTuple::getValue).map(String::valueOf).filter(i -> i.contains(searchKey)).collect(Collectors.toList());
+            }
+        } else {
+            // 返回热搜词前十
+            Set<ZSetOperations.TypedTuple<Object>> typedTupleSet = redisTemplate.opsForZSet().reverseRangeByScoreWithScores(RedisKeyConstant.PRODUCT_HOT_WORDS_KEY, 1, Integer.MAX_VALUE, 0, 10);
+            if (!CollectionUtils.isEmpty(typedTupleSet)) {
+                hotWords = typedTupleSet.stream().map(ZSetOperations.TypedTuple::getValue).map(String::valueOf).collect(Collectors.toList());
+            }
+        }
+        return ResponseData.success(hotWords);
     }
 
     /**

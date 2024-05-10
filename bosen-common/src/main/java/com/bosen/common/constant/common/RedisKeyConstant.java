@@ -42,4 +42,14 @@ public interface RedisKeyConstant {
      * 白名单key
      */
     String VISIT_URL_WHITE_LIST_KEY = "bosen:visit:white:list";
+
+    /**
+     * 热搜词key
+     */
+    String PRODUCT_HOT_WORDS_KEY = "product:hot:words";
+
+    /**
+     * 用户热搜词
+     */
+    String USER_HOT_WORDS_KEY = "product:hot:words:user";
 }
