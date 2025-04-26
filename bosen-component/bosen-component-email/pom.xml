@@ -3,24 +3,23 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>zykj-bosen</artifactId>
+        <artifactId>bosen-component</artifactId>
         <groupId>com.bosen</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>bosen-component</artifactId>
-    <packaging>pom</packaging>
-    <description>组件服务：mq，短信，邮件，上传，redisson</description>
-    <modules>
-        <module>bosen-component-redisson</module>
-        <module>bosen-component-elasticsearch</module>
-        <module>bosen-component-email</module>
-    </modules>
+    <artifactId>bosen-component-email</artifactId>
+    <description>邮件发送服务组件功能</description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
-
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+    </dependencies>
 </project>

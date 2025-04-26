@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class PageVO {
-    private Integer current;
+    private Integer current = 1;
 
-    private Integer size;
+    private Integer size = 20;
 }

@@ -1,6 +1,7 @@
 package com.bosen.auth.config.mobile;
 
 import cn.hutool.core.util.StrUtil;
+import com.bosen.auth.security.UserServiceImpl;
 import com.bosen.common.constant.auth.AuthConstant;
 import com.bosen.common.exception.BusinessException;
 import lombok.Data;
@@ -8,6 +9,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**

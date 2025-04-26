@@ -566,3 +566,17 @@ CREATE TABLE `bs_store_shop` (
                             `del_flag` int DEFAULT 0,
                             PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='店铺-商城关系表';
+
+
+CREATE TABLE `bs_oauth_jwt_keys` (
+                                           `id` varchar(32) NOT NULL,
+                                           `private_key` TEXT NOT NULL,
+                                           `public_key` TEXT NOT NULL,
+                                           `algorithm` VARCHAR(255) NOT NULL,
+                                           `creator_user` varchar(50) DEFAULT NULL,
+                                           `create_time` datetime DEFAULT NULL,
+                                           `updater_user` varchar(50) DEFAULT NULL,
+                                           `update_time` datetime DEFAULT NULL,
+                                           `del_flag` int DEFAULT '0',
+                                           PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='公钥密钥信息';

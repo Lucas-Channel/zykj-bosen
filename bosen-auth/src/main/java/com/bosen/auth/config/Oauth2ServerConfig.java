@@ -3,12 +3,14 @@ package com.bosen.auth.config;
 import com.bosen.auth.component.JwtTokenEnhancer;
 import com.bosen.auth.config.mobile.SmsCodeTokenGranter;
 import com.bosen.auth.security.ClientDetailsServiceImpl;
+import com.bosen.auth.security.IKeyPairService;
 import com.bosen.auth.security.UserServiceImpl;
 import com.bosen.common.constant.common.RedisKeyConstant;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +25,7 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 import java.security.KeyPair;
@@ -46,6 +49,8 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     private final ClientDetailsServiceImpl clientDetailsService;
 
     private final RedisConnectionFactory redisConnectionFactory;
+
+    private final IKeyPairService keyPairService;
 
     /**
      * 设置jwt token 缓存到redis
@@ -105,12 +110,13 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
         // 总结：
         // `KeyPairGenerator`用于动态生成密钥对并保存在内存中，适用于在运行时生成密钥对的场景。
         // `KeyStoreKeyFactory`用于从密钥库中加载密钥对，适用于持久化保存和管理密钥对的场景。它通常与密钥库文件一起使用。
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPairGenerator.initialize(1024);
-        return keyPairGenerator.genKeyPair();
+//        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+//        keyPairGenerator.initialize(1024);
+//        return keyPairGenerator.genKeyPair();
         //从classpath下的证书中获取秘钥对
 //        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("bosen.jks"), "bosen888".toCharArray());
 //        return keyStoreKeyFactory.getKeyPair("bosen", "bosen888".toCharArray());
+        return keyPairService.getCurrentKeyPair();
     }
 
 }
