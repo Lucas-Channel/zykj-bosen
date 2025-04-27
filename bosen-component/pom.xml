@@ -16,6 +16,7 @@
         <module>bosen-component-redisson</module>
         <module>bosen-component-elasticsearch</module>
         <module>bosen-component-email</module>
+        <module>bosen-component-wecom</module>
     </modules>
 
     <properties>

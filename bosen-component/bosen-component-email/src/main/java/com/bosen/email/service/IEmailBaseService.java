@@ -19,4 +19,11 @@ public interface IEmailBaseService {
      * 发送简要邮件信息 + 附件
      */
     void sendSimpleEmailWithFiles(SimpleEmailRequest request, List<EmailFileRequest> fileRequests);
+
+    void sendHtmlEmail(SimpleEmailRequest request);
+
+    /**
+     * 发送带内联图片的邮件
+     */
+    void sendEmailWithInlineImage(SimpleEmailRequest request, List<EmailFileRequest> picFiles);
 }

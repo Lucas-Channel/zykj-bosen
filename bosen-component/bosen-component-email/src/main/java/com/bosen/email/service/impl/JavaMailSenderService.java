@@ -3,20 +3,23 @@ package com.bosen.email.service.impl;
 import com.bosen.email.domain.EmailFileRequest;
 import com.bosen.email.domain.SimpleEmailRequest;
 import com.bosen.email.service.IEmailBaseService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.annotation.Resource;
 import javax.mail.BodyPart;
+import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.*;
 import javax.mail.util.ByteArrayDataSource;
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -30,6 +33,9 @@ import java.util.stream.Collectors;
 @Service("javaMailSenderService")
 public class JavaMailSenderService implements IEmailBaseService {
 
+    @Value("${spring.mail.from}")
+    private String emailFrom;
+
     @Resource
     private JavaMailSender javaMailSender;
 
@@ -37,6 +43,7 @@ public class JavaMailSenderService implements IEmailBaseService {
     public void sendSimpleEmail(SimpleEmailRequest request) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(String.join(",", request.getEmailTo()));
+        simpleMailMessage.setFrom(emailFrom);
         if (!CollectionUtils.isEmpty(request.getEmailCopyTo())) {
             simpleMailMessage.setCc(String.join(",", request.getEmailCopyTo()));
         }
@@ -57,10 +64,10 @@ public class JavaMailSenderService implements IEmailBaseService {
             multipart.addBodyPart(bodyPart);
             if (!CollectionUtils.isEmpty(fileRequests)) {
                 fileRequests.forEach(i -> {
-                    BodyPart filePart = new MimeBodyPart();
+                    MimeBodyPart filePart = new MimeBodyPart();
                     try {
-                        filePart.setFileName(i.getFileName());
-                        filePart.setDataHandler(new DataHandler(new ByteArrayDataSource(Files.readAllBytes(Paths.get(i.getFilePath())), "application/octet-stream")));
+                        filePart.setFileName(MimeUtility.encodeText(i.getFileName()));
+                        filePart.setDataHandler(new DataHandler(new FileDataSource(new File(i.getFilePath()))));
                         multipart.addBodyPart(filePart);
                     } catch (Exception e) {
                         throw new RuntimeException(e.getMessage());
@@ -68,8 +75,41 @@ public class JavaMailSenderService implements IEmailBaseService {
                 });
             }
             mimeMessage.setContent(multipart);
+            mimeMessage.setFrom(emailFrom);
+            mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(String.join(",", request.getEmailTo())));
+            javaMailSender.send(mimeMessage);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+    @Override
+    public void sendHtmlEmail(SimpleEmailRequest request) {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        try {
+            helper.setTo(request.getEmailTo().toArray(new String[0]));
+            helper.setSubject(request.getEmailTitle());
+            helper.setText(request.getContent(), true); // true表示内容为HTML
+        } catch (MessagingException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        javaMailSender.send(message);
+    }
+
+    @Override
+    public void sendEmailWithInlineImage(SimpleEmailRequest request, List<EmailFileRequest> picFiles) {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        try {
+            helper.setTo(request.getEmailTo().toArray(new String[0]));
+            helper.setSubject(request.getEmailTitle());
+            helper.addInline("logo", new File(""));// todo 等接入文件服务后调整
+            helper.setText(request.getContent(), true); // true表示内容为HTML
+        } catch (MessagingException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        javaMailSender.send(message);
+    }
+
 }
